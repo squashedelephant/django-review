@@ -9,4 +9,4 @@ httpie==0.9.9
 psycopg2==2.7.1
 Pygments==2.2.0
 pytz==2017.2
-selenium-3.5.0
+selenium=3.5.0
