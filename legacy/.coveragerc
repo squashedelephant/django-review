@@ -1,0 +1,11 @@
+[run]
+source =
+    legacy
+    #simple
+[html]
+directory=results
+[report]
+omit = 
+    legacy/tests/*
+    #simple/tests/*
+    #simple/migrations/*

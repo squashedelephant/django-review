@@ -1,0 +1,15 @@
+<html>
+<head>
+<title>App: Legacy: User Profile</title>
+</head>
+<body>
+<h3>User Profile</h3>
+{% if user.username %}
+<p>username: {{ user.username }}</p>
+<p>first name: {{ user.first_name }}</p>
+<p>last name: {{ user.last_name }}</p>
+<p>email: {{ user.email }}</p>
+<p><a href="/logout/">logout</a></p>
+{% endif %}
+</body>
+</html>

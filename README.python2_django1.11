@@ -5,7 +5,10 @@ $ source omg/bin/activate
 2.7.1
 (omg) $ cd $HOME/Projects/django-review/
 (omg) $ pip install -r pip_requirements.txt
+(omg) $ django-admin.py --version
+1.11.3
 (omg) $ django-admin.py startproject legacy
+(omg) $ cd legacy/
 (omg) $ mkdir -p legacy/static
 (omg) $ mkdir -p legacy/templates/registration
 (omg) $ mkdir -p legacy/tests
@@ -25,6 +28,8 @@ $ source omg/bin/activate
 TEST PROJECT
 (omg) $ mkdir -p tools/
 (omg) $ mkdir -p results/
+(omg) $ vi tools/__init__.py
+(omg) $ vi tools/users.py
 (omg) $ vi tools/populate_legacy.py
 (omg) $ python ./tools/populate_legacy.py
 (omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/user.json auth.user
@@ -35,10 +40,13 @@ TEST PROJECT
 (omg) $ vi legacy/tests/test_authorization.py
 (omg) $ vi legacy/tests/test_settings.py
 (omg) $ vi legacy/tests/utils.py
+(omg) $ coverage --version
+Coverage.py, version 4.4.1 with C extension
+Documentation at https://coverage.readthedocs.io
 (omg) $ vi .coveragerc
 (omg) $ coverage erase
 (omg) $ coverage run manage.py test
-(omg) $ coverage result -m
+(omg) $ coverage report -m
 (omg) $ python manage.py runserver
 NOTE: inspect via Browser URL and Browser URL/admin
 
@@ -74,8 +82,8 @@ CREATE SIMPLE WEB APP
 (omg) $ python manage.py migrate
 
 TEST SIMPLE WEB APP
-(omg) $ vi tools/populate_legacy.py
-(omg) $ python ./tools/populate_legacy.py
+(omg) $ vi tools/populate_simple.py
+(omg) $ python ./tools/populate_simple.py
 (omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/widget.json simple.widget
 (omg) $ vi simple/tests/__init__.py
 (omg) $ vi simple/tests/test_admin.py
