@@ -1,0 +1,210 @@
+Django: Things to Know 09/03/2017
+
+WARNING: Here, there be dragons.   
+      Python Django is a HUGE web app framework for development and testing
+      web apps.  While it works well for small apps, it has been repeatedly
+      redesigned and extended to support web apps with increasingly larger
+      APIs forcing these obvious compromises
+      1) forced use of standardization in URL paths and object management
+      2) boilerplate code hidden in inherited class methods 2-4 layers 
+         deep forcing mandatory read of source code
+      3) hiding behavior behind inherited boilerplate code forces Developer 
+         to takeover most of the QA Engineer's job 
+      4) forced use of test fixtures which assume manipulation of pre-created
+         and pre-loaded seed data limiting creativity of negative tests as it
+         is now impossible to create invalid data sets as fixtures to be
+         loaded as needed in order to test
+         a) missing POST data keywords 
+         b) invalid POST data values 
+         c) missing or invalid CRSF token 
+         d) missing or invalid authentication
+      5) great idea new features are introduced outside project source then
+         force added after user base has voted them as defacto standard so 
+         eventual integration is ugly
+         a) documentation sources ignore until forced to acknowledge
+         b) integration by non-django labeled packages or in django.contrib
+      6) Large volume web apps inevitably require web app integration via
+         WSGI with well known volume HTTP web servers: Jetty, Nginx
+      7) Large volume web apps inevitably require a message queuing service
+         such as Celery/RabbitMQ, Celery/Redis or Celery/(AWS SQS)
+      8) Large volume web apps inevitably switch from RDBMS to NoSQL yet
+         Django support is limited and buggy
+         a. Cassandra started then abandoned
+            ie. https://djangocassandra.readthedocs.io/en/latest/
+         b. MongoDB supported with Django REST
+            ie. https://github.com/umutbozkurt/django-rest-framework-mongoengine
+         c. Redis supported
+            ie. https://realpython.com/blog/python/caching-in-django-with-redis/
+
+Sources
+01) Django documentation: semi-useful API descriptions missing examples and
+    recommendations for best practices and failing to indicate what is
+    deprecated so read at your own risk
+    ie. https://docs.djangoproject.com/en/1.11/
+02) Django online tutorials: always published with a specific audience in
+    mind and intended for limited use in a specialized lab with preset
+    dependencies already installed so version bound but never declaring
+    actual version
+03) Django Books: helpful describing some Django features but always lacking
+    history and mixing instance method or generic view examples with zero
+    clarity so avoid at all costs
+    ie. Mastering Django: Core Complete Guide
+04) Django REST documentation: semi-use API descriptions and recommendations
+    for best practices
+    ie. http://www.django-rest-framework.org/
+05) Django Source: any Python module loaded for a particular component can
+    also be read to identify which hidden variables are required 
+    ie. view ~/venv/lib/python2.7/site-packages/django/contrib/auth/models.py
+06) Google Search: django <component> <problem>
+    ie. stackoverflow.com questions
+07) BeautifulSoup documentation: semi-useful API descriptions providing
+    examples for only basic HTML elements
+    ie. https://www.crummy.com/software/BeautifulSoup/bs4/doc/
+08) Selenium documentation: semi-useful API descriptions providing
+    examples for only basic HTML elements
+    ie. http://www.seleniumhq.org/docs/
+09) Memcached documentation: semi-useful API descriptions and examples
+    ie. https://memcached.org/
+10) Coverage documentation: Python Test tool semi-useful API description
+    ignores obvious failure to work properly with Django 1.7+
+    ie. https://coverage.readthedocs.io/en/coverage-4.4.1/
+        https://github.com/django-nose/django-nose/issues/180
+
+Modern Django apps require knowledge of Django, Nose, Coverage, BeautifulSoup,
+Selenium, HTML, JavaScript, Google Bootstrap, Crispy
+
+Common Django Components
+01) data modeling
+02) forms
+03) serializers
+04) generic views
+05) routing
+06) admin pages
+07) settings
+08) templates
+09) authentication 
+10) authorization  
+11) versioning
+12) caching
+13) testing
+14) test fixtures
+
+Many of these components were developed external to Django and sloppily
+integrated later so one must become familiar with all such Python modules that
+must be imported and sadly, it isn't immediately obvious which have obsoleted
+which but in general, users contribute separate Python modules and Django
+project slowly incorporates them.
+
+Further, Django originally supported small apps so data models were managed by
+instance methods, a strategy which failed to scale when developing API with
+more than 10 models so standardization was imposed via use of generic classes
+instead.  Therefore, legacy code or custom code may still use instance methods
+but best practices encourage replacement with generic classes and URL path
+standardization for code maintenance purposes.  ie. it is easier for developers
+new to the code base to detect an existing standardization and extend it rather
+than wing it and risk introducing new bugs.
+
+Instance Method Imports
+01) data modeling: from django.db import models, 
+                   from django.contrib.auth.models import User
+                   from django.core.urlresolvers import reverse_lazy
+02) forms: from django import forms
+03) serializers: NON-EXISTENT
+04) generic views: NON-EXISTENT
+05) routing: from django.conf.urls import include, url
+06) admin pages: from django.contrib import admin
+07) settings: from django.conf import settings
+08) templates: from django.http import Http404, HttpResponse
+               from django.http import HttpResponseRedirect, JsonResponse
+               from django.shortcuts import redirect, render
+09) authentication: from django.contrib.auth import authenticate, login, logout
+10) authorization: from django.contrib.decorators import login_required
+                   from django.contrib.decorators import permission_required
+11) versioning: NON-EXISTENT
+12) caching: from django.views.decorators.cache import cache_page
+13) testing: from django.test import Client, RequestFactory
+             from django.test import TestCase, TransactionTestCase
+             from bs4 import BeautifulSoup 
+             from django.urls import reverse
+             from django.core.urlresolvers import reverse
+             from django.utils.six import BytesIO
+14) test fixtures: from django.core.management import execute_from_command_line
+                   from django.contrib.auth.models import Permission, User
+                   from django.contrib.contenttypes.models import ContentType
+
+Generic Class Imports
+01) data modeling: from django.db import models
+                   from django.contrib.auth.models import User
+                   from django.core.urlresolvers import reverse_lazy
+02) generic forms: from django import forms
+03) serializers: from rest_framework import serializers
+04) generic views: from django.views.generic import DetailView, ListView
+                   from django.views.generic.base import TemplateView
+                   from django.views.generic.edit import Createview, DeleteView
+                   from django.views.generic.edit import FormView
+                   from rest_framework import filters, mixins, viewsets, views
+05) generic routers: from django.conf.urls import include, url
+                     from rest_framework.routers import DefaultRouter
+06) admin pages: from django.contrib import admin
+07) settings: from rest_framework.settings import api_settings
+08) templates: from django.http import Http404, HttpResponse
+               from django.http import HttpResponseRedirect, JsonResponse
+               from django.shortcuts import redirect, render
+09) authentication: from django.contrib.auth import authenticate, login, logout
+10) authorization: from django.contrib.decorators import login_required
+                   from django.contrib.decorators import permission_required
+11) versioning: from rest_framework.versioning import URLPathVersioning
+12) caching: from django.views.decorators.cache import cache_page
+             from django.core.cache import cache
+             from django.core.cache.utils import make_template_fragment_key
+13) testing: from django.test import Client, RequestFactory
+             from django.test import TestCase, TransactionTestCase
+             from bs4 import BeautifulSoup 
+             from django.urls import reverse
+             from django.utils.six import BytesIO
+14) test fixtures: from django.core.management import execute_from_command_line
+                   from django.contrib.auth.models import Permission, User
+                   from django.contrib.contenttypes.models import ContentType
+
+Standardization required general agreement to refer to objects uniformly as
+/<app>/<object>/<id>/<action>/ so
+01) create one object: 
+    HTTP POST /<app>/<object_as_plural>/
+02) retrieve list of objects: 
+    HTTP GET /<app>/<object_as_plural>/ or
+    HTTP GET /<app>/<object_as_plural>/page/<page_id>/
+03) retrieve detail of a single object: 
+    HTTP GET /<app>/<object_as_plural>/<object_id>/
+04) update a single object possibly by full replacement: 
+    HTTP PUT /<app>/<object_as_plural>/<object_id>/
+05) update a single object only by partial replacement: 
+    HTTP PATCH /<app>/<object_as_plural>/<object_id>/
+06) delete a single object: 
+    HTTP DELETE /<app>/<object_as_plural>/<object_id>/
+07) delete a single object without updating RDBMS table indices: 
+    HTTP POST /<app>/<object_as_plural>/<object_id>/
+08) retrieve multiple lists of objects:
+    HTTP GET /<app>/<object_as_plural>/<action>/ or
+    HTTP GET /<app>/<object_as_plural>/<action>/page/<page_id>/
+09) multiple updates of a single object by full replacement: 
+    HTTP PUT /<app>/<object_as_plural>/<object_id>/<action>/
+10) multiple updates of a single object by partial replacement: 
+    HTTP PATCH /<app>/<object_as_plural>/<object_id>/<action>/
+
+CSRF hacking forced use of a two-step object creation or modification where a
+server generated token is created and presented via HTTP GET then passed back
+with HTTP POST, PUT, PATCH or DELETE.
+
+Because a project can manage multiple web apps and each app may be updated on
+a separate schedule, best practices encourage app versioning defined in the
+HTTP Accept Header as: {'Accept': 'application/json; version=1.0'}
+
+Django provides a test framework as well as a fixture format.  The test
+framework allows testing of all 11 components eliminating most QA Engineer
+work unless the Engineer is able to whitebox test and already deeply
+familiar with Django.   Mandatory seed data consisting of multiple users
+with differing authentication, authorization levels and at least 21 instances
+of each object to allow pagination testing is required.  This data should be
+generated once, then stored as JSON files in settings.FIXTURE_DIR using
+'python manage.py dumpdata' so easily imported during automated testing.
+

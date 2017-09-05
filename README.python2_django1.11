@@ -1,0 +1,101 @@
+
+CREATE PROJECT
+$ source omg/bin/activate
+(omg) $ python -V
+2.7.1
+(omg) $ cd $HOME/Projects/django-review/
+(omg) $ pip install -r pip_requirements.txt
+(omg) $ django-admin.py startproject legacy
+(omg) $ mkdir -p legacy/static
+(omg) $ mkdir -p legacy/templates/registration
+(omg) $ mkdir -p legacy/tests
+(omg) $ mkdir -p legacy/fixtures
+(omg) $ vi legacy/settings.py
+(omg) $ vi legacy/templates/main_page.html
+(omg) $ vi legacy/templates/registration/login.html
+(omg) $ vi legacy/templates/registration/logged_out.html
+(omg) $ vi legacy/templates/user_page.html
+(omg) $ vi legacy/urls.py
+(omg) $ vi legacy/views.py
+(omg) $ python manage.py check
+(omg) $ python manage.py makemigrations
+(omg) $ python manage.py migrate
+(omg) $ python manage.py collectstatic
+
+TEST PROJECT
+(omg) $ mkdir -p tools/
+(omg) $ mkdir -p results/
+(omg) $ vi tools/populate_legacy.py
+(omg) $ python ./tools/populate_legacy.py
+(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/user.json auth.user
+(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/permission.json auth.permission
+(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/user_permission.json auth.user_user_permissions
+(omg) $ vi legacy/tests/__init__.py
+(omg) $ vi legacy/tests/test_authentication.py
+(omg) $ vi legacy/tests/test_authorization.py
+(omg) $ vi legacy/tests/test_settings.py
+(omg) $ vi legacy/tests/utils.py
+(omg) $ vi .coveragerc
+(omg) $ coverage erase
+(omg) $ coverage run manage.py test
+(omg) $ coverage result -m
+(omg) $ python manage.py runserver
+NOTE: inspect via Browser URL and Browser URL/admin
+
+CREATE SIMPLE WEB APP
+(omg) $ python manage.py startapp simple
+(omg) $ vi legacy/urls.py
+(omg) $ vi legacy/settings.py
+(omg) $ vi simple/models.py
+(omg) $ vi simple/forms.py
+(omg) $ vi simple/admin.py
+(omg) $ vi simple/views.py
+(omg) $ vi simple/urls.py
+(omg) $ mkdir -p simple/static/css/simple
+(omg) $ mkdir -p simple/static/js
+(omg) $ mkdir -p simple/static/jslib
+(omg) $ vi simple/static/css/simple/layout.css
+(omg) $ vi simple/static/js/utils.js
+(omg) $ mv jquery.3.1.1.min.js simple/static/jslib/
+(omg) $ mkdir -p simple/templates/simple
+(omg) $ vi simple/templates/simple/base.html
+(omg) $ vi simple/templates/simple/created.html
+(omg) $ vi simple/templates/simple/deleted.html
+(omg) $ vi simple/templates/simple/home.html
+(omg) $ vi simple/templates/simple/updated.html
+(omg) $ vi simple/templates/simple/widget_create_form.html
+(omg) $ vi simple/templates/simple/widget_delete_form.html
+(omg) $ vi simple/templates/simple/widget_detail.html
+(omg) $ vi simple/templates/simple/widget_list.html
+(omg) $ vi simple/templates/simple/widget_update.html
+(omg) $ mkdir -p simple/tests
+(omg) $ python manage.py check
+(omg) $ python manage.py makemigrations
+(omg) $ python manage.py migrate
+
+TEST SIMPLE WEB APP
+(omg) $ vi tools/populate_legacy.py
+(omg) $ python ./tools/populate_legacy.py
+(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/widget.json simple.widget
+(omg) $ vi simple/tests/__init__.py
+(omg) $ vi simple/tests/test_admin.py
+(omg) $ vi simple/tests/test_forms.py
+(omg) $ vi simple/tests/test_models.py
+(omg) $ vi simple/tests/test_urls.py
+(omg) $ vi simple/tests/test_views.py
+(omg) $ coverage erase
+(omg) $ coverage run manage.py test
+(omg) $ coverage result -m
+
+UPDATE SIMPLE WEB APP
+(omg) $ rm legacy/db.sqlite3
+(omg) $ rm simple/migrations/00*
+(omg) $ python manage.py check
+(omg) $ python manage.py makemigrations
+(omg) $ python manage.py migrate
+NOTE: edit app changes
+(omg) $ python ./tools/populate_legacy.py
+(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/user.json auth.user
+(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/permission.json auth.permission
+(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/user_permission.json auth.user_user_permissions
+(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/widget.json simple.widget
