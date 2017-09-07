@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', login),
     url(r'^logout/$', logout),
-    #url(r'^simple/', include('simple.urls')),
+    url(r'^simple/', include('simple.urls')),
     url(r'^user/(\w+)/$', user_page),
 ]
 

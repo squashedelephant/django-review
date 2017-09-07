@@ -1,0 +1,21 @@
+{% extends "simple/base.html" %}
+
+{% block table %}
+    <h3>Active Widgets</h3>
+    <table id="list">
+        <thead>
+            <tr>
+                <th>Link</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for widget in widgets %}
+            <tr>
+                <td><a href="{{ widget.link }}">{{ widget.link }}</a></td>
+                <td>{{ widget.name }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

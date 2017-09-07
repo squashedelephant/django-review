@@ -160,5 +160,41 @@
         "content_type": 6,
         "codename": "delete_session"
     }
+},
+{
+    "model": "auth.permission",
+    "pk": 19,
+    "fields": {
+        "name": "Can add widget",
+        "content_type": 7,
+        "codename": "add_widget"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 20,
+    "fields": {
+        "name": "Can change widget",
+        "content_type": 7,
+        "codename": "change_widget"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 21,
+    "fields": {
+        "name": "Can delete widget",
+        "content_type": 7,
+        "codename": "delete_widget"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 22,
+    "fields": {
+        "name": "User may Add, View, Change, Delete",
+        "content_type": 7,
+        "codename": "widget.full_access"
+    }
 }
 ]

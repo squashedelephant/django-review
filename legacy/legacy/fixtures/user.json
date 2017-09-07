@@ -3,25 +3,27 @@
     "model": "auth.user",
     "pk": 1,
     "fields": {
-        "password": "pbkdf2_sha256$36000$zE42J3UpmPNg$N+YxcxlMp6bjbAP2Skqi9ONonM4MQsfMF3c52wZ+MQ0=",
+        "password": "pbkdf2_sha256$36000$lOk7pHJyq8g4$zmJTz4w74OKBMz9DSuzDJbAN03MW/dgYkOoFucCPbkg=",
         "last_login": null,
-        "is_superuser": false,
+        "is_superuser": true,
         "username": "qa",
         "first_name": "",
         "last_name": "",
         "email": "qa@random.org",
         "is_staff": true,
         "is_active": true,
-        "date_joined": "2017-09-05T21:28:34.261Z",
+        "date_joined": "2017-09-07T23:00:10.384Z",
         "groups": [],
-        "user_permissions": []
+        "user_permissions": [
+            22
+        ]
     }
 },
 {
     "model": "auth.user",
     "pk": 2,
     "fields": {
-        "password": "pbkdf2_sha256$36000$LXYREXKEpOgQ$q/XjLrCJsTNFiUOdGVCaySY5aYXzOs9EQYoy/XMfmlA=",
+        "password": "pbkdf2_sha256$36000$gDawsubxEGWR$Gn8tOo+2wgXosbkeQ5lCwgiom5Mbdi6ABSFWlFNeYAI=",
         "last_login": null,
         "is_superuser": true,
         "username": "superuser",
@@ -30,34 +32,38 @@
         "email": "superuser@random.org",
         "is_staff": true,
         "is_active": true,
-        "date_joined": "2017-09-05T21:28:34.410Z",
+        "date_joined": "2017-09-07T23:00:19.197Z",
         "groups": [],
-        "user_permissions": []
+        "user_permissions": [
+            22
+        ]
     }
 },
 {
     "model": "auth.user",
     "pk": 3,
     "fields": {
-        "password": "pbkdf2_sha256$36000$kimgqogm5VgV$9UTyU5K93Ic2BrtE0scr/GNzRIlOg62uGmCQ7/d/4X8=",
+        "password": "pbkdf2_sha256$36000$ehFaugxYR23Y$juqfr86HF89MxZ1Tn6e77YyDPE2RbwsonbQOd1wuvLU=",
         "last_login": null,
         "is_superuser": false,
         "username": "add",
         "first_name": "",
         "last_name": "",
         "email": "add@random.org",
-        "is_staff": true,
+        "is_staff": false,
         "is_active": true,
-        "date_joined": "2017-09-05T21:28:34.552Z",
+        "date_joined": "2017-09-07T23:00:19.360Z",
         "groups": [],
-        "user_permissions": []
+        "user_permissions": [
+            19
+        ]
     }
 },
 {
     "model": "auth.user",
     "pk": 4,
     "fields": {
-        "password": "pbkdf2_sha256$36000$0CFtuEGCo1Uo$exAl22m4x96iQ4/60ILht5G00QckPeA8IWh21RUR5Hg=",
+        "password": "pbkdf2_sha256$36000$W347bVH6IE7k$qgp/kmQ0yb6Tsc2b7xXSETBil/p/ms+ttPUsbfSpSXw=",
         "last_login": null,
         "is_superuser": false,
         "username": "delete",
@@ -66,16 +72,19 @@
         "email": "delete@random.org",
         "is_staff": false,
         "is_active": true,
-        "date_joined": "2017-09-05T21:28:34.713Z",
+        "date_joined": "2017-09-07T23:00:19.524Z",
         "groups": [],
-        "user_permissions": []
+        "user_permissions": [
+            19,
+            21
+        ]
     }
 },
 {
     "model": "auth.user",
     "pk": 5,
     "fields": {
-        "password": "pbkdf2_sha256$36000$5oCi29ZkjgOL$a0CAxl/fn940HP8NHi3TiFClG+5SESPP7mOEcnA4zFY=",
+        "password": "pbkdf2_sha256$36000$bQEluhbpAlSc$svmqCNNpyLZxpPEwWX3IbR5/f/Xnp1q7xLIMVvBvyqI=",
         "last_login": null,
         "is_superuser": false,
         "username": "change",
@@ -84,16 +93,19 @@
         "email": "change@random.org",
         "is_staff": false,
         "is_active": true,
-        "date_joined": "2017-09-05T21:28:34.857Z",
+        "date_joined": "2017-09-07T23:00:19.685Z",
         "groups": [],
-        "user_permissions": []
+        "user_permissions": [
+            19,
+            20
+        ]
     }
 },
 {
     "model": "auth.user",
     "pk": 6,
     "fields": {
-        "password": "pbkdf2_sha256$36000$hGfbjI41oLus$/QjRbR6VynaiuQnz1+u21ll0iMBfMMQ8mUR3kY64Pus=",
+        "password": "pbkdf2_sha256$36000$TcKTCrHrwBdy$qHPkUe1EJHavBPX1a5DdByT5E72Guvguoap5Tp0TSZ4=",
         "last_login": null,
         "is_superuser": false,
         "username": "active",
@@ -102,7 +114,7 @@
         "email": "active@random.org",
         "is_staff": false,
         "is_active": true,
-        "date_joined": "2017-09-05T21:28:35.018Z",
+        "date_joined": "2017-09-07T23:00:19.849Z",
         "groups": [],
         "user_permissions": []
     }
@@ -111,7 +123,7 @@
     "model": "auth.user",
     "pk": 7,
     "fields": {
-        "password": "pbkdf2_sha256$36000$fttLSJTuEpd3$p6IcfDzCwTR0XbCb4U2TH1gcAP0gUK2slGErBkv+jro=",
+        "password": "pbkdf2_sha256$36000$0p1YK3oHf3nb$9G14ggzu9rU3CTLyDc1dDko9CAahDScEUUre3pP7PPg=",
         "last_login": null,
         "is_superuser": false,
         "username": "view",
@@ -120,7 +132,7 @@
         "email": "view@random.org",
         "is_staff": false,
         "is_active": true,
-        "date_joined": "2017-09-05T21:28:35.162Z",
+        "date_joined": "2017-09-07T23:00:20.009Z",
         "groups": [],
         "user_permissions": []
     }
@@ -129,7 +141,7 @@
     "model": "auth.user",
     "pk": 8,
     "fields": {
-        "password": "pbkdf2_sha256$36000$kOLHOYBrYdX2$ITue+IVo3j7BT2x0k1+FAQmw7bBdsMoSl49PM9VTl5c=",
+        "password": "pbkdf2_sha256$36000$QytsgqzOdDHl$U5dBxE8YBmEMbaaWvCVdoFz1l/Jw7ONib09Fmov3Hh8=",
         "last_login": null,
         "is_superuser": false,
         "username": "invalid",
@@ -138,7 +150,7 @@
         "email": "invalid@random.org",
         "is_staff": false,
         "is_active": false,
-        "date_joined": "2017-09-05T21:28:35.299Z",
+        "date_joined": "2017-09-07T23:00:20.171Z",
         "groups": [],
         "user_permissions": []
     }
@@ -147,7 +159,7 @@
     "model": "auth.user",
     "pk": 9,
     "fields": {
-        "password": "pbkdf2_sha256$36000$xV7jirFmEX4u$F2qz/rtKxmXxdhNSHuegVTstoCcbkSE3huov/rGwcOg=",
+        "password": "pbkdf2_sha256$36000$cNktNc13UT2D$O1a0654XoHhKAMmM1I9MO52gjeQRiSIlOq2LdctlDD0=",
         "last_login": null,
         "is_superuser": false,
         "username": "staff",
@@ -156,9 +168,11 @@
         "email": "staff@random.org",
         "is_staff": true,
         "is_active": true,
-        "date_joined": "2017-09-05T21:28:35.438Z",
+        "date_joined": "2017-09-07T23:00:20.322Z",
         "groups": [],
-        "user_permissions": []
+        "user_permissions": [
+            22
+        ]
     }
 }
 ]

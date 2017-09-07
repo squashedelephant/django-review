@@ -33,6 +33,7 @@ TEST PROJECT
 (omg) $ vi tools/populate_legacy.py
 (omg) $ python ./tools/populate_legacy.py
 (omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/user.json auth.user
+(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/group.json auth.group
 (omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/permission.json auth.permission
 (omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/user_permission.json auth.user_user_permissions
 (omg) $ vi legacy/tests/__init__.py
@@ -71,6 +72,7 @@ CREATE SIMPLE WEB APP
 (omg) $ vi simple/templates/simple/deleted.html
 (omg) $ vi simple/templates/simple/home.html
 (omg) $ vi simple/templates/simple/updated.html
+(omg) $ vi simple/templates/simple/widget_aggregate.html
 (omg) $ vi simple/templates/simple/widget_create_form.html
 (omg) $ vi simple/templates/simple/widget_delete_form.html
 (omg) $ vi simple/templates/simple/widget_detail.html
@@ -80,10 +82,17 @@ CREATE SIMPLE WEB APP
 (omg) $ python manage.py check
 (omg) $ python manage.py makemigrations
 (omg) $ python manage.py migrate
+(omg) $ python manage.py createsuperuser qa
+email? qa@random.org
+password? br0k3nc0d3
 
 TEST SIMPLE WEB APP
 (omg) $ vi tools/populate_simple.py
 (omg) $ python ./tools/populate_simple.py
+(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/permission.json auth.permission
+(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/group_permission.json auth.group_permissions
+(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/user_groups.json auth.user_groups
+(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/user_permission.json auth.user_user_permissions
 (omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/widget.json simple.widget
 (omg) $ vi simple/tests/__init__.py
 (omg) $ vi simple/tests/test_admin.py
@@ -103,7 +112,8 @@ UPDATE SIMPLE WEB APP
 (omg) $ python manage.py migrate
 NOTE: edit app changes
 (omg) $ python ./tools/populate_legacy.py
-(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/user.json auth.user
 (omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/permission.json auth.permission
+(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/user_group_permission.json auth.user_group_permissions
+(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/user_groups.json auth.user_groups
 (omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/user_permission.json auth.user_user_permissions
 (omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/widget.json simple.widget

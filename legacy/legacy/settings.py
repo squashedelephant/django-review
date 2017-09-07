@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'simple',
 ]
 
 MIDDLEWARE = [
@@ -128,7 +129,7 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = [
     '--verbosity=2',
     '--with-coverage',
-    '--cover-package=legacy',
+    '--cover-package=legacy,simple',
     '--cover-erase',
     '--cover-branches',
     '--cover-html',

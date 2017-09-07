@@ -65,7 +65,8 @@ class TestSettings(TestCase):
                           'django.contrib.contenttypes',
                           'django.contrib.sessions',
                           'django.contrib.messages',
-                          'django.contrib.staticfiles']
+                          'django.contrib.staticfiles',
+                          'simple']
         self.assertTrue(settings.is_overridden('INSTALLED_APPS'))
         self.assertEquals(list, type(settings.INSTALLED_APPS))
         self.assertListEqual(installed_apps, settings.INSTALLED_APPS) 
@@ -95,7 +96,7 @@ class TestSettings(TestCase):
     def test_11_nose_args(self):
         nose_args = ['--verbosity=2',
                      '--with-coverage',
-                     '--cover-package=legacy',
+                     '--cover-package=legacy,simple',
                      '--cover-erase',
                      '--cover-branches',
                      '--cover-html',

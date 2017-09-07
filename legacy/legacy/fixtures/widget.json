@@ -1,0 +1,132 @@
+[
+{
+    "model": "simple.widget",
+    "pk": 1,
+    "fields": {
+        "created_by": 1,
+        "name": "Random Widget 39022",
+        "cost": 336.2692510645962,
+        "deleted": false,
+        "link": "/simple/widgets/1/",
+        "ulink": "/simple/widgets/update/1/",
+        "dlink": "/simple/widget/delete/1/"
+    }
+},
+{
+    "model": "simple.widget",
+    "pk": 2,
+    "fields": {
+        "created_by": 1,
+        "name": "Random Widget 22973",
+        "cost": 10911.406373955675,
+        "deleted": false,
+        "link": "/simple/widgets/2/",
+        "ulink": "/simple/widgets/update/2/",
+        "dlink": "/simple/widget/delete/2/"
+    }
+},
+{
+    "model": "simple.widget",
+    "pk": 3,
+    "fields": {
+        "created_by": 1,
+        "name": "Random Widget 48880",
+        "cost": 26836.105805765827,
+        "deleted": false,
+        "link": "/simple/widgets/3/",
+        "ulink": "/simple/widgets/update/3/",
+        "dlink": "/simple/widget/delete/3/"
+    }
+},
+{
+    "model": "simple.widget",
+    "pk": 4,
+    "fields": {
+        "created_by": 1,
+        "name": "Random Widget 36290",
+        "cost": 30330.73229952052,
+        "deleted": false,
+        "link": "/simple/widgets/4/",
+        "ulink": "/simple/widgets/update/4/",
+        "dlink": "/simple/widget/delete/4/"
+    }
+},
+{
+    "model": "simple.widget",
+    "pk": 5,
+    "fields": {
+        "created_by": 1,
+        "name": "Random Widget 31933",
+        "cost": 17167.62888670252,
+        "deleted": false,
+        "link": "/simple/widgets/5/",
+        "ulink": "/simple/widgets/update/5/",
+        "dlink": "/simple/widget/delete/5/"
+    }
+},
+{
+    "model": "simple.widget",
+    "pk": 6,
+    "fields": {
+        "created_by": 1,
+        "name": "Random Widget 40315",
+        "cost": 35635.192597614325,
+        "deleted": false,
+        "link": "/simple/widgets/6/",
+        "ulink": "/simple/widgets/update/6/",
+        "dlink": "/simple/widget/delete/6/"
+    }
+},
+{
+    "model": "simple.widget",
+    "pk": 7,
+    "fields": {
+        "created_by": 1,
+        "name": "Random Widget 43632",
+        "cost": 37295.58091547806,
+        "deleted": false,
+        "link": "/simple/widgets/7/",
+        "ulink": "/simple/widgets/update/7/",
+        "dlink": "/simple/widget/delete/7/"
+    }
+},
+{
+    "model": "simple.widget",
+    "pk": 8,
+    "fields": {
+        "created_by": 1,
+        "name": "Random Widget 15622",
+        "cost": 13241.777359738184,
+        "deleted": false,
+        "link": "/simple/widgets/8/",
+        "ulink": "/simple/widgets/update/8/",
+        "dlink": "/simple/widget/delete/8/"
+    }
+},
+{
+    "model": "simple.widget",
+    "pk": 9,
+    "fields": {
+        "created_by": 1,
+        "name": "Random Widget 27386",
+        "cost": 8603.915535981816,
+        "deleted": false,
+        "link": "/simple/widgets/9/",
+        "ulink": "/simple/widgets/update/9/",
+        "dlink": "/simple/widget/delete/9/"
+    }
+},
+{
+    "model": "simple.widget",
+    "pk": 10,
+    "fields": {
+        "created_by": 1,
+        "name": "Random Widget 40584",
+        "cost": 12446.977162852572,
+        "deleted": false,
+        "link": "/simple/widgets/10/",
+        "ulink": "/simple/widgets/update/10/",
+        "dlink": "/simple/widget/delete/10/"
+    }
+}
+]
