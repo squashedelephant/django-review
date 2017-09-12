@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.contrib import admin
 
 from simple.views import created, widget_create
-from simple.views import widget_delete, widget_detail
+from simple.views import widget_aggr, widget_delete, widget_detail
 from simple.views import widget_list, widget_update
 from simple.views import deleted, home, updated
 
@@ -41,4 +41,7 @@ urlpatterns = [
     url(r'^widgets/update/(?P<pk>\d+)/$',
         widget_update,
         name='widget-update'),
+    url(r'^widgets/aggr/$',
+        widget_aggr,
+        name='widget-aggr'),
 ]

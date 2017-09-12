@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from decimal import Decimal
+
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -12,9 +14,9 @@ class Widget(models.Model):
                             null=False,
                             blank=False,
                             unique=True)
-    cost = models.FloatField(default=10.00,
-                             null=False,
-                             blank=False)
+    cost = models.DecimalField(max_digits=6,
+                               decimal_places=2,
+                               default=Decimal('0.00'))
     deleted = models.BooleanField(default=False)
     link = models.URLField(max_length=30,
                            null=True,

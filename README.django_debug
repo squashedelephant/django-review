@@ -1,0 +1,41 @@
+
+Tips for Debugging Views
+1) use RequestFactory for unsecured views
+2) use Client(enforce_csrf_check=True) for secured views
+3) add 'testserver' to ALLOWED_HOSTS in <site>/settings.py
+4) execute view test step-by-step from python manage.py shell
+5) HTTP POST form can fail silently because 
+   a) CSRF has missing, invalid or bad token
+   b) data posted failed to format
+
+Tips for Debugging Data Models
+1) model field limits are actually enforced at Form level so don't
+   test for max string length
+2) <model>.save() is only called when
+   a) <model>.objects.create()
+   b) m = <model>()
+      m.save()
+
+Tips for Debugging Authentication
+1) @login_required that wraps any method checks that user exists
+   and user.is_authenticated
+
+Tips for Debugging Authorization
+1) @permission_required that wraps any method checks that user
+   a) user exists
+   b) user.is_authenticated
+   c) user.has_perm(permission)
+2) permission is defined as
+   a) <app>.<model>.<permission> OR
+   b) <app>.<model permission codename>
+3) permissions are
+   a) view: undefined but always existing
+   b) add: view any and create one object
+   c) change: view any, create one, and update any
+   d) delete: view any, create one, and delete any 
+3) by default, python manage.py makemigrations will
+   a) create add, change, delete permissions for each model
+   b) grant access to currently defined users
+
+
+

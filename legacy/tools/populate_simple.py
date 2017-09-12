@@ -96,7 +96,7 @@ def load_widgets(n):
         for i in range(n):
             ref = randint(10000, 50000)
             kwargs = {'name': 'Random Widget {}'.format(ref),
-                      'cost': ref * 1.00 * random(),
+                      'cost': ref * 1.00 * random() / 100,
                       'created_by': user,
                       'deleted': False}
             try:
@@ -113,7 +113,7 @@ def main():
     setup()
     max = 10
     assign_user_permissions()
-    #assign_group_permissions()
+    assign_group_permissions()
     load_widgets(max)
     return
 

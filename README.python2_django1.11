@@ -24,6 +24,9 @@ $ source omg/bin/activate
 (omg) $ python manage.py makemigrations
 (omg) $ python manage.py migrate
 (omg) $ python manage.py collectstatic
+(omg) $ python manage.py createsuperuser --username qa
+email? qa@random.org
+password? br0k3nc0d3
 
 TEST PROJECT
 (omg) $ mkdir -p tools/
@@ -32,10 +35,7 @@ TEST PROJECT
 (omg) $ vi tools/users.py
 (omg) $ vi tools/populate_legacy.py
 (omg) $ python ./tools/populate_legacy.py
-(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/user.json auth.user
-(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/group.json auth.group
-(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/permission.json auth.permission
-(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/user_permission.json auth.user_user_permissions
+(omg) $ python ./tools/create_fixtures.py
 (omg) $ vi legacy/tests/__init__.py
 (omg) $ vi legacy/tests/test_authentication.py
 (omg) $ vi legacy/tests/test_authorization.py
@@ -82,18 +82,12 @@ CREATE SIMPLE WEB APP
 (omg) $ python manage.py check
 (omg) $ python manage.py makemigrations
 (omg) $ python manage.py migrate
-(omg) $ python manage.py createsuperuser qa
-email? qa@random.org
-password? br0k3nc0d3
+(omg) $ memcached -d -p 11211
 
 TEST SIMPLE WEB APP
 (omg) $ vi tools/populate_simple.py
 (omg) $ python ./tools/populate_simple.py
-(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/permission.json auth.permission
-(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/group_permission.json auth.group_permissions
-(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/user_groups.json auth.user_groups
-(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/user_permission.json auth.user_user_permissions
-(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/widget.json simple.widget
+(omg) $ python ./tools/create_fixtures.py
 (omg) $ vi simple/tests/__init__.py
 (omg) $ vi simple/tests/test_admin.py
 (omg) $ vi simple/tests/test_forms.py
@@ -112,8 +106,5 @@ UPDATE SIMPLE WEB APP
 (omg) $ python manage.py migrate
 NOTE: edit app changes
 (omg) $ python ./tools/populate_legacy.py
-(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/permission.json auth.permission
-(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/user_group_permission.json auth.user_group_permissions
-(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/user_groups.json auth.user_groups
-(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/user_permission.json auth.user_user_permissions
-(omg) $ python manage.py dumpdata --indent 4 --output legacy/fixtures/widget.json simple.widget
+(omg) $ python ./tools/populate_simple.py
+(omg) $ python ./tools/create_fixtures.py

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from decimal import Decimal
 from random import randint, random
 
 from django.contrib.auth.models import User
@@ -10,21 +11,23 @@ from simple.forms import WidgetForm
 
 class TestSimpleForm(TestCase):
     def setUp(self):
-        value = randint(10000, 50000)
+        value = randint(1000, 5000)
+        cost = Decimal('%0.2f' % (value * 1.00 * random()))
         self.data_valid = {'name': 'Moon',
-                           'cost': value * 1.00 * random()}
+                           'cost': cost}
         self.data_long = {'name': 'Exceedingly Long {}'.format(value),
-                          'cost': value * 1.00 * random()}
+                          'cost': cost}
         self.data_empty = {'name': None,
-                          'cost': value * 1.00 * random()}
+                           'cost': value * 1.00 * random()}
         self.data_blank = {'name': '',
-                          'cost': value * 1.00 * random()}
+                           'cost': cost}
 
     def tearDown(self):
         self.data = None
 
     def test_01_name_valid(self):
         form = WidgetForm(data=self.data_valid)
+        print(form.errors)
         self.assertTrue(form.is_valid())
         self.assertTrue(form.is_bound)
         self.assertEqual(self.data_valid['name'], form.data['name'])
@@ -34,7 +37,7 @@ class TestSimpleForm(TestCase):
         self.assertFalse(form.is_valid())
         self.assertTrue(form.is_bound)
         self.assertEqual(1, len(form.errors['name']))
-        self.assertEqual(u'Ensure this value has at most 20 characters (it has 22).',
+        self.assertEqual(u'Ensure this value has at most 20 characters (it has 21).',
                          form.errors['name'][0])
 
     def test_03_name_empty(self):
