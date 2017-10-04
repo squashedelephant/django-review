@@ -1,0 +1,9 @@
+{% extends "simple/base.html" %}
+
+{% block form %}
+    {% if pk %}
+        <p>Object {{ pk }} created successfully.</p>
+    {% else %}
+        <p>Object created successfully.</p>
+    {% endif %}
+{% endblock %}

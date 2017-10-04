@@ -1,0 +1,29 @@
+{% extends "simple/base.html" %}
+{% load static %}
+
+{% block table %}
+    <h3>Active Widgets</h3>
+    <table id="list">
+        <thead>
+            <tr>
+                <th>Link</th>
+                <th>Name</th>
+                <th>Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for widget in widgets %}
+            <tr>
+                <td><a href="{{ widget.link }}">{{ widget.link }}</a></td>
+                <td>{{ widget.name }}</td>
+                <td>{{ widget.cost }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if widgets > 0 %}
+        <button type="button">
+            <a href={% url "simple:widget-aggr" %}>Total Cost</a>
+        </button>
+    {% endif %}
+{% endblock %}

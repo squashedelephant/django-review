@@ -1,0 +1,132 @@
+[
+{
+    "model": "simple.widget",
+    "pk": 1,
+    "fields": {
+        "created_by": 1,
+        "name": "Random Widget 23247",
+        "cost": "22.44",
+        "deleted": false,
+        "link": "/simple/widgets/1/",
+        "ulink": "/simple/widgets/update/1/",
+        "dlink": "/simple/widget/delete/1/"
+    }
+},
+{
+    "model": "simple.widget",
+    "pk": 2,
+    "fields": {
+        "created_by": 1,
+        "name": "Random Widget 31529",
+        "cost": "2.23",
+        "deleted": false,
+        "link": "/simple/widgets/2/",
+        "ulink": "/simple/widgets/update/2/",
+        "dlink": "/simple/widget/delete/2/"
+    }
+},
+{
+    "model": "simple.widget",
+    "pk": 3,
+    "fields": {
+        "created_by": 1,
+        "name": "Random Widget 44133",
+        "cost": "49.45",
+        "deleted": false,
+        "link": "/simple/widgets/3/",
+        "ulink": "/simple/widgets/update/3/",
+        "dlink": "/simple/widget/delete/3/"
+    }
+},
+{
+    "model": "simple.widget",
+    "pk": 4,
+    "fields": {
+        "created_by": 1,
+        "name": "Random Widget 46232",
+        "cost": "57.97",
+        "deleted": false,
+        "link": "/simple/widgets/4/",
+        "ulink": "/simple/widgets/update/4/",
+        "dlink": "/simple/widget/delete/4/"
+    }
+},
+{
+    "model": "simple.widget",
+    "pk": 5,
+    "fields": {
+        "created_by": 1,
+        "name": "Random Widget 34416",
+        "cost": "247.38",
+        "deleted": false,
+        "link": "/simple/widgets/5/",
+        "ulink": "/simple/widgets/update/5/",
+        "dlink": "/simple/widget/delete/5/"
+    }
+},
+{
+    "model": "simple.widget",
+    "pk": 6,
+    "fields": {
+        "created_by": 1,
+        "name": "Random Widget 20703",
+        "cost": "52.17",
+        "deleted": false,
+        "link": "/simple/widgets/6/",
+        "ulink": "/simple/widgets/update/6/",
+        "dlink": "/simple/widget/delete/6/"
+    }
+},
+{
+    "model": "simple.widget",
+    "pk": 7,
+    "fields": {
+        "created_by": 1,
+        "name": "Random Widget 18173",
+        "cost": "142.41",
+        "deleted": false,
+        "link": "/simple/widgets/7/",
+        "ulink": "/simple/widgets/update/7/",
+        "dlink": "/simple/widget/delete/7/"
+    }
+},
+{
+    "model": "simple.widget",
+    "pk": 8,
+    "fields": {
+        "created_by": 1,
+        "name": "Random Widget 48169",
+        "cost": "456.64",
+        "deleted": false,
+        "link": "/simple/widgets/8/",
+        "ulink": "/simple/widgets/update/8/",
+        "dlink": "/simple/widget/delete/8/"
+    }
+},
+{
+    "model": "simple.widget",
+    "pk": 9,
+    "fields": {
+        "created_by": 1,
+        "name": "Random Widget 39336",
+        "cost": "311.21",
+        "deleted": false,
+        "link": "/simple/widgets/9/",
+        "ulink": "/simple/widgets/update/9/",
+        "dlink": "/simple/widget/delete/9/"
+    }
+},
+{
+    "model": "simple.widget",
+    "pk": 10,
+    "fields": {
+        "created_by": 1,
+        "name": "Random Widget 33466",
+        "cost": "4.11",
+        "deleted": false,
+        "link": "/simple/widgets/10/",
+        "ulink": "/simple/widgets/update/10/",
+        "dlink": "/simple/widget/delete/10/"
+    }
+}
+]
