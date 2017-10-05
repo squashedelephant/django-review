@@ -1,0 +1,85 @@
+ul.errorlist {
+    margin: 0;
+    padding: 0;
+}
+
+.errorlist li {
+    background-color: red;
+    color: white;
+    display: block;
+    font-size: 10px;
+    margin: 0 0 3px;
+    padding: 4px 5px;
+}
+
+article {
+    margin-left: 170px;
+    border-left: 1px solid gray;
+    padding: 1em;
+    overflow: hidden;
+    /* border: 2px solid black; */
+}
+
+div#inside {
+    text-align: center;
+    width: 100%;
+    border: 5px solid white;
+    display: block;
+    background-color: lightblue;
+}
+div#outside {
+    text-align: center;
+    width: 100%;
+    border: 1px solid lightblue;
+    display: block;
+    background-color: white;
+}
+
+div {
+   text-align: center;
+   width: 100%;
+   border: 1px solid gray;
+}
+
+footer {
+    padding: 1em;
+    color: white;
+    background-color: black;
+    clear: left;
+    text-align: center;
+}
+
+header {
+    padding: 1em;
+    color: black;
+    background-color: lightblue;
+    clear: left;
+    text-align: center;
+}
+
+nav {
+    text-align: left;
+    float: left;
+    max-width: 200px;
+    margin: 0;
+    padding: 1em;
+}
+
+table {
+    text-align: right;
+    font-family: arial, sans-serif;
+    font-style: 10px;
+    border: 2px solid black;
+    padding: none;
+    margin: 0 auto 0 auto;
+}
+
+td, th {
+    border: 2px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}

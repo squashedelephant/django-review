@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>Popular App Login</title>
+</head>
+<body>
+<h3>User Login to app: Complex</h3>
+{% if form.has_errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+    <p>Please login to see this page.</p>
+    {% endif %}
+{% endif %}
+
+<form method="post" action=".">
+{% csrf_token %}
+<p><label for="id_username">Username:</label>
+{{ form.username }}</p>
+<p><label for="id_password">Password:</label>
+{{ form.password }}</p>
+<input type="hidden" name="next" value="/" />
+<input type="submit" value="login" />
+</form>
+</body>
+</html>
