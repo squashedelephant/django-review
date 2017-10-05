@@ -8,8 +8,8 @@ from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.cache import cache_page
 
-from simple.forms import WidgetForm
-from simple.models import Widget
+from simple.forms import InventoryForm, WidgetForm
+from simple.models import Inventory, Widget
 
 class Http405(Http404):
     status_code = 405
@@ -59,6 +59,7 @@ def widget_create(request):
         return render(request, template, context)
     else:
         initial = {'name': 'myWidget',
+                   'sku': '111-111-11',
                    'cost': 0.00}
         form = WidgetForm(initial=initial)
         context['form'] = form

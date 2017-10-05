@@ -12,11 +12,13 @@ def get_db_tables():
                  'group_permission.json': 'auth.group_permissions',
                  'user_groups.json': 'auth.user_groups',
                  'user_permission.json': 'auth.user_user_permissions',
+                 'inventory.json': 'simple.inventory'}
+                 'store.json': 'simple.store'}
                  'widget.json': 'simple.widget'}
     return db_tables
 
 def main():
-    path.append('/Users/tim/Project/django-review/legacy/')
+    path.append('/Users/tim/Documents/workspace/python/django-review/legacy/')
     environ.setdefault("DJANGO_SETTINGS_MODULE", "legacy.settings")
     setup()
     for key, value in get_db_tables().items():

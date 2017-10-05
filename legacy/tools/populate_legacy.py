@@ -34,7 +34,7 @@ def load_groups():
     return
 
 def main():
-    path.append('/Users/tim/Project/django-review/legacy/')
+    path.append('/Users/tim/Documents/workspace/python/django-review/legacy/')
     environ.setdefault("DJANGO_SETTINGS_MODULE", "legacy.settings")
     setup()
     max = 10

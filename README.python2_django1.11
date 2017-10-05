@@ -35,6 +35,7 @@ TEST PROJECT
 (omg) $ vi tools/users.py
 (omg) $ vi tools/populate_legacy.py
 (omg) $ python ./tools/populate_legacy.py
+(omg) $ python ./tools/populate_simple.py
 (omg) $ python ./tools/create_fixtures.py
 (omg) $ vi legacy/tests/__init__.py
 (omg) $ vi legacy/tests/test_authentication.py
