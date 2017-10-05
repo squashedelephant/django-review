@@ -100,7 +100,64 @@ def load_widgets(n):
                       'created_by': user,
                       'deleted': False}
             try:
-                widget = Widget.objects.create(**kwargs)
+                Widget.objects.create(**kwargs)
+            except IntegrityError:
+                pass
+    else:
+        error = 'script assumes User: qa exists as first user created!'
+        exit('ERROR: {}'.format(error))
+
+def load_stores():
+    from django.contrib.auth.models import User
+    from simple.models import Store
+    try:
+        user = User.objects.get(username='qa')
+    except User.DoesNotExist as e:
+        exit('ERROR: create missing username: qa')
+    locations = ['Hercules', 'Pinole', 'San Pablo', 'Richmond',
+                 'Albany', 'El Cerrito', 'Berkeley', 'Emeryville']
+    if hasattr(user, 'id'):
+        for location in locations:
+            ref = randint(1, 100)
+            location = locations[randint(0, len(locations))]
+            kwargs = {'name': 'Store {}'.format(ref),
+                      'location': location,
+                      'created_by': user,
+                      'deleted': False}
+            try:
+                Store.objects.create(**kwargs)
+            except IntegrityError:
+                pass
+    else:
+        error = 'script assumes User: qa exists as first user created!'
+        exit('ERROR: {}'.format(error))
+
+def load_inventory():
+    from django.contrib.auth.models import User
+    from simple.models import Inventory, Widget
+    try:
+        user = User.objects.get(username='qa')
+        widgets = Widget.objects.filter(deleted=False,
+                                        created_by=user)
+        stores = Store.objects.filter(deleted=False,
+                                      created_by=user)
+    except Widget.DoesNotExist as e:
+        widgets = []
+    except Store.DoesNotExist as e:
+        stores = []
+    except User.DoesNotExist as e:
+        exit('ERROR: create missing username: qa')
+    if hasattr(user, 'id'):
+        for widget in widgets:
+            store = randint(0, len(stores))
+            quantity = randint(1, 100)
+            kwargs = {'store': store,
+                      'widget': widget,
+                      'quantity': quantity,
+                      'created_by': user,
+                      'deleted': False}
+            try:
+                inv = Inventory.objects.create(**kwargs)
             except IntegrityError:
                 pass
     else:
@@ -108,13 +165,15 @@ def load_widgets(n):
         exit('ERROR: {}'.format(error))
 
 def main():
-    path.append('/Users/tim/Project/django-review/legacy/')
+    path.append('/Users/tim/Documents/workspace/python/django-review/legacy/')
     environ.setdefault("DJANGO_SETTINGS_MODULE", "legacy.settings")
     setup()
     max = 10
     assign_user_permissions()
     assign_group_permissions()
     load_widgets(max)
+    load_stores()
+    load_inventory()
     return
 
 if __name__ == '__main__':

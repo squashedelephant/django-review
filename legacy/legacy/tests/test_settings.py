@@ -27,7 +27,7 @@ class TestSettings(TestCase):
     def test_03_base_dir(self):
         self.assertTrue(settings.is_overridden('BASE_DIR'))
         self.assertEquals(str, type(settings.BASE_DIR))
-        self.assertEquals('/Users/tim/Project/django-review/legacy/legacy', settings.BASE_DIR) 
+        self.assertEquals('/Users/tim/Documents/workspace/python/django-review/legacy/legacy', settings.BASE_DIR) 
     
     def test_04_databases(self):
         databases = {'default': {'ATOMIC_REQUESTS': False,
@@ -57,7 +57,7 @@ class TestSettings(TestCase):
     def test_06_fixture_dirs(self):
         self.assertTrue(settings.is_overridden('FIXTURE_DIRS'))
         self.assertEquals(tuple, type(settings.FIXTURE_DIRS))
-        self.assertTupleEqual(('/Users/tim/Project/django-review/legacy/legacy/fixtures',), settings.FIXTURE_DIRS) 
+        self.assertTupleEqual(('/Users/tim/Documents/workspace/python/django-review/legacy/legacy/fixtures',), settings.FIXTURE_DIRS) 
     
     def test_07_installed_apps(self):
         installed_apps = ['django.contrib.admin',
@@ -115,7 +115,7 @@ class TestSettings(TestCase):
     def test_13_project_root(self):
         self.assertTrue(settings.is_overridden('PROJECT_ROOT'))
         self.assertEquals(str, type(settings.PROJECT_ROOT))
-        self.assertEquals('/Users/tim/Project/django-review/legacy/legacy', settings.PROJECT_ROOT) 
+        self.assertEquals('/Users/tim/Documents/workspace/python/django-review/legacy/legacy', settings.PROJECT_ROOT) 
     
     def test_14_root_urlconf(self):
         self.assertTrue(settings.is_overridden('ROOT_URLCONF'))
@@ -128,7 +128,7 @@ class TestSettings(TestCase):
         self.assertEquals('qhea@8(uu_zj_7$pg369o_v+f5h3y31vet2z*brq#1+v0@+*h_', settings.SECRET_KEY) 
     
     def test_16_staticfiles_dirs(self):
-        staticfiles_dirs = ('/Users/tim/Project/django-review/legacy/legacy/static',)
+        staticfiles_dirs = ('/Users/tim/Documents/workspace/python/django-review/legacy/legacy/static',)
         self.assertTrue(settings.is_overridden('STATICFILES_DIRS'))
         self.assertEquals(tuple, type(settings.STATICFILES_DIRS))
         self.assertTupleEqual(staticfiles_dirs, settings.STATICFILES_DIRS) 
@@ -136,7 +136,7 @@ class TestSettings(TestCase):
     def test_17_static_root(self):
         self.assertTrue(settings.is_overridden('STATIC_ROOT'))
         self.assertEquals(str, type(settings.STATIC_ROOT))
-        self.assertEquals('/Users/tim/Project/django-review/legacy/legacy/staticfiles', settings.STATIC_ROOT) 
+        self.assertEquals('/Users/tim/Documents/workspace/python/django-review/legacy/legacy/staticfiles', settings.STATIC_ROOT) 
     
     def test_18_static_url(self):
         self.assertTrue(settings.is_overridden('STATIC_URL'))
@@ -146,7 +146,7 @@ class TestSettings(TestCase):
     def test_19_templates(self):
         templates = [{'APP_DIRS': True,
                       'BACKEND': 'django.template.backends.django.DjangoTemplates',
-                      'DIRS': ['/Users/tim/Project/django-review/legacy/legacy/templates'],
+                      'DIRS': ['/Users/tim/Documents/workspace/python/django-review/legacy/legacy/templates'],
                       'OPTIONS': {'context_processors': ['django.template.context_processors.debug',
                                                          'django.template.context_processors.request',
                                                          'django.contrib.auth.context_processors.auth',

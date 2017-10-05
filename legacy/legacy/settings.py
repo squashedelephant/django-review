@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname('/Users/tim/Project/django-review/legacy/legacy/')
+BASE_DIR = os.path.dirname('/Users/tim/Documents/workspace/python/django-review/legacy/legacy/')
 PROJECT_ROOT = BASE_DIR
 
 # Quick-start development settings - unsuitable for production
@@ -55,7 +55,7 @@ ROOT_URLCONF = 'legacy.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/Users/tim/Project/django-review/legacy/legacy/templates'],
+        'DIRS': ['/Users/tim/Documents/workspace/python/django-review/legacy/legacy/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
