@@ -1,0 +1,36 @@
+
+Django Review demos various webapps using Django v1.11.x
+
+Python Django limitations
+1) most popular webapp development framework
+2) evolved repeated over time to hide complexity
+3) the more hidden, the more one must know intimate framework details
+4) many webapps were designed before their time so not updated to
+   use latest features of Django
+
+WebApps Created
+1) legacy:simple 
+   purpose: demonstrates purchaseable Widget visible in Inventory for 
+            a number of Stores owned by a franchise business
+   model: Inventory has store(FK), widget(FK)
+   features: ForeignKey in models
+             Form and ModelForm in forms
+             functions in views
+             authentication, authorization in views
+             pagination in urls, views
+             aggregration in views
+             object representation contains related URL links 
+
+2) popular:complex 
+   purpose: demonstrates Region of installed Meters for a number of 
+            Devices intended to collect measurements
+   model: Region has Meter(FK) which has Device(FK)
+   NOTE: need ManyToMany ex. see family-schedule/schedule/models.py
+   features: ForeignKey in models
+             model data referenced by set? TBD
+
+3) advanced:rest
+   purposes: demonstrates stock market purchase
+   model: TBD
+   features: 
+
