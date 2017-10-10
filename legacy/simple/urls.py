@@ -1,10 +1,14 @@
 from django.conf.urls import url
 from django.contrib import admin
 
-from simple.views import created, widget_create
-from simple.views import widget_aggr, widget_delete, widget_detail
-from simple.views import widget_list, widget_update
-from simple.views import deleted, home, updated
+from simple.views import created, deleted, eperm, home
+from simple.views import non_existent, updated
+from simple.views import inventory_aggr, inventory_create, inventory_delete
+from simple.views import inventory_detail, inventory_list, inventory_update
+from simple.views import store_create, store_delete, store_detail
+from simple.views import store_list, store_update
+from simple.views import widget_aggr, widget_create, widget_delete
+from simple.views import widget_detail, widget_list, widget_update
 
 app_name = 'simple'
 urlpatterns = [
@@ -20,6 +24,51 @@ urlpatterns = [
     url(r'^deleted/(?P<pk>\d+)/$',
         deleted,
         name='deleted'),
+    url(r'^eperm/(?P<pk>\d+)/$',
+        eperm,
+        name='eperm'),
+    url(r'^nonexistent/(?P<pk>\d+)/$',
+        non_existent,
+        name='non-existent'),
+    url(r'^inventory/create/$',
+        inventory_create,
+        name='inventory-create'),
+    url(r'^inventory/delete/(?P<pk>\d+)/$',
+        inventory_delete,
+        name='inventory-delete'),
+    url(r'^inventory/(?P<pk>\d+)/$',
+        inventory_detail,
+        name='inventory-detail'),
+    url(r'^inventory/$',
+        inventory_list,
+        name='inventory-list'),
+    url(r'^inventory/page/(?P<page>\d+)/$',
+        inventory_list,
+        name='inventory-list'),
+    url(r'^inventory/update/(?P<pk>\d+)/$',
+        inventory_update,
+        name='inventory-update'),
+    url(r'^inventory/aggr/$',
+        inventory_aggr,
+        name='inventory-aggr'),
+    url(r'^stores/create/$',
+        store_create,
+        name='store-create'),
+    url(r'^stores/delete/(?P<pk>\d+)/$',
+        store_delete,
+        name='store-delete'),
+    url(r'^stores/(?P<pk>\d+)/$',
+        store_detail,
+        name='store-detail'),
+    url(r'^stores/$',
+        store_list,
+        name='store-list'),
+    url(r'^stores/page/(?P<page>\d+)/$',
+        store_list,
+        name='store-list'),
+    url(r'^stores/update/(?P<pk>\d+)/$',
+        store_update,
+        name='store-update'),
     url(r'^updated/(?P<pk>\d+)/$',
         updated,
         name='updated'),

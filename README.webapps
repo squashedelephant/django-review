@@ -15,7 +15,7 @@ WebApps Created
    model: Inventory has store(FK), widget(FK)
    features: ForeignKey in models
              Form and ModelForm in forms
-             functions in views
+             functions, templates in views
              authentication, authorization in views
              pagination in urls, views
              aggregration in views

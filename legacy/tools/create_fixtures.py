@@ -12,8 +12,8 @@ def get_db_tables():
                  'group_permission.json': 'auth.group_permissions',
                  'user_groups.json': 'auth.user_groups',
                  'user_permission.json': 'auth.user_user_permissions',
-                 'inventory.json': 'simple.inventory'}
-                 'store.json': 'simple.store'}
+                 'inventory.json': 'simple.inventory',
+                 'store.json': 'simple.store',
                  'widget.json': 'simple.widget'}
     return db_tables
 

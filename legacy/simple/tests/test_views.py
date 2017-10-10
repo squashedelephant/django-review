@@ -18,7 +18,7 @@ from simple.forms import WidgetForm
 from simple.views import created, deleted, home, updated, widget_create
 from simple.views import widget_delete, widget_detail, widget_list, widget_update
 
-class TestWidget(TestCase):
+class TestWidgetView(TestCase):
     fixtures = ['group',
                 'group_permission',
                 'permission',
@@ -96,7 +96,7 @@ class TestWidget(TestCase):
         self.headers.update({'content-length': len(dumps(self.data))})
         return
 
-    def test_01_list_default_page(self):
+    def ttest_01_list_default_page(self):
         page = 0
         (offset, limit) = self._convert_page(page)
         self._set_user(self.kwargs['view'])
@@ -117,7 +117,7 @@ class TestWidget(TestCase):
         rows = soup.findAll('table')[0].findAll('tbody')[0].findAll('tr')
         self.assertEqual(len(expected), len(rows))
 
-    def test_02_list_first_page(self):
+    def ttest_02_list_first_page(self):
         page = 0
         (offset, limit) = self._convert_page(page)
         self._set_user(self.kwargs['view'])
@@ -138,7 +138,7 @@ class TestWidget(TestCase):
         rows = soup.findAll('table')[0].findAll('tbody')[0].findAll('tr')
         self.assertEqual(len(expected), len(rows))
 
-    def test_03_list_next_page(self):
+    def ttest_03_list_next_page(self):
         page = 1
         (offset, limit) = self._convert_page(page)
         self._set_user(self.kwargs['view'])
@@ -159,7 +159,7 @@ class TestWidget(TestCase):
         rows = soup.findAll('table')[0].findAll('tbody')[0].findAll('tr')
         self.assertEqual(len(expected), len(rows))
 
-    def test_04_detail(self):
+    def ttest_04_detail(self):
         pk = 1
         self._set_user(self.kwargs['view'])
         self.assertTrue(self.user.is_authenticated())
@@ -235,7 +235,7 @@ class TestWidget(TestCase):
         response = self.c.get(path=url, headers=self.headers, follow=False)
         return response
 
-    def test_05_create(self):
+    def ttest_05_create(self):
         # test using Client not FactoryRequest because auth/auth wrappers
         self._set_user(self.kwargs['add'])
         self.assertTrue(self.user.has_perm('simple.add_widget'))
@@ -243,7 +243,7 @@ class TestWidget(TestCase):
         self.assertEqual(u'Object {} created successfully.'.format(pk),
                          soup.find('p').string)
 
-    def test_06_create_insufficient_perms(self):
+    def ttest_06_create_insufficient_perms(self):
         self._set_user(self.kwargs['view'])
         self.assertFalse(self.user.has_perm('simple.add_widget'))
         self.assertEquals(set(), self.user.get_all_permissions())
@@ -253,7 +253,7 @@ class TestWidget(TestCase):
         self.assertEqual('Found', response.reason_phrase)
         self.assertEqual('/login/?next=/simple/widgets/create/', response.url)
 
-    def test_07_update(self):
+    def ttest_07_update(self):
         # user change has change_widget permission which includes add_widget
         self._set_user(self.kwargs['change'])
         self.assertTrue(self.user.has_perm('simple.change_widget'))
@@ -282,7 +282,7 @@ class TestWidget(TestCase):
         self.assertEqual(u'Object {} updated successfully.'.format(pk),
                          soup.find('p').string)
 
-    def test_08_update_insufficient_perms(self):
+    def ttest_08_update_insufficient_perms(self):
         # user add does not have change_widget permission
         self._set_user(self.kwargs['add'])
         (soup, pk) = self._create()
@@ -309,7 +309,7 @@ class TestWidget(TestCase):
         self.assertEqual('Found', response.reason_phrase)
         self.assertEqual('/login/?next={}'.format(url), response.url)
 
-    def test_09_delete_update(self):
+    def ttest_09_delete_update(self):
         # user delete has delete_widget, add_widget permissions but not change_widget
         self._set_user(self.kwargs['delete'])
         self.assertTrue(self.user.has_perm('simple.delete_widget'))
@@ -340,7 +340,7 @@ class TestWidget(TestCase):
         self.assertEqual(u'Object {} deleted successfully.'.format(pk),
                          soup.find('p').string)
 
-    def test_10_delete_insufficient_perms(self):
+    def ttest_10_delete_insufficient_perms(self):
         # user add does not have delete_widget permission
         self._set_user(self.kwargs['add'])
         (soup, pk) = self._create()
@@ -365,7 +365,7 @@ class TestWidget(TestCase):
         self.assertEqual('Found', response.reason_phrase)
         self.assertEqual('/login/?next={}'.format(url), response.url)
 
-    def test_11_home(self):
+    def ttest_11_home(self):
         self._set_user(self.kwargs['view'])
         self.assertTrue(self.user.is_authenticated())
         self.assertTrue(self.user.is_active)

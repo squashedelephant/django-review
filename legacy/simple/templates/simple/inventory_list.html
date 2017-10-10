@@ -2,33 +2,33 @@
 {% load static %}
 
 {% block table %}
-    <h3>Active Widgets</h3>
+    <h3>Active Inventory</h3>
     <table id="list">
         <thead>
             <tr>
                 <th>Link</th>
-                <th>Name</th>
-                <th>SKU</th>
-                <th>Cost</th>
+                <th>Store</th>
+                <th>Widget</th>
+                <th>Quantity</th>
             </tr>
         </thead>
         <tbody>
-        {% for widget in widgets %}
+        {% for inv in inventory %}
             <tr>
-                <td><a href="{{ widget.link }}">{{ widget.link }}</a></td>
-                <td>{{ widget.name }}</td>
-                <td>{{ widget.sku }}</td>
-                <td>{{ widget.cost }}</td>
+                <td><a href="{{ inv.link }}">{{ inv.link }}</a></td>
+                <td>{{ inv.store }}</td>
+                <td>{{ inv.widget }}</td>
+                <td>{{ inv.quantity }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-    {% if widgets > 0 %}
+    {% if inventory > 0 %}
         <button type="button">
-            <a href="{{ widget.ulink }}">Modify Widget</a>
+            <a href="{{ inv.ulink }}">Modify Item</a>
         </button>
         <button type="button">
-            <a href="{{ widget.dlink }}">Delete Widget</a>
+            <a href="{{ inv.dlink }}">Delete Item</a>
         </button>
     {% endif %}
 
