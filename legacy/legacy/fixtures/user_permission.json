@@ -1,2 +1,130 @@
 [
+{
+    "model": "auth.user_user_permissions",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "permission": 29
+    }
+},
+{
+    "model": "auth.user_user_permissions",
+    "pk": 2,
+    "fields": {
+        "user": 1,
+        "permission": 30
+    }
+},
+{
+    "model": "auth.user_user_permissions",
+    "pk": 3,
+    "fields": {
+        "user": 2,
+        "permission": 29
+    }
+},
+{
+    "model": "auth.user_user_permissions",
+    "pk": 4,
+    "fields": {
+        "user": 2,
+        "permission": 30
+    }
+},
+{
+    "model": "auth.user_user_permissions",
+    "pk": 5,
+    "fields": {
+        "user": 3,
+        "permission": 22
+    }
+},
+{
+    "model": "auth.user_user_permissions",
+    "pk": 6,
+    "fields": {
+        "user": 3,
+        "permission": 19
+    }
+},
+{
+    "model": "auth.user_user_permissions",
+    "pk": 7,
+    "fields": {
+        "user": 4,
+        "permission": 22
+    }
+},
+{
+    "model": "auth.user_user_permissions",
+    "pk": 8,
+    "fields": {
+        "user": 4,
+        "permission": 19
+    }
+},
+{
+    "model": "auth.user_user_permissions",
+    "pk": 9,
+    "fields": {
+        "user": 4,
+        "permission": 24
+    }
+},
+{
+    "model": "auth.user_user_permissions",
+    "pk": 10,
+    "fields": {
+        "user": 4,
+        "permission": 21
+    }
+},
+{
+    "model": "auth.user_user_permissions",
+    "pk": 11,
+    "fields": {
+        "user": 5,
+        "permission": 22
+    }
+},
+{
+    "model": "auth.user_user_permissions",
+    "pk": 12,
+    "fields": {
+        "user": 5,
+        "permission": 19
+    }
+},
+{
+    "model": "auth.user_user_permissions",
+    "pk": 13,
+    "fields": {
+        "user": 5,
+        "permission": 23
+    }
+},
+{
+    "model": "auth.user_user_permissions",
+    "pk": 14,
+    "fields": {
+        "user": 5,
+        "permission": 20
+    }
+},
+{
+    "model": "auth.user_user_permissions",
+    "pk": 15,
+    "fields": {
+        "user": 9,
+        "permission": 29
+    }
+},
+{
+    "model": "auth.user_user_permissions",
+    "pk": 16,
+    "fields": {
+        "user": 9,
+        "permission": 30
+    }
+}
 ]

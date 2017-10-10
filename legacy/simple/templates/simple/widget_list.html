@@ -23,17 +23,41 @@
         {% endfor %}
         </tbody>
     </table>
-    {% if widgets > 0 %}
-        <button type="button">
-            <a href="{{ widget.ulink }}">Modify Widget</a>
-        </button>
-        <button type="button">
-            <a href="{{ widget.dlink }}">Delete Widget</a>
-        </button>
-    {% endif %}
-
-        <button type="button">
-            <a href={% url "simple:widget-aggr" %}>Total Cost</a>
-        </button>
-    {% endif %}
+    <table id="pagination">
+        <tr>
+            <td>
+                {% if prev %}
+                    <button type="button">
+                        <a href="{{ prev }}">Prev</a>
+                    </button>
+                {% else %}
+                    <button type="button">
+                        <a>Prev</a>
+                    </button>
+                {% endif %}
+            </td>
+            <td>
+                {% if aggr %}
+                    <button type="button">
+                        <a href={% url "simple:widget-aggr" %}>Total Cost</a>
+                    </button>
+                {% else %}
+                    <button type="button">
+                        <a>Total Cost</a>
+                    </button>
+                {% endif %}
+            </td>
+            <td>
+                {% if next %}
+                    <button type="button">
+                        <a href="{{ next }}">Next</a>
+                    </button>
+                {% else %}
+                    <button type="button">
+                        <a>Next</a>
+                    </button>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
 {% endblock %}

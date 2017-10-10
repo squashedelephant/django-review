@@ -241,5 +241,32 @@
         "content_type": 9,
         "codename": "delete_inventory"
     }
+},
+{
+    "model": "auth.permission",
+    "pk": 28,
+    "fields": {
+        "name": "User may Add, View, Change, Delete",
+        "content_type": 9,
+        "codename": "inventory.full_access"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 29,
+    "fields": {
+        "name": "User may Add, View, Change, Delete",
+        "content_type": 8,
+        "codename": "store.full_access"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 30,
+    "fields": {
+        "name": "User may Add, View, Change, Delete",
+        "content_type": 7,
+        "codename": "widget.full_access"
+    }
 }
 ]

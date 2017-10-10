@@ -1,2 +1,142 @@
 [
+{
+    "model": "simple.inventory",
+    "pk": 1,
+    "fields": {
+        "created_by": 1,
+        "store": 6,
+        "widget": 5,
+        "quantity": 100,
+        "deleted": false,
+        "link": "/simple/inventory/1/",
+        "ulink": "/simple/inventory/update/1/",
+        "dlink": "/simple/inventory/delete/1/"
+    }
+},
+{
+    "model": "simple.inventory",
+    "pk": 2,
+    "fields": {
+        "created_by": 1,
+        "store": 3,
+        "widget": 10,
+        "quantity": 86,
+        "deleted": false,
+        "link": "/simple/inventory/2/",
+        "ulink": "/simple/inventory/update/2/",
+        "dlink": "/simple/inventory/delete/2/"
+    }
+},
+{
+    "model": "simple.inventory",
+    "pk": 3,
+    "fields": {
+        "created_by": 1,
+        "store": 8,
+        "widget": 10,
+        "quantity": 77,
+        "deleted": false,
+        "link": "/simple/inventory/3/",
+        "ulink": "/simple/inventory/update/3/",
+        "dlink": "/simple/inventory/delete/3/"
+    }
+},
+{
+    "model": "simple.inventory",
+    "pk": 4,
+    "fields": {
+        "created_by": 1,
+        "store": 8,
+        "widget": 5,
+        "quantity": 45,
+        "deleted": false,
+        "link": "/simple/inventory/4/",
+        "ulink": "/simple/inventory/update/4/",
+        "dlink": "/simple/inventory/delete/4/"
+    }
+},
+{
+    "model": "simple.inventory",
+    "pk": 5,
+    "fields": {
+        "created_by": 1,
+        "store": 1,
+        "widget": 8,
+        "quantity": 5,
+        "deleted": false,
+        "link": "/simple/inventory/5/",
+        "ulink": "/simple/inventory/update/5/",
+        "dlink": "/simple/inventory/delete/5/"
+    }
+},
+{
+    "model": "simple.inventory",
+    "pk": 6,
+    "fields": {
+        "created_by": 1,
+        "store": 1,
+        "widget": 3,
+        "quantity": 91,
+        "deleted": false,
+        "link": "/simple/inventory/6/",
+        "ulink": "/simple/inventory/update/6/",
+        "dlink": "/simple/inventory/delete/6/"
+    }
+},
+{
+    "model": "simple.inventory",
+    "pk": 7,
+    "fields": {
+        "created_by": 1,
+        "store": 7,
+        "widget": 1,
+        "quantity": 76,
+        "deleted": false,
+        "link": "/simple/inventory/7/",
+        "ulink": "/simple/inventory/update/7/",
+        "dlink": "/simple/inventory/delete/7/"
+    }
+},
+{
+    "model": "simple.inventory",
+    "pk": 8,
+    "fields": {
+        "created_by": 1,
+        "store": 5,
+        "widget": 3,
+        "quantity": 30,
+        "deleted": false,
+        "link": "/simple/inventory/8/",
+        "ulink": "/simple/inventory/update/8/",
+        "dlink": "/simple/inventory/delete/8/"
+    }
+},
+{
+    "model": "simple.inventory",
+    "pk": 9,
+    "fields": {
+        "created_by": 1,
+        "store": 2,
+        "widget": 5,
+        "quantity": 8,
+        "deleted": false,
+        "link": "/simple/inventory/9/",
+        "ulink": "/simple/inventory/update/9/",
+        "dlink": "/simple/inventory/delete/9/"
+    }
+},
+{
+    "model": "simple.inventory",
+    "pk": 10,
+    "fields": {
+        "created_by": 1,
+        "store": 6,
+        "widget": 5,
+        "quantity": 18,
+        "deleted": false,
+        "link": "/simple/inventory/10/",
+        "ulink": "/simple/inventory/update/10/",
+        "dlink": "/simple/inventory/delete/10/"
+    }
+}
 ]

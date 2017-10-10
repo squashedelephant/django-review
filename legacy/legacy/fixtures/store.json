@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
         "created_by": 1,
-        "name": "Store 91",
+        "name": "Store 74",
         "location": "Albany",
         "deleted": false,
         "link": "/simple/stores/1/",
@@ -17,8 +17,8 @@
     "pk": 2,
     "fields": {
         "created_by": 1,
-        "name": "Store 42",
-        "location": "El Cerrito",
+        "name": "Store 12",
+        "location": "Berkeley",
         "deleted": false,
         "link": "/simple/stores/2/",
         "ulink": "/simple/stores/update/2/",
@@ -30,8 +30,8 @@
     "pk": 3,
     "fields": {
         "created_by": 1,
-        "name": "Store 32",
-        "location": "Emeryville",
+        "name": "Store 34",
+        "location": "El Cerrito",
         "deleted": false,
         "link": "/simple/stores/3/",
         "ulink": "/simple/stores/update/3/",
@@ -43,8 +43,8 @@
     "pk": 4,
     "fields": {
         "created_by": 1,
-        "name": "Store 74",
-        "location": "Hercules",
+        "name": "Store 95",
+        "location": "Emeryville",
         "deleted": false,
         "link": "/simple/stores/4/",
         "ulink": "/simple/stores/update/4/",
@@ -56,8 +56,8 @@
     "pk": 5,
     "fields": {
         "created_by": 1,
-        "name": "Store 69",
-        "location": "Pinole",
+        "name": "Store 57",
+        "location": "Hercules",
         "deleted": false,
         "link": "/simple/stores/5/",
         "ulink": "/simple/stores/update/5/",
@@ -69,8 +69,8 @@
     "pk": 6,
     "fields": {
         "created_by": 1,
-        "name": "Store 31",
-        "location": "Rodeo",
+        "name": "Store 83",
+        "location": "Pinole",
         "deleted": false,
         "link": "/simple/stores/6/",
         "ulink": "/simple/stores/update/6/",
@@ -82,12 +82,25 @@
     "pk": 7,
     "fields": {
         "created_by": 1,
-        "name": "Store 39",
-        "location": "San Pablo",
+        "name": "Store 21",
+        "location": "Rodeo",
         "deleted": false,
         "link": "/simple/stores/7/",
         "ulink": "/simple/stores/update/7/",
         "dlink": "/simple/stores/delete/7/"
+    }
+},
+{
+    "model": "simple.store",
+    "pk": 8,
+    "fields": {
+        "created_by": 1,
+        "name": "Store 88",
+        "location": "San Pablo",
+        "deleted": false,
+        "link": "/simple/stores/8/",
+        "ulink": "/simple/stores/update/8/",
+        "dlink": "/simple/stores/delete/8/"
     }
 }
 ]

@@ -51,21 +51,6 @@ def inventory_aggr(request):
     if request.method not in ['GET']:
         return Http405()
     context = _get_context()
-    context['title'] = 'Simple: Total Inventory Cost'
-    template = 'simple/inventory_aggregate.html'
-    try:
-        context.update(Inventory.objects.filter(deleted=False).aggregate(
-            models.Sum('quantity')))
-    except Store.DoesNotExist as e:
-        context['quantity_sum'] = 0
-    return render(request, template, context)
-
-@login_required
-@cache_page(60 * 5)
-def inventory_aggr(request):
-    if request.method not in ['GET']:
-        return Http405()
-    context = _get_context()
     context['title'] = 'Simple: Total Inventory Quantities'
     template = 'simple/inventory_aggregate.html'
     try:
