@@ -12,9 +12,7 @@
     "pk": 2,
     "fields": {
         "name": "add",
-        "permissions": [
-            19
-        ]
+        "permissions": []
     }
 },
 {
@@ -22,9 +20,7 @@
     "pk": 3,
     "fields": {
         "name": "change",
-        "permissions": [
-            20
-        ]
+        "permissions": []
     }
 },
 {
@@ -32,9 +28,7 @@
     "pk": 4,
     "fields": {
         "name": "delete",
-        "permissions": [
-            21
-        ]
+        "permissions": []
     }
 },
 {
@@ -42,9 +36,7 @@
     "pk": 5,
     "fields": {
         "name": "full_access",
-        "permissions": [
-            22
-        ]
+        "permissions": []
     }
 }
 ]

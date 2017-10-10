@@ -1,0 +1,24 @@
+{% extends "simple/base.html" %}
+
+{% block table %}
+    <table id="detail">
+        <tr>
+            <th>Store</th>
+            <th>Widget</th>
+            <th>Quantity</th>
+        </tr>
+        <tr>
+            <td>{{ inventory.store }}</td>
+            <td>{{ inventory.widget }}</td>
+            <td>{{ inventory.quantity }}</td>
+        </tr>
+    </table>
+    {% if len(inventory) > 0 %}
+        <button type="button">
+            <a href="{{ inventory.ulink }}">Modify Item</a>
+        </button>
+        <button type="button">
+            <a href="{{ inventory.dlink }}">Delete Item</a>
+        </button>
+    {% endif %}
+{% endblock %}

@@ -63,6 +63,47 @@ def get_users():
                         'is_active': True}}
     return users
 
+def get_inventory_permissions():
+    from django.contrib.auth.models import Permission
+    from django.contrib.contenttypes.models import ContentType
+    from simple.models import Inventory 
+    content_type = ContentType.objects.get_for_model(Inventory)
+    try:
+        Permission.objects.get(codename='inventory.full_access')
+    except Permission.DoesNotExist:
+        Permission.objects.create(codename='inventory.full_access',
+                                  name='User may Add, View, Change, Delete',
+                                  content_type=content_type)
+    add_inventory = Permission.objects.get(codename='add_inventory')
+    change_inventory = Permission.objects.get(codename='change_inventory')
+    delete_inventory = Permission.objects.get(codename='delete_inventory')
+    full_access = Permission.objects.get(codename='inventory.full_access')
+    permissions = {'add_inventory': add_inventory,
+                   'change_inventory': change_inventory,
+                   'delete_inventory': delete_inventory,
+                   'full_access': full_access}
+
+def get_store_permissions():
+    from django.contrib.auth.models import Permission
+    from django.contrib.contenttypes.models import ContentType
+    from simple.models import Store
+    content_type = ContentType.objects.get_for_model(Store)
+    try:
+        Permission.objects.get(codename='store.full_access')
+    except Permission.DoesNotExist:
+        Permission.objects.create(codename='store.full_access',
+                                  name='User may Add, View, Change, Delete',
+                                  content_type=content_type)
+    add_store = Permission.objects.get(codename='add_store')
+    change_store = Permission.objects.get(codename='change_store')
+    delete_store = Permission.objects.get(codename='delete_store')
+    full_access = Permission.objects.get(codename='store.full_access')
+    permissions = {'add_store': add_store,
+                   'change_store': change_store,
+                   'delete_store': delete_store,
+                   'full_access': full_access}
+    return permissions
+
 def get_widget_permissions():
     from django.contrib.auth.models import Permission
     from django.contrib.contenttypes.models import ContentType

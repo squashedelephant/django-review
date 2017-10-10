@@ -60,11 +60,11 @@ class TestSimpleURL(TestCase):
         if self.c:
            self.c.logout()
 
-    def test_01_fixtures_loaded(self):
+    def ttest_01_fixtures_loaded(self):
         self.assertEqual(9, len(User.objects.all()))
         self.assertEqual(10, len(Widget.objects.all()))
 
-    def test_02_main_page(self):
+    def ttest_02_main_page(self):
         url = '/'
         response = self.c.get(path=url, headers=self.headers, follow=False)
         self.assertEqual(302, response.status_code)
@@ -83,7 +83,7 @@ class TestSimpleURL(TestCase):
         soup = BeautifulSoup(response.content, 'html.parser')
         self.assertEquals('Welcome to App: Legacy using Simple Widgets', soup.find('h3').string)
 
-    def test_03_login_get_cookie(self):
+    def ttest_03_login_get_cookie(self):
         url = '/login/'
         self.assertEqual(SimpleCookie, type(self.c.cookies))
         self.assertEqual(0, len(self.c.cookies))
@@ -94,7 +94,7 @@ class TestSimpleURL(TestCase):
         self.assertEqual(1, len(self.c.cookies))
         self.assertTrue(self.c.cookies.has_key('csrftoken'))
 
-    def test_04_login_get_sessionid(self):
+    def ttest_04_login_get_sessionid(self):
         url = '/login/'
         response = self.c.get(path=url, headers=self.headers, follow=True)
         self.assertEqual(200, response.status_code)
@@ -106,7 +106,7 @@ class TestSimpleURL(TestCase):
         self.assertTrue(self.c.cookies.has_key('sessionid'))
         self.assertTrue(self.c.cookies.get('sessionid').value)
 
-    def test_05_login_authenticated(self):
+    def ttest_05_login_authenticated(self):
         url = '/login/'
         staff = self.kwargs['staff']
         user = User.objects.get(username=staff['username'])
@@ -132,7 +132,7 @@ class TestSimpleURL(TestCase):
         self.assertIsNotNone(soup.find(name='p',
                                        text='email: {}'.format(user.email)))
 
-    def test_06_logout_clear_session(self):
+    def ttest_06_logout_clear_session(self):
         url = '/login/'
         response = self.c.get(path=url, follow=True)
         self.assertEqual(200, response.status_code)
@@ -145,7 +145,7 @@ class TestSimpleURL(TestCase):
         self.c.logout()
         self.assertEqual(0, len(self.c.cookies))
 
-    def test_07_login_active_user(self):
+    def ttest_07_login_active_user(self):
         url = '/login/'
         active = self.kwargs['active']
         user = User.objects.get(username=active['username'])
@@ -174,7 +174,7 @@ class TestSimpleURL(TestCase):
                                        text='email: {}'.format(user.email)))
         self.assertIsNone(self.c.logout())
 
-    def test_08_login_staff_user(self):
+    def ttest_08_login_staff_user(self):
         url = '/login/'
         staff = self.kwargs['staff']
         user = User.objects.get(username=staff['username'])
@@ -203,7 +203,7 @@ class TestSimpleURL(TestCase):
                                        text='email: {}'.format(user.email)))
         self.assertIsNone(self.c.logout())
 
-    def test_09_login_superuser_user(self):
+    def ttest_09_login_superuser_user(self):
         url = '/login/'
         superuser = self.kwargs['superuser']
         user = User.objects.get(username=superuser['username'])
@@ -232,7 +232,7 @@ class TestSimpleURL(TestCase):
                                        text='email: {}'.format(user.email)))
         self.assertIsNone(self.c.logout())
 
-    def test_10_login_invalid_user(self):
+    def ttest_10_login_invalid_user(self):
         url = '/login/'
         invalid = self.kwargs['invalid']
         response = self.c.get(path=url, follow=True)
@@ -241,7 +241,7 @@ class TestSimpleURL(TestCase):
         self.assertFalse(self.c.login(**{'username': invalid['username'],
                                         'password': invalid['password']}))
 
-    def test_11_real_login_logout(self):
+    def ttest_11_real_login_logout(self):
         url = '/login/'
         response = self.c.get(path=url, headers=self.headers, follow=True)
         self.assertEqual(200, response.status_code)
@@ -260,7 +260,7 @@ class TestSimpleURL(TestCase):
         self.assertEqual(200, response.status_code)
         self.assertEqual('OK', response.reason_phrase)
 
-    def test_13_home_URL(self):
+    def ttest_12_home_URL(self):
         url = '/'
         response = self.c.get(path=url, headers=self.headers, follow=True)
         self.assertEqual(200, response.status_code)

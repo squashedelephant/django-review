@@ -1,0 +1,9 @@
+{% extends "simple/base.html" %}
+
+{% block form %}
+    {% if pk %}
+        <p>Object {{ pk }} does not exist.</p>
+    {% else %}
+        <p>Object does not exist.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "simple/base.html" %}
+
+{% block form %}
+    {% if pk %}
+        <p>User lacks permission to manage Object {{ pk }}.</p>
+    {% else %}
+        <p>User lacks permission to manage Object.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,93 @@
+[
+{
+    "model": "simple.store",
+    "pk": 1,
+    "fields": {
+        "created_by": 1,
+        "name": "Store 91",
+        "location": "Albany",
+        "deleted": false,
+        "link": "/simple/stores/1/",
+        "ulink": "/simple/stores/update/1/",
+        "dlink": "/simple/stores/delete/1/"
+    }
+},
+{
+    "model": "simple.store",
+    "pk": 2,
+    "fields": {
+        "created_by": 1,
+        "name": "Store 42",
+        "location": "El Cerrito",
+        "deleted": false,
+        "link": "/simple/stores/2/",
+        "ulink": "/simple/stores/update/2/",
+        "dlink": "/simple/stores/delete/2/"
+    }
+},
+{
+    "model": "simple.store",
+    "pk": 3,
+    "fields": {
+        "created_by": 1,
+        "name": "Store 32",
+        "location": "Emeryville",
+        "deleted": false,
+        "link": "/simple/stores/3/",
+        "ulink": "/simple/stores/update/3/",
+        "dlink": "/simple/stores/delete/3/"
+    }
+},
+{
+    "model": "simple.store",
+    "pk": 4,
+    "fields": {
+        "created_by": 1,
+        "name": "Store 74",
+        "location": "Hercules",
+        "deleted": false,
+        "link": "/simple/stores/4/",
+        "ulink": "/simple/stores/update/4/",
+        "dlink": "/simple/stores/delete/4/"
+    }
+},
+{
+    "model": "simple.store",
+    "pk": 5,
+    "fields": {
+        "created_by": 1,
+        "name": "Store 69",
+        "location": "Pinole",
+        "deleted": false,
+        "link": "/simple/stores/5/",
+        "ulink": "/simple/stores/update/5/",
+        "dlink": "/simple/stores/delete/5/"
+    }
+},
+{
+    "model": "simple.store",
+    "pk": 6,
+    "fields": {
+        "created_by": 1,
+        "name": "Store 31",
+        "location": "Rodeo",
+        "deleted": false,
+        "link": "/simple/stores/6/",
+        "ulink": "/simple/stores/update/6/",
+        "dlink": "/simple/stores/delete/6/"
+    }
+},
+{
+    "model": "simple.store",
+    "pk": 7,
+    "fields": {
+        "created_by": 1,
+        "name": "Store 39",
+        "location": "San Pablo",
+        "deleted": false,
+        "link": "/simple/stores/7/",
+        "ulink": "/simple/stores/update/7/",
+        "dlink": "/simple/stores/delete/7/"
+    }
+}
+]

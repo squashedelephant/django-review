@@ -192,9 +192,54 @@
     "model": "auth.permission",
     "pk": 22,
     "fields": {
-        "name": "User may Add, View, Change, Delete",
-        "content_type": 7,
-        "codename": "widget.full_access"
+        "name": "Can add store",
+        "content_type": 8,
+        "codename": "add_store"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 23,
+    "fields": {
+        "name": "Can change store",
+        "content_type": 8,
+        "codename": "change_store"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 24,
+    "fields": {
+        "name": "Can delete store",
+        "content_type": 8,
+        "codename": "delete_store"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 25,
+    "fields": {
+        "name": "Can add inventory",
+        "content_type": 9,
+        "codename": "add_inventory"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 26,
+    "fields": {
+        "name": "Can change inventory",
+        "content_type": 9,
+        "codename": "change_inventory"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 27,
+    "fields": {
+        "name": "Can delete inventory",
+        "content_type": 9,
+        "codename": "delete_inventory"
     }
 }
 ]

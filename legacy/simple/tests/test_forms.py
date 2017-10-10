@@ -25,14 +25,14 @@ class TestSimpleForm(TestCase):
     def tearDown(self):
         self.data = None
 
-    def test_01_name_valid(self):
+    def ttest_01_name_valid(self):
         form = WidgetForm(data=self.data_valid)
         print(form.errors)
         self.assertTrue(form.is_valid())
         self.assertTrue(form.is_bound)
         self.assertEqual(self.data_valid['name'], form.data['name'])
 
-    def test_02_name_too_long(self):
+    def ttest_02_name_too_long(self):
         form = WidgetForm(data=self.data_long)
         self.assertFalse(form.is_valid())
         self.assertTrue(form.is_bound)
@@ -40,7 +40,7 @@ class TestSimpleForm(TestCase):
         self.assertEqual(u'Ensure this value has at most 20 characters (it has 21).',
                          form.errors['name'][0])
 
-    def test_03_name_empty(self):
+    def ttest_03_name_empty(self):
         form = WidgetForm(data=self.data_empty)
         self.assertFalse(form.is_valid())
         self.assertTrue(form.is_bound)
@@ -48,7 +48,7 @@ class TestSimpleForm(TestCase):
         self.assertEqual(u'This field is required.',
                          form.errors['name'][0])
 
-    def test_04_name_blank(self):
+    def ttest_04_name_blank(self):
         form = WidgetForm(data=self.data_blank)
         self.assertFalse(form.is_valid())
         self.assertTrue(form.is_bound)
@@ -56,7 +56,7 @@ class TestSimpleForm(TestCase):
         self.assertEqual(u'This field is required.',
                          form.errors['name'][0])
 
-    def test_05_object(self):
+    def ttest_05_object(self):
         form = WidgetForm(data=self.data_valid)
         self.assertIn('name', str(form).split())
         self.assertEqual("<class 'simple.forms.WidgetForm'>.'name_cost'", repr(form))
