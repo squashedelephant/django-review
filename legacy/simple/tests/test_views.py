@@ -5,7 +5,7 @@ from random import randint, random
 
 from django.contrib import admin
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Group, Permission, User
 from django.core.management import call_command
 from django.core.management import execute_from_command_line
 from django.core.urlresolvers import reverse
@@ -13,7 +13,7 @@ from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
 from django.test import Client, RequestFactory, TestCase
 
-from simple.models import Widget
+from simple.models import Inventory, Store, Widget
 from simple.forms import WidgetForm
 from simple.views import created, deleted, home, updated, widget_create
 from simple.views import widget_delete, widget_detail, widget_list, widget_update
@@ -21,7 +21,9 @@ from simple.views import widget_delete, widget_detail, widget_list, widget_updat
 class TestWidgetView(TestCase):
     fixtures = ['group',
                 'group_permission',
+                'inventory',
                 'permission',
+                'store',
                 'user',
                 'user_groups',
                 'user_permission',
@@ -29,11 +31,16 @@ class TestWidgetView(TestCase):
 
     @classmethod
     def setUpTestData(cls):
+        # fixture load order matters
         call_command('loaddata', 'permission', verbosity=2)
         call_command('loaddata', 'user', verbosity=2)
+        call_command('loaddata', 'group_permission', verbosity=2)
         call_command('loaddata', 'group', verbosity=2)
+        call_command('loaddata', 'user_groups', verbosity=2)
         call_command('loaddata', 'user_permission', verbosity=2)
+        call_command('loaddata', 'store', verbosity=2)
         call_command('loaddata', 'widget', verbosity=2)
+        call_command('loaddata', 'inventory', verbosity=2)
 
     @classmethod
     def setUpClass(cls):
@@ -96,7 +103,21 @@ class TestWidgetView(TestCase):
         self.headers.update({'content-length': len(dumps(self.data))})
         return
 
-    def ttest_01_list_default_page(self):
+    def test_00_fixtures_loaded(self):
+        users = User.objects.all()
+        self.assertEqual(9, len(users))
+        perms = Permission.objects.all()
+        self.assertEqual(27, len(perms))
+        group = Group.objects.all()
+        self.assertEqual(1, len(group))
+        active_inv = Inventory.objects.filter(deleted=False)
+        self.assertEqual(10, len(active_inv))
+        active_stores = Store.objects.filter(deleted=False)
+        self.assertEqual(8, len(active_stores))
+        active_widgets = Widget.objects.filter(deleted=False)
+        self.assertEqual(10, len(active_widgets))
+
+    def test_01_list_default_page(self):
         page = 0
         (offset, limit) = self._convert_page(page)
         self._set_user(self.kwargs['view'])
@@ -117,7 +138,7 @@ class TestWidgetView(TestCase):
         rows = soup.findAll('table')[0].findAll('tbody')[0].findAll('tr')
         self.assertEqual(len(expected), len(rows))
 
-    def ttest_02_list_first_page(self):
+    def test_02_list_first_page(self):
         page = 0
         (offset, limit) = self._convert_page(page)
         self._set_user(self.kwargs['view'])
@@ -138,7 +159,7 @@ class TestWidgetView(TestCase):
         rows = soup.findAll('table')[0].findAll('tbody')[0].findAll('tr')
         self.assertEqual(len(expected), len(rows))
 
-    def ttest_03_list_next_page(self):
+    def test_03_list_next_page(self):
         page = 1
         (offset, limit) = self._convert_page(page)
         self._set_user(self.kwargs['view'])
@@ -243,7 +264,7 @@ class TestWidgetView(TestCase):
         self.assertEqual(u'Object {} created successfully.'.format(pk),
                          soup.find('p').string)
 
-    def ttest_06_create_insufficient_perms(self):
+    def test_06_create_insufficient_perms(self):
         self._set_user(self.kwargs['view'])
         self.assertFalse(self.user.has_perm('simple.add_widget'))
         self.assertEquals(set(), self.user.get_all_permissions())
@@ -365,7 +386,7 @@ class TestWidgetView(TestCase):
         self.assertEqual('Found', response.reason_phrase)
         self.assertEqual('/login/?next={}'.format(url), response.url)
 
-    def ttest_11_home(self):
+    def test_11_home(self):
         self._set_user(self.kwargs['view'])
         self.assertTrue(self.user.is_authenticated())
         self.assertTrue(self.user.is_active)

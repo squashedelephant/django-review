@@ -79,23 +79,33 @@ class TestInventoryAdmin(TestCase):
 
     def test_07_base_fields(self):
         ma = ModelAdmin(Inventory, self.site)
-        base_fields = ['created_by', 'store', 'widget', 'quantity', 'deleted', 'link', 'ulink', 'dlink']
-        self.assertListEqual(base_fields, list(ma.get_form(self.request).base_fields))
+        base_fields = ['created_by', 'store', 'widget', 'quantity',
+                       'deleted', 'link', 'ulink', 'dlink']
+        self.assertListEqual(base_fields,
+                             list(ma.get_form(self.request).base_fields))
 
     def test_08_fields(self):
         ma = ModelAdmin(Inventory, self.site)
-        fields = ['created_by', 'store', 'widget', 'quantity', 'deleted', 'link', 'ulink', 'dlink']
+        fields = ['created_by', 'store', 'widget', 'quantity',
+                  'deleted', 'link', 'ulink', 'dlink']
         self.assertListEqual(fields, list(ma.get_fields(self.request)))
 
     def test_09_field_lookup(self):
         ma = ModelAdmin(Inventory, self.site)
         self.assertTrue(ma.lookup_allowed('store', 'abc'))
+        self.assertTrue(ma.lookup_allowed('widget', 'def'))
 
     def test_10_exclude_list(self):
         user = User.objects.get(username=self.data['username'])
-        s = Store.objects.create(name='whatever', location='New York', created_by=user)
-        w = Widget.objects.create(name='whatever', created_by=user)
-        i = Inventory.objects.create(store=s, widget=w, created_by=user)
+        s = Store.objects.create(name='whatever',
+                                 location='New York',
+                                 created_by=user)
+        w = Widget.objects.create(name='whatever',
+                                  sku='112-11-1234',
+                                  created_by=user)
+        i = Inventory.objects.create(store=s,
+                                     widget=w,
+                                     created_by=user)
         ma = ModelAdmin(Inventory, self.site)
         self.assertIsNone(ma.get_exclude(self.request, i))
 
