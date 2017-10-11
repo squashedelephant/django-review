@@ -424,7 +424,6 @@ def widget_delete(request, pk):
     context['title'] = 'Delete an Existing Widget'
     template = 'simple/delete_form.html'
     if request.method == 'POST':
-        context = {}
         form = WidgetForm(request.POST)
         if form.is_valid():
             try:
@@ -433,14 +432,16 @@ def widget_delete(request, pk):
                 widget.deleted = True
                 widget.save()
             except Widget.DoesNotExist:
-                pass
+                reverse_lazy('simple:nonexistent',
+                             kwargs={'pk': pk})
             return HttpResponseRedirect(
                 reverse_lazy('simple:deleted',
-                             kwargs={'pk': widget.pk}))
+                             kwargs={'pk': pk}))
     else:
         widget = Widget.objects.get(pk=pk)
         initial = {'created_by': request.user,
                    'name': widget.name,
+                   'sku': widget.sku,
                    'cost': widget.cost}
         form = WidgetForm(initial=initial)
         context['form'] = form

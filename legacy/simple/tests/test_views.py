@@ -325,9 +325,9 @@ class TestWidgetView(TestCase):
         token = soup.find(attrs={'name': 'csrfmiddlewaretoken'})['value']
         self.assertEquals(u'Delete an Existing Widget', soup.title.string)
         name = soup.find(attrs={'id': 'id_name'})['value']
-        cost = soup.find(attrs={'id': 'id_cost'})['value']
         data = {'name': name,
-                'cost': cost,
+                'sku': get_random_sku(),
+                'cost': get_random_cost(),
                 'deleted': True}
         data.update({'csrfmiddlewaretoken': token})
         self._update_headers()
@@ -336,21 +336,20 @@ class TestWidgetView(TestCase):
         self.assertEqual(200, response.status_code)
         self.assertEqual('OK', response.reason_phrase)
         soup = BeautifulSoup(response.content, 'html.parser')
-        print(soup.prettify())
         self.assertEquals(u'Data Deletion', soup.title.string)
         pk = int(soup.find('p').string.split()[1])
         self.assertEqual(u'Object {} deleted successfully.'.format(pk),
                          soup.find('p').string)
 
-    def ttest_10_delete_insufficient_perms(self):
+    def test_10_delete_insufficient_perms(self):
         # user add does not have delete_widget permission
         self._set_user(self.kwargs['add'])
         (soup, pk) = self._create()
         self.assertEqual(u'Object {} created successfully.'.format(pk),
                          soup.find('p').string)
         self.assertFalse(self.user.has_perm('simple.delete_widget'))
-        self.assertEquals(set(['simple.add_widget']), self.user.get_all_permissions())
-        self.assertEquals(set(), self.user.get_group_permissions())
+        self.assertIn('simple.add_widget', self.user.get_all_permissions())
+        self.assertIn('simple.add_widget', self.user.get_group_permissions())
         url = reverse('simple:widget-list')
         response = self.c.get(path=url, headers=self.headers, follow=True)
         self.assertEqual(200, response.status_code)
