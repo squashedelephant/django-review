@@ -475,6 +475,11 @@ def widget_list(request, page=0):
     try:
         widgets = Widget.objects.filter(deleted=False)[offset:limit]
         context['widgets'] = widgets
+        if page > 0:
+            context['prev'] = reverse_lazy('simple:widget-list',
+                                           kwargs={'page': page - 1})
+            context['next'] = reverse_lazy('simple:widget-list',
+                                           kwargs={'page': page + 1})
         return render(request, template, context)
     except Widget.DoesNotExist as e:
         return render(request, template, context)

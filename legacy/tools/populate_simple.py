@@ -14,10 +14,9 @@ def assign_user_permissions():
     from tools.users_and_groups import get_store_permissions
     from tools.users_and_groups import get_widget_permissions
     users = get_users()
-    #inv_perms = get_inventory_permissions()
+    inv_perms = get_inventory_permissions()
     store_perms = get_store_permissions()
     widget_perms = get_widget_permissions()
-    #print('inv_perms: {}'.format(inv_perms))
     read_only_users = ['view']
     write_only_users = ['add']
     readwrite_users= ['change']

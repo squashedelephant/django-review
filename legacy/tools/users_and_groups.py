@@ -69,19 +69,19 @@ def get_inventory_permissions():
     from simple.models import Inventory 
     content_type = ContentType.objects.get_for_model(Inventory)
     try:
-        Permission.objects.get(codename='inventory.full_access')
+        full_access = Permission.objects.get(codename='inventory.full_access')
     except Permission.DoesNotExist:
-        Permission.objects.create(codename='inventory.full_access',
-                                  name='User may Add, View, Change, Delete',
-                                  content_type=content_type)
+        full_access = Permission.objects.create(codename='inventory.full_access',
+                                                name='User may Add, View, Change, Delete',
+                                                content_type=content_type)
     add_inventory = Permission.objects.get(codename='add_inventory')
     change_inventory = Permission.objects.get(codename='change_inventory')
     delete_inventory = Permission.objects.get(codename='delete_inventory')
-    full_access = Permission.objects.get(codename='inventory.full_access')
     permissions = {'add_inventory': add_inventory,
                    'change_inventory': change_inventory,
                    'delete_inventory': delete_inventory,
                    'full_access': full_access}
+    return permissions
 
 def get_store_permissions():
     from django.contrib.auth.models import Permission
@@ -89,15 +89,14 @@ def get_store_permissions():
     from simple.models import Store
     content_type = ContentType.objects.get_for_model(Store)
     try:
-        Permission.objects.get(codename='store.full_access')
+        full_access = Permission.objects.get(codename='store.full_access')
     except Permission.DoesNotExist:
-        Permission.objects.create(codename='store.full_access',
-                                  name='User may Add, View, Change, Delete',
-                                  content_type=content_type)
+        full_access = Permission.objects.create(codename='store.full_access',
+                                                name='User may Add, View, Change, Delete',
+                                                content_type=content_type)
     add_store = Permission.objects.get(codename='add_store')
     change_store = Permission.objects.get(codename='change_store')
     delete_store = Permission.objects.get(codename='delete_store')
-    full_access = Permission.objects.get(codename='store.full_access')
     permissions = {'add_store': add_store,
                    'change_store': change_store,
                    'delete_store': delete_store,
@@ -110,15 +109,14 @@ def get_widget_permissions():
     from simple.models import Widget
     content_type = ContentType.objects.get_for_model(Widget)
     try:
-        Permission.objects.get(codename='widget.full_access')
+        full_access = Permission.objects.get(codename='widget.full_access')
     except Permission.DoesNotExist:
-        Permission.objects.create(codename='widget.full_access',
-                                  name='User may Add, View, Change, Delete',
-                                  content_type=content_type)
+        full_access = Permission.objects.create(codename='widget.full_access',
+                                                name='User may Add, View, Change, Delete',
+                                                content_type=content_type)
     add_widget = Permission.objects.get(codename='add_widget')
     change_widget = Permission.objects.get(codename='change_widget')
     delete_widget = Permission.objects.get(codename='delete_widget')
-    full_access = Permission.objects.get(codename='widget.full_access')
     permissions = {'add_widget': add_widget,
                    'change_widget': change_widget,
                    'delete_widget': delete_widget,

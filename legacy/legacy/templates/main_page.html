@@ -3,11 +3,11 @@
 <title>App: Legacy: Home</title>
 </head>
 <body>
-<h3>Welcome to App: Legacy using Simple Widgets</h3>
+<h3>Welcome to App: Legacy using Simple Django Objects</h3>
 {% if user.username %}
 <p>Welcome <b>{{ user.username }}</b>! 
 <p><a href="/user/{{ user.id}}">{{ user.username }}: User Profile</a></p>
-<p><a href="/simple/">Simple Widgets</a></p>
+<p><a href="/simple/">Simple Django Objects</a></p>
 <p><a href="/logout/">logout</a></p>
 {% else %}
 <p>Welcome anonymous user!
