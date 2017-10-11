@@ -15,35 +15,19 @@ from django.test import Client, RequestFactory, TestCase
 
 from simple.models import Inventory, Store, Widget
 from simple.forms import WidgetForm
+from simple.tests.utils import get_random_cost, get_random_sku
 from simple.views import created, deleted, home, updated, widget_create
 from simple.views import widget_delete, widget_detail, widget_list, widget_update
 
 class TestWidgetView(TestCase):
-    fixtures = ['group',
-                'group_permission',
-                'inventory',
-                'permission',
-                'store',
-                'user',
-                'user_groups',
-                'user_permission',
-                'widget']
-
     @classmethod
     def setUpTestData(cls):
-        # fixture load order matters
         call_command('loaddata', 'permission', verbosity=2)
+        call_command('loaddata', 'group', verbosity=3)
         call_command('loaddata', 'user', verbosity=2)
-        call_command('loaddata', 'group_permission', verbosity=2)
-        call_command('loaddata', 'group', verbosity=2)
-        call_command('loaddata', 'user_groups', verbosity=2)
-        call_command('loaddata', 'user_permission', verbosity=2)
         call_command('loaddata', 'store', verbosity=2)
         call_command('loaddata', 'widget', verbosity=2)
         call_command('loaddata', 'inventory', verbosity=2)
-
-    @classmethod
-    def setUpClass(cls):
         cls.kwargs = {'view': {'username': 'view',
                                'password': 'readonly'},
                       'add': {'username': 'add',
@@ -52,10 +36,6 @@ class TestWidgetView(TestCase):
                                  'password': 'readwrite'},
                       'delete': {'username': 'delete',
                                  'password': 'write'}}
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.kwargs = {}
 
     def setUp(self):
         self.factory = RequestFactory()
@@ -104,12 +84,12 @@ class TestWidgetView(TestCase):
         return
 
     def test_00_fixtures_loaded(self):
+        groups = Group.objects.all()
+        self.assertEqual(5, len(groups))
         users = User.objects.all()
         self.assertEqual(9, len(users))
         perms = Permission.objects.all()
-        self.assertEqual(27, len(perms))
-        group = Group.objects.all()
-        self.assertEqual(1, len(group))
+        self.assertEqual(30, len(perms))
         active_inv = Inventory.objects.filter(deleted=False)
         self.assertEqual(10, len(active_inv))
         active_stores = Store.objects.filter(deleted=False)
@@ -180,7 +160,7 @@ class TestWidgetView(TestCase):
         rows = soup.findAll('table')[0].findAll('tbody')[0].findAll('tr')
         self.assertEqual(len(expected), len(rows))
 
-    def ttest_04_detail(self):
+    def test_04_detail(self):
         pk = 1
         self._set_user(self.kwargs['view'])
         self.assertTrue(self.user.is_authenticated())
@@ -197,10 +177,10 @@ class TestWidgetView(TestCase):
         self.assertEqual('OK', response.reason_phrase)
         soup = BeautifulSoup(response.content, 'html.parser')
         self.assertEqual('Simple: Widget Detail', soup.title.string)
-        actual = soup.findAll('table')[0].findAll('tr')[-1].findAll('td')[-2]
-        self.assertEqual(expected.name, actual.string)
-        actual = soup.findAll('table')[0].findAll('tr')[-1].findAll('td')[-1]
-        self.assertEqual(unicode(expected.cost), actual.string)
+        row = soup.find(attrs={'id': 'detail'}).findAll('tr')[-1]
+        self.assertEqual(expected.name, row.findAll('td')[0].string)
+        self.assertEqual(expected.sku, row.findAll('td')[1].string)
+        self.assertEqual(unicode(expected.cost), row.findAll('td')[2].string)
 
     def _create(self):
         url = '/login/?next=/'
@@ -226,6 +206,7 @@ class TestWidgetView(TestCase):
         self.assertEquals(u'Create a Widget', soup.title.string)
         _ref = randint(1000, 5000)
         data = {'name': 'Random Widget {}'.format(_ref),
+                'sku': get_random_sku(),
                 'cost': float(Decimal('%0.2f' % (_ref * 1.00 * random())))}
         data.update({'csrfmiddlewaretoken': token})
         self._update_headers()
@@ -256,7 +237,7 @@ class TestWidgetView(TestCase):
         response = self.c.get(path=url, headers=self.headers, follow=False)
         return response
 
-    def ttest_05_create(self):
+    def test_05_create(self):
         # test using Client not FactoryRequest because auth/auth wrappers
         self._set_user(self.kwargs['add'])
         self.assertTrue(self.user.has_perm('simple.add_widget'))
@@ -274,7 +255,7 @@ class TestWidgetView(TestCase):
         self.assertEqual('Found', response.reason_phrase)
         self.assertEqual('/login/?next=/simple/widgets/create/', response.url)
 
-    def ttest_07_update(self):
+    def test_07_update(self):
         # user change has change_widget permission which includes add_widget
         self._set_user(self.kwargs['change'])
         self.assertTrue(self.user.has_perm('simple.change_widget'))
@@ -288,10 +269,9 @@ class TestWidgetView(TestCase):
         soup = BeautifulSoup(response.content, 'html.parser')
         token = soup.find(attrs={'name': 'csrfmiddlewaretoken'})['value']
         self.assertEquals(u'Update an Existing Widget', soup.title.string)
-        name = soup.find(attrs={'id': 'id_name'})['value']
-        cost = soup.find(attrs={'id': 'id_cost'})['value']
         data = {'name': 'Random Widget {}'.format(randint(1000, 5000)),
-                'cost': cost}
+                'sku': get_random_sku(),
+                'cost': get_random_cost()}
         data.update({'csrfmiddlewaretoken': token})
         self._update_headers()
         response = self.c.post(path=url, data=data, headers=self.headers, follow=True)
@@ -303,15 +283,15 @@ class TestWidgetView(TestCase):
         self.assertEqual(u'Object {} updated successfully.'.format(pk),
                          soup.find('p').string)
 
-    def ttest_08_update_insufficient_perms(self):
+    def test_08_update_insufficient_perms(self):
         # user add does not have change_widget permission
         self._set_user(self.kwargs['add'])
         (soup, pk) = self._create()
         self.assertEqual(u'Object {} created successfully.'.format(pk),
                          soup.find('p').string)
         self.assertFalse(self.user.has_perm('simple.change_widget'))
-        self.assertEquals(set(['simple.add_widget']), self.user.get_all_permissions())
-        self.assertEquals(set(), self.user.get_group_permissions())
+        self.assertIn('simple.add_widget', self.user.get_all_permissions())
+        self.assertIn('simple.add_widget', self.user.get_group_permissions())
         url = reverse('simple:widget-list')
         response = self.c.get(path=url, headers=self.headers, follow=True)
         self.assertEqual(200, response.status_code)
@@ -330,7 +310,7 @@ class TestWidgetView(TestCase):
         self.assertEqual('Found', response.reason_phrase)
         self.assertEqual('/login/?next={}'.format(url), response.url)
 
-    def ttest_09_delete_update(self):
+    def test_09_delete_update(self):
         # user delete has delete_widget, add_widget permissions but not change_widget
         self._set_user(self.kwargs['delete'])
         self.assertTrue(self.user.has_perm('simple.delete_widget'))
@@ -356,6 +336,7 @@ class TestWidgetView(TestCase):
         self.assertEqual(200, response.status_code)
         self.assertEqual('OK', response.reason_phrase)
         soup = BeautifulSoup(response.content, 'html.parser')
+        print(soup.prettify())
         self.assertEquals(u'Data Deletion', soup.title.string)
         pk = int(soup.find('p').string.split()[1])
         self.assertEqual(u'Object {} deleted successfully.'.format(pk),

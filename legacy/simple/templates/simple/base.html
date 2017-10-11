@@ -28,8 +28,12 @@
                 <h4 style="text-align:center">Manage</h4>
                 <ul>
                     <li><a id="hlink" href={% url "simple:home" %}>Home</a></li>
-                    <li><a id="alink" href={% url "simple:widget-list" %}>Show Widgets</a></li>
-                    <li><a id="clink" href={% url "simple:widget-create" %}>Add Widget</a></li>
+                    <li><a id="illink" href={% url "simple:inventory-list" %}>Show Inventories</a></li>
+                    <li><a id="iclink" href={% url "simple:inventory-create" %}>Add Inventory</a></li>
+                    <li><a id="sllink" href={% url "simple:store-list" %}>Show Stores</a></li>
+                    <li><a id="sclink" href={% url "simple:store-create" %}>Add Store</a></li>
+                    <li><a id="wllink" href={% url "simple:widget-list" %}>Show Widgets</a></li>
+                    <li><a id="wclink" href={% url "simple:widget-create" %}>Add Widget</a></li>
                     <li><a id="logout" href="/logout/">Logout User</a></li>
                 </ul>
             </nav>
