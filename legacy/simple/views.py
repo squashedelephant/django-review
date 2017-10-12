@@ -96,7 +96,10 @@ def inventory_create(request):
                 #else:
                 #    form.errors.update({'name': [err_msg]})
                 context['form'] = form
-        return render(request, template, context)
+                return render(request, template, context)
+        else:
+            context['form'] = form
+            return render(request, template, context)
     else:
         form = InventoryForm()
         context['form'] = form
@@ -111,7 +114,6 @@ def inventory_delete(request, pk):
     context['title'] = 'Delete an Existing Inventory'
     template = 'simple/delete_form.html'
     if request.method == 'POST':
-        context = {}
         form = InventoryForm(request.POST)
         if form.is_valid():
             try:
@@ -119,20 +121,28 @@ def inventory_delete(request, pk):
                                             pk=pk)
                 inv.deleted = True
                 inv.save()
+                return HttpResponseRedirect(
+                     reverse_lazy('simple:deleted',
+                                  kwargs={'pk': pk}))
             except Inventory.DoesNotExist:
-                reverse_lazy('simple:nonexistent',
-                             kwargs={'pk': widget.pk})
-            return HttpResponseRedirect(
-                reverse_lazy('simple:deleted',
-                             kwargs={'pk': widget.pk}))
+                reverse_lazy('simple:eperm',
+                             kwargs={'pk': pk})
+        else:
+            context['form'] = form
+            return render(request, template, context)
     else:
-        inv = Inventory.objects.get(pk=pk)
-        initial = {'created_by': request.user,
-                   'name': inventory.name,
-                   'cost': widget.cost}
-        form = WidgetForm(initial=initial)
-        context['form'] = form
-    return render(request, template, context)
+        try:
+            inv = Inventory.objects.get(created_by=request.user,
+                                        pk=pk)
+            initial = {'created_by': request.user,
+                       'name': inventory.name,
+                       'cost': widget.cost}
+            form = InventoryForm(initial=initial)
+            context['form'] = form
+            return render(request, template, context)
+        except Inventory.DoesNotExist:
+            reverse_lazy('simple:eperm',
+                         kwargs={'pk': pk})
 
 @login_required
 @cache_page(60 * 5)
@@ -146,9 +156,11 @@ def inventory_detail(request, pk):
         context['inventory'] = Inventory.objects.get(created_by=request.user,
                                                      pk=pk,
                                                      deleted=False)
+        return render(request, template, context)
     except Inventory.DoesNotExist as e:
-        pass
-    return render(request, template, context)
+        return HttpResponseRedirect(
+            reverse_lazy('simple:eperm',
+                         kwargs={'pk': pk}))
 
 @login_required
 @cache_page(60 * 5)
@@ -167,7 +179,8 @@ def inventory_list(request, page=0):
                                                         deleted=False)[offset:limit]
         return render(request, template, context)
     except Inventory.DoesNotExist as e:
-        return render(request, template, context)
+        return HttpResponseRedirect(
+            reverse_lazy('simple:eperm'))
     
 @login_required
 @cache_page(60 * 5)
@@ -189,9 +202,14 @@ def inventory_update(request, pk):
                 inv.update(**form.cleaned_data)
                 return HttpResponseRedirect(
                     reverse_lazy('simple:updated',
-                                 kwargs={'pk': inv[0].pk}))
+                                 kwargs={'pk': pk}))
             except Inventory.DoesNotExist:
-                return Http404()
+                return HttpResponseRedirect(
+                    reverse_lazy('simple:eperm',
+                                 kwargs={'pk': pk}))
+        else:
+            context['form'] = form
+            return render(request, template, context)
     else:
         try:
             inv = Inventory.objects.get(created_by=request.user, 
@@ -203,7 +221,9 @@ def inventory_update(request, pk):
             context['form'] = InventoryForm(initial=initial)
             return render(request, template, context)
         except Inventory.DoesNotExist:
-            return Http404()
+            return HttpResponseRedirect(
+                reverse_lazy('simple:eperm',
+                             kwargs={'pk': pk}))
 
 def non_existent(request, pk=None):
     context = _get_context()
@@ -235,7 +255,7 @@ def store_create(request):
     context['title'] = 'Create a Store'
     template = 'simple/create_form.html'
     if request.method == 'POST':
-        form = WidgetForm(data=request.POST)
+        form = StoreForm(data=request.POST)
         if form.is_valid():
             form.cleaned_data.update({'created_by': request.user})
             try:
@@ -256,7 +276,10 @@ def store_create(request):
                 else:
                     form.errors.update({'name': [err_msg]})
                 context['form'] = form
-        return render(request, template, context)
+                return render(request, template, context)
+        else:
+            context['form'] = form
+            return render(request, template, context)
     else:
         initial = {'name': 'myStore',
                    'location': 'El Cerrito'}
@@ -272,23 +295,28 @@ def store_delete(request, pk):
     context['title'] = 'Delete an Existing Store'
     template = 'simple/delete_form.html'
     if request.method == 'POST':
-        context = {}
         form = StoreForm(request.POST)
         if form.is_valid():
             try:
-                store = Store.objects.get(pk=pk)
+                store = Store.objects.get(created_by=request.user,
+                                          pk=pk)
                 store.deleted = True
                 store.save()
+                return HttpResponseRedirect(
+                    reverse_lazy('simple:deleted',
+                                 kwargs={'pk': pk}))
             except Store.DoesNotExist:
-                pass
-            return HttpResponseRedirect(
-                reverse_lazy('simple:deleted',
-                             kwargs={'pk': store.pk}))
+                return HttpResponseRedirect(
+                    reverse_lazy('simple:eperm',
+                                 kwargs={'pk': pk}))
+        else:
+            context['form'] = form
+            return render(request, template, context)
     else:
         store = Store.objects.get(pk=pk)
         initial = {'created_by': request.user,
                    'name': store.name,
-                   'location': widget.location}
+                   'location': store.location}
         context['form'] = StoreForm(initial=initial)
     return render(request, template, context)
 
@@ -301,10 +329,14 @@ def store_detail(request, pk):
     context['title'] = 'Simple: Store Detail'
     template = 'simple/store_detail.html'
     try:
-        context['store'] = Store.objects.get(pk=pk, deleted=False)
+        context['store'] = Store.objects.get(created_by=request.user,
+                                             pk=pk, 
+                                             deleted=False)
+        return render(request, template, context)
     except Store.DoesNotExist as e:
-        pass
-    return render(request, template, context)
+        return HttpResponseRedirect(
+            reverse_lazy('simple:eperm',
+                         kwargs={'pk': pk}))
     
 @login_required
 @cache_page(60 * 5)
@@ -319,10 +351,12 @@ def store_list(request, page=0):
     context['title'] = 'Simple: Active Stores'
     template = 'simple/store_list.html'
     try:
-        context['stores'] = Store.objects.filter(deleted=False)[offset:limit]
+        context['stores'] = Store.objects.filter(created_by=request.user,
+                                                 deleted=False)[offset:limit]
         return render(request, template, context)
     except Store.DoesNotExist as e:
-        return render(request, template, context)
+        return HttpResponseRedirect(
+            reverse_lazy('simple:eperm'))
     
 @login_required
 @cache_page(60 * 5)
@@ -342,9 +376,14 @@ def store_update(request, pk):
                 store.update(**form.cleaned_data)
                 return HttpResponseRedirect(
                     reverse_lazy('simple:updated',
-                                 kwargs={'pk': store[0].pk}))
+                                 kwargs={'pk': pk}))
             except Store.DoesNotExist:
-                return Http404()
+                return HttpResponseRedirect(
+                    reverse_lazy('simple:eperm',
+                                 kwargs={'pk': pk}))
+        else:
+            context['form'] = form
+            return render(request, template, context)
     else:
         try:
             store = Store.objects.get(pk=pk, deleted=False)
@@ -406,7 +445,10 @@ def widget_create(request):
                 else:
                     form.errors.update({'name': [err_msg]})
                 context['form'] = form
-        return render(request, template, context)
+                return render(request, template, context)
+        else:
+            context['form'] = form
+            return render(request, template, context)
     else:
         initial = {'name': 'myWidget',
                    'sku': '111-111-11',
@@ -431,21 +473,29 @@ def widget_delete(request, pk):
                                             pk=pk)
                 widget.deleted = True
                 widget.save()
+                return HttpResponseRedirect(
+                    reverse_lazy('simple:deleted',
+                                 kwargs={'pk': pk}))
             except Widget.DoesNotExist:
-                reverse_lazy('simple:nonexistent',
+                reverse_lazy('simple:eperm',
                              kwargs={'pk': pk})
-            return HttpResponseRedirect(
-                reverse_lazy('simple:deleted',
-                             kwargs={'pk': pk}))
+        else:
+            context['form'] = form
+            return render(request, template, context)
     else:
-        widget = Widget.objects.get(pk=pk)
-        initial = {'created_by': request.user,
-                   'name': widget.name,
-                   'sku': widget.sku,
-                   'cost': widget.cost}
-        form = WidgetForm(initial=initial)
-        context['form'] = form
-    return render(request, template, context)
+        try:
+            widget = Widget.objects.get(created_by=request.user,
+                                        pk=pk)
+            initial = {'created_by': request.user,
+                       'name': widget.name,
+                       'sku': widget.sku,
+                       'cost': widget.cost}
+            form = WidgetForm(initial=initial)
+            context['form'] = form
+            return render(request, template, context)
+        except Widget.DoesNotExist:
+            reverse_lazy('simple:eperm',
+                         kwargs={'pk': pk})
 
 @login_required
 @cache_page(60 * 5)
@@ -457,9 +507,11 @@ def widget_detail(request, pk):
     template = 'simple/widget_detail.html'
     try:
         context['widget'] = Widget.objects.get(pk=pk, deleted=False)
+        return render(request, template, context)
     except Widget.DoesNotExist as e:
-        pass
-    return render(request, template, context)
+        return HttpResponseRedirect(
+            reverse_lazy('simple:eperm',
+                         kwargs={'pk': pk}))
 
 @login_required
 @cache_page(60 * 5)
@@ -483,7 +535,8 @@ def widget_list(request, page=0):
                                            kwargs={'page': page + 1})
         return render(request, template, context)
     except Widget.DoesNotExist as e:
-        return render(request, template, context)
+        return HttpResponseRedirect(
+            reverse_lazy('simple:eperm'))
     
 @login_required
 @cache_page(60 * 5)
@@ -499,23 +552,34 @@ def widget_update(request, pk):
         if form.is_valid():
             try:
                 # update only works on sequences
-                widget = Widget.objects.filter(pk=pk, deleted=False)
+                widget = Widget.objects.filter(pk=pk,
+                                               created_by=request.user,
+                                               deleted=False)
                 widget.update(**form.cleaned_data)
                 return HttpResponseRedirect(
                     reverse_lazy('simple:updated',
-                                 kwargs={'pk': widget[0].pk}))
+                                 kwargs={'pk': pk}))
             except Widget.DoesNotExist:
-                return Http404()
+                return HttpResponseRedirect(
+                    reverse_lazy('simple:eperm',
+                                 kwargs={'pk': pk}))
+        else:
+            context['form'] = form
+            return render(request, template, context)
     else:
         try:
-            widget = Widget.objects.get(pk=pk, deleted=False)
+            widget = Widget.objects.get(created_by=request.user,
+                                        pk=pk,
+                                        deleted=False)
             initial = {'created_by': request.user,
                        'name': widget.name,
                        'cost': widget.cost}
             context['form'] = WidgetForm(initial=initial)
             return render(request, template, context)
         except Widget.DoesNotExist:
-            return Http404()
+            return HttpResponseRedirect(
+                reverse_lazy('simple:eperm',
+                             kwargs={'pk': pk}))
 
 def updated(request, pk=None):
     context = _get_context()
