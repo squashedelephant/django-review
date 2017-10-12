@@ -75,7 +75,7 @@ class TestAuthentication(TestCase):
         self.assertEqual(200, response.status_code)
         self.assertEqual('OK', response.reason_phrase)
         soup = BeautifulSoup(response.content, 'html.parser')
-        self.assertEquals('Welcome to App: Legacy using Simple Widgets', soup.find('h3').string)
+        self.assertEquals('Welcome to App: Legacy using Simple Django Objects', soup.find('h3').string)
 
     def test_03_login_get_cookie(self):
         url = '/login/'

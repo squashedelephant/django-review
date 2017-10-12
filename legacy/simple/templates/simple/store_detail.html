@@ -7,16 +7,16 @@
             <th>Location</th>
         </tr>
         <tr>
-            <td>{{ widget.name }}</td>
-            <td>{{ widget.location }}</td>
+            <td>{{ store.name }}</td>
+            <td>{{ store.location }}</td>
         </tr>
     </table>
-    {% if widget.name %}
+    {% if store.name %}
         <button type="button">
-            <a href="{{ widget.ulink }}">Modify Widget</a>
+            <a href="{{ store.ulink }}">Modify Store</a>
         </button>
         <button type="button">
-            <a href="{{ widget.dlink }}">Delete Widget</a>
+            <a href="{{ store.dlink }}">Delete Store</a>
         </button>
     {% endif %}
 {% endblock %}

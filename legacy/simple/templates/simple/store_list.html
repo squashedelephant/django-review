@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block table %}
-    <h3>Active Widgets</h3>
+    <h3>Active Stores</h3>
     <table id="list">
         <thead>
             <tr>
@@ -12,9 +12,9 @@
             </tr>
         </thead>
         <tbody>
-        {% for widget in widgets %}
+        {% for store in stores %}
             <tr>
-                <td><a href="{{ widget.link }}">{{ widget.link }}</a></td>
+                <td><a href="{{ store.link }}">{{ store.link }}</a></td>
                 <td>{{ widget.name }}</td>
                 <td>{{ widget.location }}</td>
             </tr>
