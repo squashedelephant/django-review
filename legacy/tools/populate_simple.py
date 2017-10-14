@@ -28,27 +28,27 @@ def assign_user_permissions():
             if u in read_only_users:
                 pass
             if u in write_only_users:
-                #user.user_permissions.add(inv_perms['add_inventory'])
+                user.user_permissions.add(inv_perms['add_inventory'])
                 user.user_permissions.add(store_perms['add_store'])
                 user.user_permissions.add(widget_perms['add_widget'])
             if u in readwrite_users:
                 # hack because test must create before update
-                #user.user_permissions.add(inv_perms['add_inventory'])
+                user.user_permissions.add(inv_perms['add_inventory'])
                 user.user_permissions.add(store_perms['add_store'])
                 user.user_permissions.add(widget_perms['add_widget'])
-                #user.user_permissions.add(inv_perms['change_inventory'])
+                user.user_permissions.add(inv_perms['change_inventory'])
                 user.user_permissions.add(store_perms['change_store'])
                 user.user_permissions.add(widget_perms['change_widget'])
             if u in delete_users:
                 # hack because test must create before delete
-                #user.user_permissions.add(inv_perms['add_inventory'])
+                user.user_permissions.add(inv_perms['add_inventory'])
                 user.user_permissions.add(store_perms['add_store'])
                 user.user_permissions.add(widget_perms['add_widget'])
-                #user.user_permissions.add(inv_perms['delete_inventory'])
+                user.user_permissions.add(inv_perms['delete_inventory'])
                 user.user_permissions.add(store_perms['delete_store'])
                 user.user_permissions.add(widget_perms['delete_widget'])
             if u in full_access_users:
-                #user.user_permissions.add(inv_perms['full_access'])
+                user.user_permissions.add(inv_perms['full_access'])
                 user.user_permissions.add(store_perms['full_access'])
                 user.user_permissions.add(widget_perms['full_access'])
         except Exception as e:
@@ -58,10 +58,10 @@ def assign_user_permissions():
 
 def assign_group_permissions():
     from django.contrib.auth.models import Group, User
-    from tools.users_and_groups import get_groups, get_widget_permissions
+    from tools.users_and_groups import get_groups, get_inventory_permissions
     from tools.users_and_groups import get_store_permissions
     from tools.users_and_groups import get_widget_permissions
-    #inv_perms = get_inventory_permissions()
+    inv_perms = get_inventory_permissions()
     store_perms = get_store_permissions()
     widget_perms = get_widget_permissions()
     search_users = ['view']
@@ -78,7 +78,7 @@ def assign_group_permissions():
                     user.groups.add(group)
                     group.user_set.add(user)
             elif g == 'add':
-                #group.permissions.add(inv_perms['add_inventory'])
+                group.permissions.add(inv_perms['add_inventory'])
                 group.permissions.add(store_perms['add_store'])
                 group.permissions.add(widget_perms['add_widget'])
                 for u in write_only_users:
@@ -86,7 +86,7 @@ def assign_group_permissions():
                     user.groups.add(group)
                     group.user_set.add(user)
             elif g == 'change':
-                #group.permissions.add(inv_perms['change_inventory'])
+                group.permissions.add(inv_perms['change_inventory'])
                 group.permissions.add(store_perms['change_store'])
                 group.permissions.add(widget_perms['change_widget'])
                 for u in readwrite_users:
@@ -94,7 +94,7 @@ def assign_group_permissions():
                     user.groups.add(group)
                     group.user_set.add(user)
             elif g == 'delete':
-                #group.permissions.add(inv_perms['delete_inventory'])
+                group.permissions.add(inv_perms['delete_inventory'])
                 group.permissions.add(store_perms['delete_store'])
                 group.permissions.add(widget_perms['delete_widget'])
                 for u in delete_users:
@@ -102,7 +102,7 @@ def assign_group_permissions():
                     user.groups.add(group)
                     group.user_set.add(user)
             elif g == 'full_access':
-                #group.permissions.add(inv_perms['full_access'])
+                group.permissions.add(inv_perms['full_access'])
                 group.permissions.add(store_perms['full_access'])
                 group.permissions.add(widget_perms['full_access'])
                 for u in full_access_users:

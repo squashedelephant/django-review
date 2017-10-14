@@ -13,6 +13,7 @@
     "fields": {
         "name": "add",
         "permissions": [
+            25,
             22,
             19
         ]
@@ -24,6 +25,7 @@
     "fields": {
         "name": "change",
         "permissions": [
+            26,
             23,
             20
         ]
@@ -35,6 +37,7 @@
     "fields": {
         "name": "delete",
         "permissions": [
+            27,
             24,
             21
         ]
@@ -46,6 +49,7 @@
     "fields": {
         "name": "full_access",
         "permissions": [
+            28,
             29,
             30
         ]

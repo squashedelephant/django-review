@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
         "created_by": 1,
-        "name": "Store 8",
+        "name": "Store 31",
         "location": "Albany",
         "deleted": false,
         "link": "/simple/stores/1/",
@@ -17,7 +17,7 @@
     "pk": 2,
     "fields": {
         "created_by": 1,
-        "name": "Store 75",
+        "name": "Store 55",
         "location": "Berkeley",
         "deleted": false,
         "link": "/simple/stores/2/",
@@ -30,7 +30,7 @@
     "pk": 3,
     "fields": {
         "created_by": 1,
-        "name": "Store 68",
+        "name": "Store 77",
         "location": "El Cerrito",
         "deleted": false,
         "link": "/simple/stores/3/",
@@ -43,7 +43,7 @@
     "pk": 4,
     "fields": {
         "created_by": 1,
-        "name": "Store 20",
+        "name": "Store 38",
         "location": "Emeryville",
         "deleted": false,
         "link": "/simple/stores/4/",
@@ -56,7 +56,7 @@
     "pk": 5,
     "fields": {
         "created_by": 1,
-        "name": "Store 94",
+        "name": "Store 98",
         "location": "Hercules",
         "deleted": false,
         "link": "/simple/stores/5/",
@@ -69,7 +69,7 @@
     "pk": 6,
     "fields": {
         "created_by": 1,
-        "name": "Store 97",
+        "name": "Store 27",
         "location": "Pinole",
         "deleted": false,
         "link": "/simple/stores/6/",
@@ -82,7 +82,7 @@
     "pk": 7,
     "fields": {
         "created_by": 1,
-        "name": "Store 41",
+        "name": "Store 17",
         "location": "Rodeo",
         "deleted": false,
         "link": "/simple/stores/7/",
@@ -95,7 +95,7 @@
     "pk": 8,
     "fields": {
         "created_by": 1,
-        "name": "Store 30",
+        "name": "Store 43",
         "location": "San Pablo",
         "deleted": false,
         "link": "/simple/stores/8/",

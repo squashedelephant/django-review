@@ -13,7 +13,7 @@
             <td>{{ inventory.quantity }}</td>
         </tr>
     </table>
-    {% if len(inventory) > 0 %}
+    {% if inventory.store %}
         <button type="button">
             <a href="{{ inventory.ulink }}">Modify Item</a>
         </button>
