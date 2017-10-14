@@ -24,9 +24,6 @@ $ source omg/bin/activate
 (omg) $ python manage.py makemigrations
 (omg) $ python manage.py migrate
 (omg) $ python manage.py collectstatic
-(omg) $ python manage.py createsuperuser --username qa
-email? qa@random.org
-password? br0k3nc0d3
 
 TEST PROJECT
 (omg) $ mkdir -p tools/

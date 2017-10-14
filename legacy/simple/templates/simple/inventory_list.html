@@ -13,7 +13,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for inv in inventory %}
+        {% for inv in inventories %}
             <tr>
                 <td><a href="{{ inv.link }}">{{ inv.link }}</a></td>
                 <td>{{ inv.store }}</td>
@@ -23,17 +23,41 @@
         {% endfor %}
         </tbody>
     </table>
-    {% if inventory > 0 %}
-        <button type="button">
-            <a href="{{ inv.ulink }}">Modify Item</a>
-        </button>
-        <button type="button">
-            <a href="{{ inv.dlink }}">Delete Item</a>
-        </button>
-    {% endif %}
-
-        <button type="button">
-            <a href={% url "simple:widget-aggr" %}>Total Cost</a>
-        </button>
-    {% endif %}
+    <table id="pagination">
+        <tr>
+            <td>
+                {% if prev %}
+                    <button type="button">
+                        <a href="{{ prev }}">Prev</a>
+                    </button>
+                {% else %}
+                    <button type="button">
+                        <a>Prev</a>
+                    </button>
+                {% endif %}
+            </td>
+            <td>
+                {% if aggr %}
+                    <button type="button">
+                        <a href="{{ aggr }}">Total Quantity</a>
+                    </button>
+                {% else %}
+                    <button type="button">
+                        <a>Total Quantity</a>
+                    </button>
+                {% endif %}
+            </td>
+            <td>
+                {% if next %}
+                    <button type="button">
+                        <a href="{{ next }}">Next</a>
+                    </button>
+                {% else %}
+                    <button type="button">
+                        <a>Next</a>
+                    </button>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
 {% endblock %}

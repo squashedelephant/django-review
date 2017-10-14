@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
         "user": 1,
-        "permission": 29
+        "permission": 28
     }
 },
 {
@@ -12,15 +12,15 @@
     "pk": 2,
     "fields": {
         "user": 1,
-        "permission": 30
+        "permission": 29
     }
 },
 {
     "model": "auth.user_user_permissions",
     "pk": 3,
     "fields": {
-        "user": 2,
-        "permission": 29
+        "user": 1,
+        "permission": 30
     }
 },
 {
@@ -28,47 +28,47 @@
     "pk": 4,
     "fields": {
         "user": 2,
-        "permission": 30
+        "permission": 28
     }
 },
 {
     "model": "auth.user_user_permissions",
     "pk": 5,
     "fields": {
-        "user": 3,
-        "permission": 22
+        "user": 2,
+        "permission": 29
     }
 },
 {
     "model": "auth.user_user_permissions",
     "pk": 6,
     "fields": {
-        "user": 3,
-        "permission": 19
+        "user": 2,
+        "permission": 30
     }
 },
 {
     "model": "auth.user_user_permissions",
     "pk": 7,
     "fields": {
-        "user": 4,
-        "permission": 22
+        "user": 3,
+        "permission": 25
     }
 },
 {
     "model": "auth.user_user_permissions",
     "pk": 8,
     "fields": {
-        "user": 4,
-        "permission": 19
+        "user": 3,
+        "permission": 22
     }
 },
 {
     "model": "auth.user_user_permissions",
     "pk": 9,
     "fields": {
-        "user": 4,
-        "permission": 24
+        "user": 3,
+        "permission": 19
     }
 },
 {
@@ -76,14 +76,14 @@
     "pk": 10,
     "fields": {
         "user": 4,
-        "permission": 21
+        "permission": 25
     }
 },
 {
     "model": "auth.user_user_permissions",
     "pk": 11,
     "fields": {
-        "user": 5,
+        "user": 4,
         "permission": 22
     }
 },
@@ -91,7 +91,7 @@
     "model": "auth.user_user_permissions",
     "pk": 12,
     "fields": {
-        "user": 5,
+        "user": 4,
         "permission": 19
     }
 },
@@ -99,13 +99,69 @@
     "model": "auth.user_user_permissions",
     "pk": 13,
     "fields": {
+        "user": 4,
+        "permission": 27
+    }
+},
+{
+    "model": "auth.user_user_permissions",
+    "pk": 14,
+    "fields": {
+        "user": 4,
+        "permission": 24
+    }
+},
+{
+    "model": "auth.user_user_permissions",
+    "pk": 15,
+    "fields": {
+        "user": 4,
+        "permission": 21
+    }
+},
+{
+    "model": "auth.user_user_permissions",
+    "pk": 16,
+    "fields": {
+        "user": 5,
+        "permission": 25
+    }
+},
+{
+    "model": "auth.user_user_permissions",
+    "pk": 17,
+    "fields": {
+        "user": 5,
+        "permission": 22
+    }
+},
+{
+    "model": "auth.user_user_permissions",
+    "pk": 18,
+    "fields": {
+        "user": 5,
+        "permission": 19
+    }
+},
+{
+    "model": "auth.user_user_permissions",
+    "pk": 19,
+    "fields": {
+        "user": 5,
+        "permission": 26
+    }
+},
+{
+    "model": "auth.user_user_permissions",
+    "pk": 20,
+    "fields": {
         "user": 5,
         "permission": 23
     }
 },
 {
     "model": "auth.user_user_permissions",
-    "pk": 14,
+    "pk": 21,
     "fields": {
         "user": 5,
         "permission": 20
@@ -113,7 +169,15 @@
 },
 {
     "model": "auth.user_user_permissions",
-    "pk": 15,
+    "pk": 22,
+    "fields": {
+        "user": 9,
+        "permission": 28
+    }
+},
+{
+    "model": "auth.user_user_permissions",
+    "pk": 23,
     "fields": {
         "user": 9,
         "permission": 29
@@ -121,7 +185,7 @@
 },
 {
     "model": "auth.user_user_permissions",
-    "pk": 16,
+    "pk": 24,
     "fields": {
         "user": 9,
         "permission": 30

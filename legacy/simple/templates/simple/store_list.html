@@ -15,10 +15,36 @@
         {% for store in stores %}
             <tr>
                 <td><a href="{{ store.link }}">{{ store.link }}</a></td>
-                <td>{{ widget.name }}</td>
-                <td>{{ widget.location }}</td>
+                <td>{{ store.name }}</td>
+                <td>{{ store.location }}</td>
             </tr>
         {% endfor %}
         </tbody>
+    </table>
+    <table id="pagination">
+        <tr>
+            <td>
+                {% if prev %}
+                    <button type="button">
+                        <a href="{{ prev }}">Prev</a>
+                    </button>
+                {% else %}
+                    <button type="button">
+                        <a>Prev</a>
+                    </button>
+                {% endif %}
+            </td>
+            <td>
+                {% if next %}
+                    <button type="button">
+                        <a href="{{ next }}">Next</a>
+                    </button>
+                {% else %}
+                    <button type="button">
+                        <a>Next</a>
+                    </button>
+                {% endif %}
+            </td>
+        </tr>
     </table>
 {% endblock %}
