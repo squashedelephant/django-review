@@ -124,36 +124,31 @@ def inventory_delete(request, pk):
     context = _get_context()
     context['title'] = 'Delete an Existing Inventory'
     template = 'simple/delete_form.html'
+    inventory = get_object_or_404(Inventory,
+                                  pk=pk,
+                                  created_by=request.user)
     if request.method == 'POST':
         form = InventoryForm(request.POST)
+        form = InventoryForm(request.POST, instance=inventory)
         if form.is_valid():
-            try:
-                inv = Inventory.objects.get(created_by=request.user,
-                                            pk=pk)
-                inv.deleted = True
-                inv.save()
-                return HttpResponseRedirect(
-                     reverse_lazy('simple:deleted',
-                                  kwargs={'pk': pk}))
-            except Inventory.DoesNotExist:
-                reverse_lazy('simple:eperm',
-                             kwargs={'pk': pk})
+            inventory.deleted = True
+            inventory.save()
+            return HttpResponseRedirect(
+                reverse_lazy('simple:deleted',
+                             kwargs={'pk': pk}))
         else:
             context['form'] = form
             return render(request, template, context)
     else:
-        try:
-            inv = Inventory.objects.get(created_by=request.user,
-                                        pk=pk)
-            initial = {'created_by': request.user,
-                       'name': inventory.name,
-                       'cost': widget.cost}
-            form = InventoryForm(initial=initial)
-            context['form'] = form
-            return render(request, template, context)
-        except Inventory.DoesNotExist:
-            reverse_lazy('simple:eperm',
-                         kwargs={'pk': pk})
+        inv = Inventory.objects.get(created_by=request.user,
+                                    pk=pk)
+        initial = {'created_by': request.user,
+                   'store': inv.store,
+                   'widget': inv.widget,
+                   'deleted': True,
+                   'quantity': inv.quantity}
+        context['form'] = InventoryForm(initial=initial)
+        return render(request, template, context)
 
 @login_required
 @cache_page(60 * 5)

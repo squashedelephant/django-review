@@ -26,9 +26,6 @@ from simple.views import widget_detail, widget_list, widget_update
 class TestInventoryView(TestCase):
     @classmethod
     def setUpTestData(cls):
-        call_command('loaddata', 'permission', verbosity=2)
-        call_command('loaddata', 'group', verbosity=3)
-        call_command('loaddata', 'user', verbosity=2)
         call_command('loaddata', 'store', verbosity=2)
         call_command('loaddata', 'widget', verbosity=2)
         call_command('loaddata', 'inventory', verbosity=2)
@@ -41,7 +38,7 @@ class TestInventoryView(TestCase):
                       'delete': {'username': 'delete',
                                  'password': 'write'},
                       'qa': {'username': 'qa',
-                                 'password': 'br0k3nc0d3'}}
+                             'password': 'br0k3nc0d3'}}
 
     def setUp(self):
         self.factory = RequestFactory()
@@ -90,12 +87,8 @@ class TestInventoryView(TestCase):
         return
 
     def test_00_fixtures_loaded(self):
-        groups = Group.objects.all()
-        self.assertEqual(5, len(groups))
         users = User.objects.all()
         self.assertEqual(9, len(users))
-        perms = Permission.objects.all()
-        self.assertEqual(30, len(perms))
         active_inv = Inventory.objects.filter(deleted=False)
         self.assertEqual(10, len(active_inv))
         active_stores = Store.objects.filter(deleted=False)
@@ -194,7 +187,6 @@ class TestInventoryView(TestCase):
 
     def _create(self):
         url = '/login/?next=/'
-        self._set_user(self.kwargs['qa'])
         response = self.c.get(path=url, headers=self.headers, follow=True)
         self.assertEqual(200, response.status_code)
         self.assertEqual('OK', response.reason_phrase)
@@ -208,6 +200,43 @@ class TestInventoryView(TestCase):
         self.assertEqual('OK', response.reason_phrase)
         soup = BeautifulSoup(response.content, 'html.parser')
         self.assertEquals(u'App: Legacy: Home', soup.title.string)
+        url = reverse('simple:store-create')
+        response = self.c.get(path=url, headers=self.headers, follow=True)
+        self.assertEqual(200, response.status_code)
+        self.assertEqual('OK', response.reason_phrase)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        token = soup.find(attrs={'name': 'csrfmiddlewaretoken'})['value']
+        self.assertEquals(u'Create a Store', soup.title.string)
+        _ref = randint(1000, 5000)
+        data = {'name': 'Random Store {}'.format(_ref),
+                'location': 'Any Town'}
+        data.update({'csrfmiddlewaretoken': token})
+        self._update_headers()
+        response = self.c.post(path=url, data=data, headers=self.headers, follow=True)
+        self.assertEqual(200, response.status_code)
+        self.assertEqual('OK', response.reason_phrase)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        self.assertEquals(u'Data Submission', soup.title.string)
+        store_pk = int(soup.find('p').string.split()[1])
+        url = reverse('simple:widget-create')
+        response = self.c.get(path=url, headers=self.headers, follow=True)
+        self.assertEqual(200, response.status_code)
+        self.assertEqual('OK', response.reason_phrase)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        token = soup.find(attrs={'name': 'csrfmiddlewaretoken'})['value']
+        self.assertEquals(u'Create a Widget', soup.title.string)
+        _ref = randint(1000, 5000)
+        data = {'name': 'Random Widget {}'.format(_ref),
+                'sku': get_random_sku(),
+                'cost': get_random_cost()}
+        data.update({'csrfmiddlewaretoken': token})
+        self._update_headers()
+        response = self.c.post(path=url, data=data, headers=self.headers, follow=True)
+        self.assertEqual(200, response.status_code)
+        self.assertEqual('OK', response.reason_phrase)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        self.assertEquals(u'Data Submission', soup.title.string)
+        widget_pk = int(soup.find('p').string.split()[1])
         url = reverse('simple:inventory-create')
         response = self.c.get(path=url, headers=self.headers, follow=True)
         self.assertEqual(200, response.status_code)
@@ -215,26 +244,15 @@ class TestInventoryView(TestCase):
         soup = BeautifulSoup(response.content, 'html.parser')
         token = soup.find(attrs={'name': 'csrfmiddlewaretoken'})['value']
         self.assertEquals(u'Create an Inventory', soup.title.string)
-        s = Store.objects.filter(created_by=self.user,
-                                 deleted=False)
-        w = Widget.objects.filter(created_by=self.user,
-                                 deleted=False)
         for option in soup.find(attrs={'name': 'created_by'}).findAll('option'):
-            if option.text == 'qa': 
+            if option.text == self.user.username: 
                 created_by = option['value']
-        for option in soup.find(attrs={'name': 'store'}).findAll('option'):
-            if option.text == s[0].id: 
-                store = option['value']
-        for option in soup.find(attrs={'name': 'widget'}).findAll('option'):
-            if option.text == w[0].id: 
-                widget = option['value']
         data = {'created_by': created_by,
-                'store': store,
-                'widget': widget}
+                'store': store_pk,
+                'widget': widget_pk,
+                'quantity': 1}
         data.update({'csrfmiddlewaretoken': token})
         self._update_headers()
-        print('data: {}'.format(data))
-        self.assertTrue(False)
         response = self.c.post(path=url, data=data, headers=self.headers, follow=True)
         self.assertEqual(200, response.status_code)
         self.assertEqual('OK', response.reason_phrase)
@@ -270,94 +288,102 @@ class TestInventoryView(TestCase):
         self.assertEqual(u'Object {} created successfully.'.format(pk),
                          soup.find('p').string)
 
-    def ttest_06_create_insufficient_perms(self):
+    def test_06_create_insufficient_perms(self):
+        # Inventory object requires existence of Store and Widget objects
         self._set_user(self.kwargs['view'])
-        self.assertFalse(self.user.has_perm('simple.add_inventory'))
+        self.assertFalse(self.user.has_perm('simple.add_store'))
         self.assertEquals(set(), self.user.get_all_permissions())
         self.assertEquals(set(), self.user.get_group_permissions())
         response = self._unable_to_create()
         self.assertEqual(302, response.status_code)
         self.assertEqual('Found', response.reason_phrase)
-        self.assertEqual('/login/?next=/simple/inventory/create/', response.url)
+        self.assertEqual('/login/?next=/simple/stores/create/', response.url)
 
-    def ttest_07_update(self):
+    def test_07_update(self):
         # user change has change_store permission which includes add_store
         self._set_user(self.kwargs['change'])
         self.assertTrue(self.user.has_perm('simple.change_store'))
         (soup, pk) = self._create()
         self.assertEqual(u'Object {} created successfully.'.format(pk),
                          soup.find('p').string)
-        url = reverse('simple:store-update', kwargs={'pk': pk})
+        url = reverse('simple:inventory-update', kwargs={'pk': pk})
         response = self.c.get(path=url, headers=self.headers, follow=False)
         self.assertEqual(200, response.status_code)
         self.assertEqual('OK', response.reason_phrase)
         soup = BeautifulSoup(response.content, 'html.parser')
         token = soup.find(attrs={'name': 'csrfmiddlewaretoken'})['value']
-        self.assertEquals(u'Update an Existing Store', soup.title.string)
-        data = {'name': 'Random Store {}'.format(randint(1000, 5000)),
-                'location': 'Some Town'}
+        for option in soup.find(attrs={'name': 'created_by'}).findAll('option'):
+            if option.text == self.user.username: 
+                created_by = option['value']
+        for option in soup.find(attrs={'name': 'store'}).findAll('option'):
+            if option.has_attr('selected'): 
+                store_pk = option['value']
+        for option in soup.find(attrs={'name': 'widget'}).findAll('option'):
+            if option.has_attr('selected'): 
+                widget_pk = option['value']
+        self.assertEquals(u'Update an Existing Inventory', soup.title.string)
+        data = {'created_by': created_by,
+                'store': store_pk,
+                'widget': widget_pk,
+                'quantity': 2}
         data.update({'csrfmiddlewaretoken': token})
         self._update_headers()
         response = self.c.post(path=url, data=data, headers=self.headers, follow=True)
         self.assertEqual(200, response.status_code)
         self.assertEqual('OK', response.reason_phrase)
         soup = BeautifulSoup(response.content, 'html.parser')
+        print(soup.prettify())
         self.assertEquals(u'Data Modification', soup.title.string)
         pk = int(soup.find('p').string.split()[1])
         self.assertEqual(u'Object {} updated successfully.'.format(pk),
                          soup.find('p').string)
 
-    def ttest_08_update_insufficient_perms(self):
-        # user add does not have change_store permission
+    def test_08_update_insufficient_perms(self):
+        # user add has add_store permission but not change_store
         self._set_user(self.kwargs['add'])
+        self.assertFalse(self.user.has_perm('simple.change_store'))
+        self.assertNotIn('simple.change_store', self.user.get_all_permissions())
+        self.assertNotIn('simple.change_store', self.user.get_group_permissions())
         (soup, pk) = self._create()
         self.assertEqual(u'Object {} created successfully.'.format(pk),
                          soup.find('p').string)
-        self.assertFalse(self.user.has_perm('simple.change_store'))
-        self.assertIn('simple.add_store', self.user.get_all_permissions())
-        self.assertIn('simple.add_store', self.user.get_group_permissions())
-        url = reverse('simple:store-list')
-        response = self.c.get(path=url, headers=self.headers, follow=True)
-        self.assertEqual(200, response.status_code)
-        self.assertEqual('OK', response.reason_phrase)
-        soup = BeautifulSoup(response.content, 'html.parser')
-        self.assertEquals(u'Simple: Active Stores', soup.title.string)
-        soup = BeautifulSoup(response.content, 'html.parser')
-        url = soup.findAll('table')[0].findAll('tbody')[0].findAll('tr')[0].findAll('td')[0].string
-        response = self.c.get(path=url, headers=self.headers, follow=True)
-        self.assertEqual(200, response.status_code)
-        self.assertEqual('OK', response.reason_phrase)
-        soup = BeautifulSoup(response.content, 'html.parser')
-        print(soup.prettify())
-        url = soup.findAll('button')[0].find('a')['href']
+        url = reverse('simple:inventory-update', kwargs={'pk': pk})
         response = self.c.get(path=url, headers=self.headers, follow=False)
         self.assertEqual(302, response.status_code)
         self.assertEqual('Found', response.reason_phrase)
         self.assertEqual('/login/?next={}'.format(url), response.url)
 
-    def ttest_09_delete_update(self):
-        # user delete has delete_store, add_store permissions but not change_store
+    def test_09_delete_update(self):
+        # user delete has delete_store permission which includes add_store
         self._set_user(self.kwargs['delete'])
         self.assertTrue(self.user.has_perm('simple.delete_store'))
         (soup, pk) = self._create()
         self.assertEqual(u'Object {} created successfully.'.format(pk),
                          soup.find('p').string)
-        url = reverse('simple:store-delete', kwargs={'pk': pk})
-        response = self.c.get(path=url, headers=self.headers, follow=True)
+        url = reverse('simple:inventory-delete', kwargs={'pk': pk})
+        response = self.c.get(path=url, headers=self.headers, follow=False)
         self.assertEqual(200, response.status_code)
         self.assertEqual('OK', response.reason_phrase)
         soup = BeautifulSoup(response.content, 'html.parser')
         token = soup.find(attrs={'name': 'csrfmiddlewaretoken'})['value']
-        self.assertEquals(u'Delete an Existing Store', soup.title.string)
-        name = soup.find(attrs={'id': 'id_name'})['value']
-        location = soup.find(attrs={'id': 'id_location'})['value']
-        data = {'name': name,
-                'location': location,
-                'deleted': True}
+        for option in soup.find(attrs={'name': 'created_by'}).findAll('option'):
+            if option.text == self.user.username: 
+                created_by = option['value']
+        for option in soup.find(attrs={'name': 'store'}).findAll('option'):
+            if option.has_attr('selected'): 
+                store_pk = option['value']
+        for option in soup.find(attrs={'name': 'widget'}).findAll('option'):
+            if option.has_attr('selected'): 
+                widget_pk = option['value']
+        quantity = soup.find(attrs={'name': 'quantity'})['value']
+        self.assertEquals(u'Delete an Existing Inventory', soup.title.string)
+        data = {'created_by': created_by,
+                'store': store_pk,
+                'widget': widget_pk,
+                'deleted': True,
+                'quantity': quantity}
         data.update({'csrfmiddlewaretoken': token})
         self._update_headers()
-        print('data: {}'.format(data))
-        # HTTP DELETE replaced with HTTP POST to avoid CSRF
         response = self.c.post(path=url, data=data, headers=self.headers, follow=True)
         self.assertEqual(200, response.status_code)
         self.assertEqual('OK', response.reason_phrase)
@@ -368,26 +394,16 @@ class TestInventoryView(TestCase):
         self.assertEqual(u'Object {} deleted successfully.'.format(pk),
                          soup.find('p').string)
 
-    def ttest_10_delete_insufficient_perms(self):
-        # user add does not have delete_store permission
+    def test_10_delete_insufficient_perms(self):
+        # user add has add_store permission but not delete_store
         self._set_user(self.kwargs['add'])
+        self.assertFalse(self.user.has_perm('simple.delete_inventory'))
+        self.assertNotIn('simple.delete_inventory', self.user.get_all_permissions())
+        self.assertNotIn('simple.delete_inventory', self.user.get_group_permissions())
         (soup, pk) = self._create()
         self.assertEqual(u'Object {} created successfully.'.format(pk),
                          soup.find('p').string)
-        self.assertFalse(self.user.has_perm('simple.delete_store'))
-        self.assertIn('simple.add_store', self.user.get_all_permissions())
-        self.assertIn('simple.add_store', self.user.get_group_permissions())
-        url = reverse('simple:store-list')
-        response = self.c.get(path=url, headers=self.headers, follow=True)
-        self.assertEqual(200, response.status_code)
-        self.assertEqual('OK', response.reason_phrase)
-        soup = BeautifulSoup(response.content, 'html.parser')
-        url = soup.findAll('table')[0].findAll('tbody')[0].findAll('tr')[0].findAll('td')[0].string
-        response = self.c.get(path=url, headers=self.headers, follow=True)
-        self.assertEqual(200, response.status_code)
-        self.assertEqual('OK', response.reason_phrase)
-        soup = BeautifulSoup(response.content, 'html.parser')
-        url = soup.findAll('button')[1].find('a')['href']
+        url = reverse('simple:inventory-delete', kwargs={'pk': pk})
         response = self.c.get(path=url, headers=self.headers, follow=False)
         self.assertEqual(302, response.status_code)
         self.assertEqual('Found', response.reason_phrase)
@@ -677,7 +693,6 @@ class TestStoreView(TestCase):
         self.assertEqual(200, response.status_code)
         self.assertEqual('OK', response.reason_phrase)
         soup = BeautifulSoup(response.content, 'html.parser')
-        print(soup.prettify())
         url = soup.findAll('button')[0].find('a')['href']
         response = self.c.get(path=url, headers=self.headers, follow=False)
         self.assertEqual(302, response.status_code)
