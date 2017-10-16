@@ -3,24 +3,24 @@
     "model": "auth.user_groups",
     "pk": 1,
     "fields": {
-        "user": 7,
-        "group": 1
+        "user": 1,
+        "group": 5
     }
 },
 {
     "model": "auth.user_groups",
     "pk": 2,
     "fields": {
-        "user": 3,
-        "group": 2
+        "user": 2,
+        "group": 5
     }
 },
 {
     "model": "auth.user_groups",
     "pk": 3,
     "fields": {
-        "user": 5,
-        "group": 3
+        "user": 3,
+        "group": 2
     }
 },
 {
@@ -35,23 +35,23 @@
     "model": "auth.user_groups",
     "pk": 5,
     "fields": {
-        "user": 2,
-        "group": 5
+        "user": 5,
+        "group": 3
     }
 },
 {
     "model": "auth.user_groups",
     "pk": 6,
     "fields": {
-        "user": 9,
-        "group": 5
+        "user": 7,
+        "group": 1
     }
 },
 {
     "model": "auth.user_groups",
     "pk": 7,
     "fields": {
-        "user": 1,
+        "user": 9,
         "group": 5
     }
 }

@@ -6,6 +6,8 @@ source =
 directory=results
 [report]
 omit = 
+    legacy/settings.py
     legacy/tests/*
     simple/tests/*
     simple/migrations/*
+    simple/admin.py

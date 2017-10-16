@@ -92,7 +92,7 @@ class TestInventoryView(TestCase):
         active_inv = Inventory.objects.filter(deleted=False)
         self.assertEqual(10, len(active_inv))
         active_stores = Store.objects.filter(deleted=False)
-        self.assertEqual(8, len(active_stores))
+        self.assertEqual(7, len(active_stores))
         active_widgets = Widget.objects.filter(deleted=False)
         self.assertEqual(10, len(active_widgets))
 
@@ -485,7 +485,7 @@ class TestStoreView(TestCase):
         active_inv = Inventory.objects.filter(deleted=False)
         self.assertEqual(10, len(active_inv))
         active_stores = Store.objects.filter(deleted=False)
-        self.assertEqual(8, len(active_stores))
+        self.assertEqual(7, len(active_stores))
         active_widgets = Widget.objects.filter(deleted=False)
         self.assertEqual(10, len(active_widgets))
 
@@ -833,7 +833,7 @@ class TestWidgetView(TestCase):
         active_inv = Inventory.objects.filter(deleted=False)
         self.assertEqual(10, len(active_inv))
         active_stores = Store.objects.filter(deleted=False)
-        self.assertEqual(8, len(active_stores))
+        self.assertEqual(7, len(active_stores))
         active_widgets = Widget.objects.filter(deleted=False)
         self.assertEqual(10, len(active_widgets))
 
