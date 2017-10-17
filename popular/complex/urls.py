@@ -3,7 +3,7 @@ from django.contrib import admin
 
 from complex.views import home
 
-app_name = 'simple'
+app_name = 'complex'
 urlpatterns = [
     url('^$',
         home,
