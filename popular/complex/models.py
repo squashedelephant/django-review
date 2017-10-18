@@ -87,8 +87,7 @@ class Event(models.Model):
         (MEMORY, 'Memory Full')
     )
     sensor = models.ForeignKey(Sensor)
-    sdate = models.DateTimeField() 
-    edate = models.DateTimeField() 
+    timestamp = models.DateTimeField() 
     location = models.SmallIntegerField(choices=LOCATIONS,
                                         default=COCKPIT)
     status = models.SmallIntegerField(choices=STATUS,

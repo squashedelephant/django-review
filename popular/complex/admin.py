@@ -16,13 +16,13 @@ class MeterAdmin(admin.ModelAdmin):
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('sensor', 'sdate', 'edate', 'location', 'status',
+    list_display = ('sensor', 'timestamp', 'location', 'status',
                     'camera', 'avg_temp', 'avg_pressure', 'avg_humidity',
                     'altitude', 'windspeed')
     list_filter = ('device', 'created_by')
-    search_fields = ('sensor', 'sdate', 'edate', 'location', 'status')
-    date_hierarchy = 'edate'
-    ordering = ('-edate')
-    fields = ('sensor', 'sdate', 'edate', 'location', 'status', 'camera',
+    search_fields = ('sensor', 'timestamp', 'location', 'status')
+    date_hierarchy = 'timestamp'
+    ordering = ('-timestamp')
+    fields = ('sensor', 'timestamp', 'location', 'status', 'camera',
               'avg_temp', 'avg_pressure', 'avg_humidity', 'altitude',
               'windspeed')
