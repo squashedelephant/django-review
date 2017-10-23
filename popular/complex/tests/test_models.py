@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 from django.contrib.auth.models import User
 from django.core.management import call_command
-from django.db import IntegrityError
 from django.test import TestCase
 
 from complex.models import Event, Sensor

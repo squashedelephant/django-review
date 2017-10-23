@@ -7,8 +7,9 @@ from complex.models import Event, Sensor
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['sensor', 'timestamp', 'location', 'status', 'camera', 'avg_temp',
-                  'avg_pressure', 'pct_humidity', 'altitude', 'windspeed', 'deleted']
+        fields = ['sensor', 'timestamp', 'location', 'status', 'camera',
+                  'avg_temp', 'avg_pressure', 'pct_humidity', 'altitude',
+                  'windspeed', 'deleted']
 
 class SensorForm(forms.ModelForm):
     class Meta:
