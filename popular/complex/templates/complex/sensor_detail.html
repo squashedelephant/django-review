@@ -1,0 +1,22 @@
+{% extends "simple/base.html" %}
+
+{% block table %}
+    <table id="detail">
+        <tr>
+            <th>Name</th>
+            <th>Location</th>
+        </tr>
+        <tr>
+            <td>{{ store.name }}</td>
+            <td>{{ store.location }}</td>
+        </tr>
+    </table>
+    {% if store.name %}
+        <button type="button">
+            <a href="{{ store.ulink }}">Modify Store</a>
+        </button>
+        <button type="button">
+            <a href="{{ store.dlink }}">Delete Store</a>
+        </button>
+    {% endif %}
+{% endblock %}
