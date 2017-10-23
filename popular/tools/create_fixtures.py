@@ -12,14 +12,13 @@ def get_db_tables():
                  'group_permission.json': 'auth.group_permissions',
                  'user_groups.json': 'auth.user_groups',
                  'user_permission.json': 'auth.user_user_permissions',
-                 'inventory.json': 'simple.inventory',
-                 'store.json': 'simple.store',
-                 'widget.json': 'simple.widget'}
+                 'sensor.json': 'complex.sensor',
+                 'event.json': 'complex.event'}
     return db_tables
 
 def main():
-    path.append('/Users/tim/Documents/workspace/python/django-review/legacy/')
-    environ.setdefault("DJANGO_SETTINGS_MODULE", "legacy.settings")
+    path.append('/Users/tim/Documents/workspace/python/django-review/popular/')
+    environ.setdefault("DJANGO_SETTINGS_MODULE", "popular.settings")
     setup()
     for key, value in get_db_tables().items():
         print('key: {}'.format(key))

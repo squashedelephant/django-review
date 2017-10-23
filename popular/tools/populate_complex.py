@@ -2,7 +2,7 @@
 
 from decimal import Decimal
 from os import environ
-from random import randint, random
+from random import randint
 from sys import argv, exit, path
 
 from django import setup
@@ -10,8 +10,8 @@ from django.db import IntegrityError
 
 def assign_user_permissions():
     from django.contrib.auth.models import User
-    from tools.users_and_groups import get_users, get_event_permissions
-    from tools.users_and_groups import get_sensor_permissions
+    from tools.utils import get_users, get_event_permissions
+    from tools.utils import get_sensor_permissions
     users = get_users()
     event_perms = get_event_permissions()
     sensor_perms = get_sensor_permissions()
@@ -50,8 +50,8 @@ def assign_user_permissions():
 
 def assign_group_permissions():
     from django.contrib.auth.models import Group, User
-    from tools.users_and_groups import get_groups, get_event_permissions
-    from tools.users_and_groups import get_sensor_permissions
+    from tools.utils import get_groups, get_event_permissions
+    from tools.utils import get_sensor_permissions
     sensor_perms = get_sensor_permissions()
     event_perms = get_event_permissions()
     search_users = ['view']
@@ -102,64 +102,75 @@ def assign_group_permissions():
 
 def populate_sensors():
     from django.contrib.auth.models import User
-    from simple.models import Sensor
-    from simple.tests.utils import xxx
+    from complex.models import Event, Sensor
+    from tools.utils import get_sensor_name, get_sku
+    from tools.utils import get_serial_no
     try:
         user = User.objects.get(username='qa')
     except User.DoesNotExist as e:
         exit('ERROR: create missing username: qa')
     if hasattr(user, 'id'):
         sensors = []
-        for sku in get_skus():
+        for location in Event.LOCATIONS:
             while True:
-                ref = randint(1, 100)
-                kwargs = {'name': 'Sensor {}'.format(ref),
-                          'sku': sku,
-                          'created_by': user,
-                          'deleted': False}
+                kwargs = {'created_by': user,
+                          'name': get_sensor_name(),
+                          'sku': get_sku(),
+                          'serial_no': get_serial_no(),
+                          'climate': True}
+                if location in [Event.COCKPIT, Event.FORE_DOOR, Event.AFT_DOOR]:
+                    kwargs.update({'camera': True})
+                else:
+                    kwargs.update({'camera': False})
                 try:
-                    s = Store.objects.create(**kwargs)
-                    stores.append(s)
+                    s = Sensor.objects.create(**kwargs)
+                    sensors.append(s)
                     break
                 except IntegrityError as e:
-                    if str(e).endswith('name'):
-                        s = Store.objects.filter(name=kwargs['name'])
-                    elif str(e).endswith('location'):
-                        s = Store.objects.filter(location=kwargs['location'])
-                    stores.append(s[0])
+                    if str(e).endswith('serial_no'):
+                        s = Sensor.objects.filter(serial_no=kwargs['serial_no'])
+                    sensors.append(s[0])
                     break
         return sensors
     else:
         error = 'script assumes User: qa exists as first user created!'
         exit('ERROR: {}'.format(error))
 
-def populate_events(sensors, n):
+def populate_events(sensors, max):
     from django.contrib.auth.models import User
-    from simple.models import Event, Sensor
+    from complex.models import Event, Sensor
+    from tools.utils import get_timestamp, get_location, get_status
+    from tools.utils import get_camera, get_avg_temp, get_avg_pressure
+    from tools.utils import get_pct_humidity, get_altitude, get_windspeed
     try:
         user = User.objects.get(username='qa')
     except User.DoesNotExist as e:
         exit('ERROR: create missing username: qa')
     if hasattr(user, 'id'):
-        events = []
-        for i in range(n):
-            while True:
-                idx_s = randint(0, len(sensors) - 1)
-                quantity = randint(1, 100)
-                kwargs = {'store': stores[idx_s],
-                          'widget': widgets[idx_w],
-                          'quantity': quantity,
-                          'created_by': user,
-                          'deleted': False}
-                try:
-                    e = Event.objects.create(**kwargs)
-                    events.append(i)
-                    break
-                except IntegrityError:
-                    e = Event.objects.filter(sensor=kwargs['sensor'],
-                                             widget=kwargs['widget'])
-                    events.append(e[0])
-                    continue
+        for i in range(max):
+            idx_s = randint(0, len(sensors) - 1)
+            kwargs = {'sensor': sensors[idx_s],
+                      'timestamp': get_timestamp(),
+                      'location': get_location(),
+                      'status': get_status(),
+                      'avg_temp': get_avg_temp(),
+                      'avg_pressure': get_avg_pressure(),
+                      'pct_humidity': get_pct_humidity(),
+                      'altitude': get_altitude(),
+                      'windspeed': get_windspeed()}
+            if sensors[idx_s].camera:
+                kwargs.update({'camera': get_camera()})
+            print('Event kwargs: {}'.format(kwargs))
+            #Event kwargs: {'status': (103, u'Low Power'), 
+            #                'windspeed': 868, 
+            #                'location': (8, u'Tail'), 
+            #                'timestamp': datetime.datetime(2017, 10, 18, 23, 34, 41, 420907, tzinfo=<UTC>), 
+            #                'avg_pressure': 26.22648944398296, 
+            #                'altitude': 84102, 
+            #                'sensor': Random Sensor 4920_7U4Q5POABV, 
+            #                'pct_humidity': 13, 
+            #                'avg_temp': 49.90912681930372}
+            e = Event.objects.create(**kwargs)
     else:
         error = 'script assumes User: qa exists as first user created!'
         exit('ERROR: {}'.format(error))
@@ -168,11 +179,11 @@ def main():
     path.append('/Users/tim/Documents/workspace/python/django-review/popular/')
     environ.setdefault("DJANGO_SETTINGS_MODULE", "popular.settings")
     setup()
-    max = 10
+    max = 50
     assign_user_permissions()
     assign_group_permissions()
     sensors = populate_sensors()
-    populate_events(sensors, max)
+    #populate_events(sensors, max)
     return
 
 if __name__ == '__main__':

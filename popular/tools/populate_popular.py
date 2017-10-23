@@ -9,7 +9,7 @@ from django.db.utils import IntegrityError
 
 def load_users():
     from django.contrib.auth.models import User
-    from tools.users_and_groups import get_users
+    from tools.utils import get_users
     users = get_users()
     for user in users:
         try:
@@ -22,7 +22,7 @@ def load_users():
 
 def load_groups():
     from django.contrib.auth.models import Group
-    from tools.users_and_groups import get_groups
+    from tools.utils import get_groups
     groups = get_groups()
     for group in groups:
         try:

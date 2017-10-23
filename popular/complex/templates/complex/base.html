@@ -20,6 +20,7 @@
 <body>
     <div id="outside">
         <div id="inside">
+            <header>Django: Complex App</header>
             {% block header %}{% endblock %}
             <div>
             {% block form %}{% endblock %}
@@ -28,8 +29,8 @@
                 <h4 style="text-align:center">Manage</h4>
                 <ul>
                     <li><a id="hlink" href={% url "simple:home" %}>Home</a></li>
-                    <li><a id="alink" href={% url "simple:widget-list" %}>Show Widgets</a></li>
-                    <li><a id="clink" href={% url "simple:widget-create" %}>Add Widget</a></li>
+                    <li><a id="alink" href={% url "simple:sensor-list" %}>Show Sensors</a></li>
+                    <li><a id="clink" href={% url "simple:sensor-create" %}>Add Sensor</a></li>
                     <li><a id="logout" href="/logout/">Logout User</a></li>
                 </ul>
             </nav>
@@ -38,7 +39,7 @@
                 {% block table %}{% endblock %}
             </div>
             </article>
-            {% block footer %}{% endblock %}
+            <footer>Copyright 2017 @Tim Stilwell</footer>
         </div>
     </div>
 </body>
