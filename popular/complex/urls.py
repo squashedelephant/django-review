@@ -1,10 +1,10 @@
 from django.conf.urls import url
 from django.contrib import admin
 
+from complex.views import created, deleted, thanks, updated
 from complex.views import EventCreateView, EventDeleteView
 from complex.views import EventDetailView, EventListView
 from complex.views import EventUpdateView, HomePageView
-
 from complex.views import SensorCreateView, SensorDeleteView
 from complex.views import SensorDetailView, SensorListView
 from complex.views import SensorUpdateView
@@ -17,6 +17,12 @@ urlpatterns = [
     url(r'^admin/',
         admin.site.urls,
         name='admin'),
+    url(r'^created/(?P<pk>\d+)/$',
+        created,
+        name='created'),
+    url(r'^deleted/(?P<pk>\d+)/$',
+        deleted,
+        name='deleted'),
     url(r'^event/create/$',
         EventCreateView.as_view(),
         name='event-create'),
@@ -52,6 +58,12 @@ urlpatterns = [
         name='sensor-list'),
     url(r'^sensor/update/(?P<pk>\d+)/$',
         SensorUpdateView.as_view(),
-        name='sensor-update')
+        name='sensor-update'),
+    url(r'^thanks/$',
+        thanks,
+        name='thanks'),
+    url(r'^updated/(?P<pk>\d+)/$',
+        updated,
+        name='updated')
 ]
 

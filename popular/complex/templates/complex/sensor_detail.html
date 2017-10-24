@@ -1,22 +1,40 @@
-{% extends "simple/base.html" %}
+{% extends "complex/base.html" %}
 
 {% block table %}
     <table id="detail">
         <tr>
+            <th>Creator</th>
             <th>Name</th>
-            <th>Location</th>
+            <th>SKU</th>
+            <th>Serial Number</th>
+            <th>Temperature Units</th>
+            <th>Pressure Units</th>
+            <th>Altitude Units</th>
+            <th>Windspeed Units</th>
+            <th>Installation Date</th>
+            <th>Climate</th>
+            <th>Camera</th>
         </tr>
         <tr>
-            <td>{{ store.name }}</td>
-            <td>{{ store.location }}</td>
+            <td>{{ sensor.created_by }}</td>
+            <td>{{ sensor.name }}</td>
+            <td>{{ sensor.sku }}</td>
+            <td>{{ sensor.serial_no }}</td>
+            <td>{{ sensor.temp_units }}</td>
+            <td>{{ sensor.pressure_units }}</td>
+            <td>{{ sensor.alt_units }}</td>
+            <td>{{ sensor.ws_units }}</td>
+            <td>{{ sensor.installed }}</td>
+            <td>{{ sensor.climate }}</td>
+            <td>{{ sensor.camera }}</td>
         </tr>
     </table>
-    {% if store.name %}
+    {% if sensor.name %}
         <button type="button">
-            <a href="{{ store.ulink }}">Modify Store</a>
+            <a href="{{ sensor.ulink }}">Modify Sensor</a>
         </button>
         <button type="button">
-            <a href="{{ store.dlink }}">Delete Store</a>
+            <a href="{{ sensor.dlink }}">Delete Sensor</a>
         </button>
     {% endif %}
 {% endblock %}

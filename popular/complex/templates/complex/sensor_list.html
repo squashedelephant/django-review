@@ -1,22 +1,25 @@
-{% extends "simple/base.html" %}
+{% extends "complex/base.html" %}
 {% load static %}
 
 {% block table %}
-    <h3>Active Stores</h3>
+    <h3>Active Sensors</h3>
+    <h4>{{ form }}</h4>
     <table id="list">
         <thead>
             <tr>
                 <th>Link</th>
                 <th>Name</th>
-                <th>Location</th>
+                <th>SKU</th>
+                <th>Serial Number</th>
             </tr>
         </thead>
         <tbody>
-        {% for store in stores %}
+        {% for sensor in sensors %}
             <tr>
-                <td><a href="{{ store.link }}">{{ store.link }}</a></td>
-                <td>{{ store.name }}</td>
-                <td>{{ store.location }}</td>
+                <td><a href="{{ sensor.link }}">{{ sensor.link }}</a></td>
+                <td>{{ sensor.name }}</td>
+                <td>{{ sensor.sku }}</td>
+                <td>{{ sensor.serial_no }}</td>
             </tr>
         {% endfor %}
         </tbody>
