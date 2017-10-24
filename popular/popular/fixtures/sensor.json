@@ -1,0 +1,182 @@
+[
+{
+    "model": "complex.sensor",
+    "pk": 1,
+    "fields": {
+        "created_by": 2,
+        "name": "Random Sensor 4522",
+        "sku": "206-84902-394",
+        "serial_no": "71747240C4",
+        "temp_units": 1,
+        "pressure_units": 3,
+        "alt_units": 5,
+        "ws_units": 7,
+        "installed": "2017-10-24",
+        "climate": true,
+        "camera": false,
+        "link": "/complex/sensor/1/",
+        "ulink": "/complex/sensor/update/1/",
+        "dlink": "/complex/sensor/delete/1/"
+    }
+},
+{
+    "model": "complex.sensor",
+    "pk": 2,
+    "fields": {
+        "created_by": 2,
+        "name": "Random Sensor 3864",
+        "sku": "998-95236-841",
+        "serial_no": "G9419O65GT",
+        "temp_units": 1,
+        "pressure_units": 3,
+        "alt_units": 5,
+        "ws_units": 7,
+        "installed": "2017-10-24",
+        "climate": true,
+        "camera": false,
+        "link": "/complex/sensor/2/",
+        "ulink": "/complex/sensor/update/2/",
+        "dlink": "/complex/sensor/delete/2/"
+    }
+},
+{
+    "model": "complex.sensor",
+    "pk": 3,
+    "fields": {
+        "created_by": 2,
+        "name": "Random Sensor 3535",
+        "sku": "948-71992-179",
+        "serial_no": "Q3COL05UHO",
+        "temp_units": 1,
+        "pressure_units": 3,
+        "alt_units": 5,
+        "ws_units": 7,
+        "installed": "2017-10-24",
+        "climate": true,
+        "camera": false,
+        "link": "/complex/sensor/3/",
+        "ulink": "/complex/sensor/update/3/",
+        "dlink": "/complex/sensor/delete/3/"
+    }
+},
+{
+    "model": "complex.sensor",
+    "pk": 4,
+    "fields": {
+        "created_by": 2,
+        "name": "Random Sensor 4045",
+        "sku": "840-20932-142",
+        "serial_no": "0MBL7L9EL5",
+        "temp_units": 1,
+        "pressure_units": 3,
+        "alt_units": 5,
+        "ws_units": 7,
+        "installed": "2017-10-24",
+        "climate": true,
+        "camera": false,
+        "link": "/complex/sensor/4/",
+        "ulink": "/complex/sensor/update/4/",
+        "dlink": "/complex/sensor/delete/4/"
+    }
+},
+{
+    "model": "complex.sensor",
+    "pk": 5,
+    "fields": {
+        "created_by": 2,
+        "name": "Random Sensor 4842",
+        "sku": "208-30921-298",
+        "serial_no": "X3ADU0YM2E",
+        "temp_units": 1,
+        "pressure_units": 3,
+        "alt_units": 5,
+        "ws_units": 7,
+        "installed": "2017-10-24",
+        "climate": true,
+        "camera": false,
+        "link": "/complex/sensor/5/",
+        "ulink": "/complex/sensor/update/5/",
+        "dlink": "/complex/sensor/delete/5/"
+    }
+},
+{
+    "model": "complex.sensor",
+    "pk": 6,
+    "fields": {
+        "created_by": 2,
+        "name": "Random Sensor 3963",
+        "sku": "797-93836-923",
+        "serial_no": "00G95Z5906",
+        "temp_units": 1,
+        "pressure_units": 3,
+        "alt_units": 5,
+        "ws_units": 7,
+        "installed": "2017-10-24",
+        "climate": true,
+        "camera": false,
+        "link": "/complex/sensor/6/",
+        "ulink": "/complex/sensor/update/6/",
+        "dlink": "/complex/sensor/delete/6/"
+    }
+},
+{
+    "model": "complex.sensor",
+    "pk": 7,
+    "fields": {
+        "created_by": 2,
+        "name": "Random Sensor 3170",
+        "sku": "814-13583-401",
+        "serial_no": "DB9R5P31O4",
+        "temp_units": 1,
+        "pressure_units": 3,
+        "alt_units": 5,
+        "ws_units": 7,
+        "installed": "2017-10-24",
+        "climate": true,
+        "camera": false,
+        "link": "/complex/sensor/7/",
+        "ulink": "/complex/sensor/update/7/",
+        "dlink": "/complex/sensor/delete/7/"
+    }
+},
+{
+    "model": "complex.sensor",
+    "pk": 8,
+    "fields": {
+        "created_by": 2,
+        "name": "Random Sensor 2915",
+        "sku": "824-68185-307",
+        "serial_no": "4S7U7SMWL1",
+        "temp_units": 1,
+        "pressure_units": 3,
+        "alt_units": 5,
+        "ws_units": 7,
+        "installed": "2017-10-24",
+        "climate": true,
+        "camera": false,
+        "link": "/complex/sensor/8/",
+        "ulink": "/complex/sensor/update/8/",
+        "dlink": "/complex/sensor/delete/8/"
+    }
+},
+{
+    "model": "complex.sensor",
+    "pk": 9,
+    "fields": {
+        "created_by": 2,
+        "name": "Random Sensor 2025",
+        "sku": "960-85833-828",
+        "serial_no": "K1IIA44DOH",
+        "temp_units": 1,
+        "pressure_units": 3,
+        "alt_units": 5,
+        "ws_units": 7,
+        "installed": "2017-10-24",
+        "climate": true,
+        "camera": false,
+        "link": "/complex/sensor/9/",
+        "ulink": "/complex/sensor/update/9/",
+        "dlink": "/complex/sensor/delete/9/"
+    }
+}
+]

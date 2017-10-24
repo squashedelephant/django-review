@@ -22,21 +22,63 @@ def _get_context(context={}):
     context['footer'] = 'Copyright 2017 @Tim Stilwell'
     return context
 
+def created(request, pk=None):
+    context = _get_context()
+    context['title'] = 'Data Submission'
+    context['pk'] = pk
+    return render(request, 'complex/created.html', context)
+
+def deleted(request, pk=None):
+    context = _get_context()
+    context['title'] = 'Data Deletion'
+    context['pk'] = pk
+    return render(request, 'complex/deleted.html', context)
+
+class EventCreateView(FormView):
+    template_name = 'complex/create_form.html'
+    form_class = EventForm
+
+    def form_valid(self, form):
+        return super(EventCreateView, self).form_valid(form)
+
+class EventDeleteView(FormView):
+    template_name = 'complex/delete_form.html'
+    form_class = EventForm
+    lookup_field = 'pk'
+
+    def form_valid(self, form):
+        return super(EventDeleteView, self).form_valid(form)
+    
+class EventDetailView(ListView):
+    template_name = 'complex/event_detail.html'
+    lookup_field = 'pk'
+    lookup_url_kwarg = None
+
+class EventListView(ListView):
+    template_name = 'complex/event_list.html'
+    queryset = Event.objects.all()
+    context_object_name = ''
+
+class EventUpdateView(FormView):
+    template_name = 'complex/update_form.html'
+    form_class = EventForm
+    lookup_field = 'pk'
+
+    def form_valid(self, form):
+        return super(EventUpdateView, self).form_valid(form)
+
 class HomePageView(TemplateView):
     template_name = 'complex/home.html'
 
-def home(request):
-    context = _get_context()
-    context['title'] = 'Complex App'
-    context['user'] = request.user
-    return render(request, 'complex/home.html', context)
-
 class SensorCreateView(FormView):
     template_name = 'complex/create_form.html'
+    success_url = '/complex/thanks/'
     form_class = SensorForm
 
     def form_valid(self, form):
-        return super(SensorCreateView, self).form_valid(form)
+        #return super(SensorCreateView, self).form_valid(form)
+        object = super(SensorCreateView, self).form_valid(form)
+        return object
 
 class SensorDeleteView(FormView):
     template_name = 'complex/delete_form.html'
@@ -63,3 +105,12 @@ class SensorUpdateView(FormView):
 
     def form_valid(self, form):
         return super(SensorUpdateView, self).form_valid(form)
+
+def thanks(request):
+    return render(request, 'complex/thanks.html')
+
+def updated(request, pk=None):
+    context = _get_context()
+    context['title'] = 'Data Modification'
+    context['pk'] = pk
+    return render(request, 'complex/updated.html', context)

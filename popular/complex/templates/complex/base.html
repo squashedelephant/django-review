@@ -8,7 +8,7 @@
           content="width=device-width,initial-scale=1">
     <link rel="stylesheet"
           type="text/css"
-          href="{% static 'css/simple/layout.css' %}"/>
+          href="{% static 'css/complex/layout.css' %}"/>
     <script type="text/javascript"
             src="{% static 'jslib/jquery.3.1.1.min.js' %}">
     </script>
@@ -28,9 +28,11 @@
             <nav id="menu">
                 <h4 style="text-align:center">Manage</h4>
                 <ul>
-                    <li><a id="hlink" href={% url "simple:home" %}>Home</a></li>
-                    <li><a id="alink" href={% url "simple:sensor-list" %}>Show Sensors</a></li>
-                    <li><a id="clink" href={% url "simple:sensor-create" %}>Add Sensor</a></li>
+                    <li><a id="hlink" href={% url "complex:home" %}>Home</a></li>
+                    <li><a id="alink" href={% url "complex:sensor-list" %}>Show Sensors</a></li>
+                    <li><a id="clink" href={% url "complex:sensor-create" %}>Add Sensor</a></li>
+                    <li><a id="alink" href={% url "complex:event-list" %}>Show Events</a></li>
+                    <li><a id="clink" href={% url "complex:event-create" %}>Add Event</a></li>
                     <li><a id="logout" href="/logout/">Logout User</a></li>
                 </ul>
             </nav>
