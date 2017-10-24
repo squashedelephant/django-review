@@ -170,7 +170,10 @@ class Event(models.Model):
         return '{}:{}'.format(self.sensor, self.id)
 
     def __repr__(self):
-        return '{}_{}'.format(self.sensor, self.id)
+        if self.id:
+            return '%r:%r' % (self.__class__, self.id)
+        else:
+            return '%r' % (self.__class__)
 
     def save(self, *args, **kwargs):
         super(Event, self).save(*args, **kwargs)

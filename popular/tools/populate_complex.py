@@ -160,16 +160,6 @@ def populate_events(sensors, max):
                       'windspeed': get_windspeed()}
             if sensors[idx_s].camera:
                 kwargs.update({'camera': get_camera()})
-            print('Event kwargs: {}'.format(kwargs))
-            #Event kwargs: {'status': (103, u'Low Power'), 
-            #                'windspeed': 868, 
-            #                'location': (8, u'Tail'), 
-            #                'timestamp': datetime.datetime(2017, 10, 18, 23, 34, 41, 420907, tzinfo=<UTC>), 
-            #                'avg_pressure': 26.22648944398296, 
-            #                'altitude': 84102, 
-            #                'sensor': Random Sensor 4920_7U4Q5POABV, 
-            #                'pct_humidity': 13, 
-            #                'avg_temp': 49.90912681930372}
             e = Event.objects.create(**kwargs)
     else:
         error = 'script assumes User: qa exists as first user created!'
@@ -183,7 +173,7 @@ def main():
     assign_user_permissions()
     assign_group_permissions()
     sensors = populate_sensors()
-    #populate_events(sensors, max)
+    populate_events(sensors, max)
     return
 
 if __name__ == '__main__':

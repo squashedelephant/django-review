@@ -118,15 +118,15 @@ def get_timestamp():
     return: datetime.datetime localized to tz
     """
     t = datetime.now()
-    return t.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
-    #return datetime(t.year,
-    #                t.month,
-    #                t.day,
-    #                t.hour,
-    #                t.minute,
-    #                t.second,
-    #                t.microsecond,
-    #                tzinfo=pytz.timezone(settings.TIME_ZONE))
+    #return t.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+    return datetime(t.year,
+                    t.month,
+                    t.day,
+                    t.hour,
+                    t.minute,
+                    t.second,
+                    t.microsecond,
+                    tzinfo=pytz.timezone(settings.TIME_ZONE))
 
 def get_location():
     locations = Event.LOCATIONS

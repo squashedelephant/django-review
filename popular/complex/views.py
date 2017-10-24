@@ -31,6 +31,39 @@ def home(request):
     context['user'] = request.user
     return render(request, 'complex/home.html', context)
 
+class EventCreateView(FormView):
+    template_name = 'complex/create_form.html'
+    form_class = EventForm
+
+    def form_valid(self, form):
+        return super(EventCreateView, self).form_valid(form)
+
+class EventDeleteView(FormView):
+    template_name = 'complex/delete_form.html'
+    form_class = EventForm
+    lookup_field = 'pk'
+
+    def form_valid(self, form):
+        return super(EventDeleteView, self).form_valid(form)
+    
+class EventDetailView(ListView):
+    template_name = 'complex/event_detail.html'
+    lookup_field = 'pk'
+    lookup_url_kwarg = None
+
+class EventListView(ListView):
+    template_name = 'complex/event_list.html'
+    queryset = Event.objects.all()
+    context_object_name = ''
+
+class EventUpdateView(FormView):
+    template_name = 'complex/update_form.html'
+    form_class = EventForm
+    lookup_field = 'pk'
+
+    def form_valid(self, form):
+        return super(EventUpdateView, self).form_valid(form)
+
 class SensorCreateView(FormView):
     template_name = 'complex/create_form.html'
     form_class = SensorForm
