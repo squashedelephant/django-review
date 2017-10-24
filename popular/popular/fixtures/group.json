@@ -1,0 +1,46 @@
+[
+{
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+        "name": "add",
+        "permissions": [
+            22,
+            19
+        ]
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 2,
+    "fields": {
+        "name": "change",
+        "permissions": [
+            23,
+            20
+        ]
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 3,
+    "fields": {
+        "name": "delete",
+        "permissions": [
+            24,
+            21
+        ]
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 4,
+    "fields": {
+        "name": "full_access",
+        "permissions": [
+            25,
+            26
+        ]
+    }
+}
+]

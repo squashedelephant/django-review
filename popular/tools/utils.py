@@ -144,10 +144,10 @@ def get_status():
     return status[s_idx][0]
 
 def get_avg_temp():
-    return float(Decimal(randint(-273, 1000) * random() * 1.00))
+    return float(Decimal('%0.2f' % (randint(-273, 1000) * random() * 1.00)))
 
 def get_avg_pressure():
-    return float(Decimal(randint(0, 1000) * random() * 1.00))
+    return float(Decimal('%0.2f' % (randint(0, 1000) * random() * 1.00)))
 
 def get_pct_humidity():
     return randint(0, 100)
