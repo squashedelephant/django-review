@@ -3,51 +3,44 @@
 
 {% block table %}
     <h3>Active Sensors</h3>
-    <h4>{{ form }}</h4>
-    <table id="list">
-        <thead>
-            <tr>
-                <th>Link</th>
-                <th>Name</th>
-                <th>SKU</th>
-                <th>Serial Number</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for sensor in sensors %}
-            <tr>
-                <td><a href="{{ sensor.link }}">{{ sensor.link }}</a></td>
-                <td>{{ sensor.name }}</td>
-                <td>{{ sensor.sku }}</td>
-                <td>{{ sensor.serial_no }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <table id="pagination">
-        <tr>
-            <td>
-                {% if prev %}
-                    <button type="button">
-                        <a href="{{ prev }}">Prev</a>
-                    </button>
-                {% else %}
-                    <button type="button">
-                        <a>Prev</a>
-                    </button>
+    <h4>request.path: {{ request.path }}</h4>
+    {% if object_list %}
+        <table id="list">
+            <thead>
+                <tr>
+                    <th>Link</th>
+                    <th>Name</th>
+                    <th>SKU</th>
+                    <th>Serial Number</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for sensor in object_list %}
+                <tr>
+                    <td><a href="{{ sensor.link }}">{{ sensor.link }}</a></td>
+                    <td>{{ sensor.name }}</td>
+                    <td>{{ sensor.sku }}</td>
+                    <td>{{ sensor.serial_no }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>There are no active sensors.</p>
+    {% endif %}
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
                 {% endif %}
-            </td>
-            <td>
-                {% if next %}
-                    <button type="button">
-                        <a href="{{ next }}">Next</a>
-                    </button>
-                {% else %}
-                    <button type="button">
-                        <a>Next</a>
-                    </button>
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
                 {% endif %}
-            </td>
-        </tr>
-    </table>
+            </span>
+        </div>
+    {% endif %}
 {% endblock %}

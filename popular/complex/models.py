@@ -93,6 +93,9 @@ class Sensor(models.Model):
                                    kwargs = {'pk': self.pk})}
         Sensor.objects.filter(pk=self.pk).update(**kwargs)
 
+    class Meta:
+        ordering = ['id']
+
 class Event(models.Model):
     NOSE = 0
     COCKPIT = 1
@@ -185,3 +188,5 @@ class Event(models.Model):
                                    kwargs = {'pk': self.pk})}
         Event.objects.filter(pk=self.pk).update(**kwargs)
 
+    class Meta:
+        ordering = ['id']

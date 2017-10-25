@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.core.paginator import InvalidPage, Paginator
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.decorators import login_required, permission_required
 from django.db import IntegrityError, models
 from django.http import Http404, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import get_list_or_404, get_object_or_404, render
 from django.views.decorators.cache import cache_page
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic import FormView, DeleteView, UpdateView
@@ -49,12 +50,17 @@ class EventDeleteView(FormView):
     def form_valid(self, form):
         return super(EventDeleteView, self).form_valid(form)
     
-class EventDetailView(ListView):
+class EventDetailView(DetailView):
     template_name = 'complex/event_detail.html'
     lookup_field = 'pk'
     lookup_url_kwarg = None
 
+    def get_absolute_url(self):
+        return reverse_lazy('event-detail',
+                            kwargs={'pk': self.pk})
+
 class EventListView(ListView):
+    form = EventForm
     template_name = 'complex/event_list.html'
     queryset = Event.objects.all()
     context_object_name = ''
@@ -68,7 +74,7 @@ class EventUpdateView(FormView):
         return super(EventUpdateView, self).form_valid(form)
 
 class HomePageView(TemplateView):
-    template_name = 'complex/home.html'
+    template_name = 'complex/index.html'
 
 class SensorCreateView(FormView):
     template_name = 'complex/create_form.html'
@@ -88,15 +94,26 @@ class SensorDeleteView(FormView):
     def form_valid(self, form):
         return super(SensorDeleteView, self).form_valid(form)
     
-class SensorDetailView(ListView):
+class SensorDetailView(DetailView):
+    context_object_name = 'sensor'
+    http_method_names = ['get', 'head']
+    model = Sensor
     template_name = 'complex/sensor_detail.html'
-    lookup_field = 'pk'
-    lookup_url_kwarg = None
+    pk_url_kwarg = 'pk'
 
 class SensorListView(ListView):
+    allow_empty = True
+    context_object_name = 'object_list'
+    http_method_names = ['get', 'head']
+    model = Sensor
+    paginate_by = 5
+    paginate_orphans = 0
+    paginator_class = Paginator
+    page_kwarg = 'page'
     template_name = 'complex/sensor_list.html'
-    queryset = Sensor.objects.all()
-    context_object_name = ''
+
+    def get_queryset(self):
+        return get_list_or_404(Sensor, created_by=self.request.user)
 
 class SensorUpdateView(FormView):
     template_name = 'complex/update_form.html'
