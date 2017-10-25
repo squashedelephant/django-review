@@ -53,7 +53,7 @@ urlpatterns = [
     url(r'^sensors/$',
         SensorListView.as_view(),
         name='sensor-list'),
-    url(r'^sensors/page/(?P<page>\d+)/$',
+    url(r'^sensors/\?page=(?P<page>\d+)$',
         SensorListView.as_view(),
         name='sensor-list'),
     url(r'^sensor/update/(?P<pk>\d+)/$',
@@ -66,4 +66,3 @@ urlpatterns = [
         updated,
         name='updated')
 ]
-
