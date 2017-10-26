@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.core.paginator import InvalidPage, Paginator
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import IntegrityError, models
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_list_or_404, get_object_or_404, render
@@ -13,27 +14,6 @@ from django.views.generic import FormView, DeleteView, UpdateView
 
 from complex.forms import EventForm, SensorForm
 from complex.models import Event, Sensor 
-
-class Http405(Http404):
-    status_code = 405
-    reason_phrase = 'FORBIDDEN'
-
-def _get_context(context={}):
-    context['header'] = 'Django: Complex App'
-    context['footer'] = 'Copyright 2017 @Tim Stilwell'
-    return context
-
-def created(request, pk=None):
-    context = _get_context()
-    context['title'] = 'Data Submission'
-    context['pk'] = pk
-    return render(request, 'complex/created.html', context)
-
-def deleted(request, pk=None):
-    context = _get_context()
-    context['title'] = 'Data Deletion'
-    context['pk'] = pk
-    return render(request, 'complex/deleted.html', context)
 
 class EventCreateView(FormView):
     template_name = 'complex/create_form.html'
@@ -77,34 +57,47 @@ class HomePageView(TemplateView):
     template_name = 'complex/index.html'
 
 class SensorCreateView(FormView):
-    template_name = 'complex/create_form.html'
-    success_url = '/complex/thanks/'
     form_class = SensorForm
+    success_message = 'Sensor object created successfully.'
+    success_url = '/complex/thanks/'
+    template_name = 'complex/create_form.html'
+
+    def get_initial(self):
+        return {'created_by': self.request.user}
 
     def form_valid(self, form):
-        #return super(SensorCreateView, self).form_valid(form)
-        object = super(SensorCreateView, self).form_valid(form)
-        return object
+        print('user: {}'.format(self.request.user.username))
+        form.instance.created_by = self.request.user
+        return super(SensorCreateView, self).form_valid(form)
 
-class SensorDeleteView(FormView):
-    template_name = 'complex/delete_form.html'
+class SensorDeleteView(DeleteView):
     form_class = SensorForm
-    lookup_field = 'pk'
+    http_method_not_allowed = ['delete', 'patch', 'put']
+    success_message = 'Sensor object deleted successfully.'
+    template_name = 'complex/delete_form.html'
 
     def form_valid(self, form):
         return super(SensorDeleteView, self).form_valid(form)
     
+    def get_form_kwargs(self):
+        kwargs = super(SensorDeleteView, self).get_form_kwargs()
+        kwargs.update({'request': self.request})
+        return kwargs
+
+    def get_queryset(self):
+        qs = super(SensorDeleteView, self).get_queryset()
+        return qs.filter(owner=self.request.user)
+
 class SensorDetailView(DetailView):
     context_object_name = 'sensor'
-    http_method_names = ['get', 'head']
+    http_method_not_allowed = ['delete', 'patch', 'post', 'put']
     model = Sensor
     template_name = 'complex/sensor_detail.html'
-    pk_url_kwarg = 'pk'
 
 class SensorListView(ListView):
     allow_empty = True
     context_object_name = 'object_list'
-    http_method_names = ['get', 'head']
+    http_method_not_allowed = ['delete', 'patch', 'post', 'put']
     model = Sensor
     paginate_by = 5
     paginate_orphans = 0
@@ -116,18 +109,28 @@ class SensorListView(ListView):
         return get_list_or_404(Sensor, created_by=self.request.user)
 
 class SensorUpdateView(FormView):
-    template_name = 'complex/update_form.html'
     form_class = SensorForm
-    lookup_field = 'pk'
+    http_method_not_allowed = ['delete', 'put']
+    success_url = '/complex/thanks/'
+    success_message = 'Sensor object updated successfully.'
+    template_name = 'complex/update_form.html'
 
-    def form_valid(self, form):
-        return super(SensorUpdateView, self).form_valid(form)
+    def get_initial(self):
+        object = Sensor.objects.get(pk=self.kwargs.get('pk'))
+        return {'created_by': self.request.user,
+                'name': object.name,
+                'sku': object.sku,
+                'serial_no': object.serial_no.upper(),
+                'camera': object.camera}
+
+    def get_object(self, queryset=None):
+        object = Sensor.objects.get(pk=self.kwargs['pk'])
+        return object
+
+    def post(self, request, *args, **kwargs):
+        super(SensorUpdateView, self).post(request, *args, **kwargs)
+
+        pass
 
 def thanks(request):
     return render(request, 'complex/thanks.html')
-
-def updated(request, pk=None):
-    context = _get_context()
-    context['title'] = 'Data Modification'
-    context['pk'] = pk
-    return render(request, 'complex/updated.html', context)

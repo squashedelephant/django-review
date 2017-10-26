@@ -16,8 +16,8 @@ def get_random_name():
 
 def get_random_sku():
     ref1 = randint(100, 999)
-    ref2 = randint(100, 999)
-    ref3 = randint(10, 99)
+    ref2 = randint(10000, 99999)
+    ref3 = randint(100, 999)
     return '{0}-{1}-{2}'.format(ref1, ref2, ref3)
 
 def get_serial_no():

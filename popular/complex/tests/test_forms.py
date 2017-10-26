@@ -248,11 +248,6 @@ class TestSensorForm(TestCase):
                          repr(form))
 
     def test_06_default_errors(self):
-        #{'temp_units': [u'This field is required.'],
-        # 'alt_units': [u'This field is required.'],
-        # 'ws_units': [u'This field is required.'],
-        # 'pressure_units': [u'This field is required.']}
-        # 'created_by': [u'This field is required.'],
         form = SensorForm(data=self.data_invalid)
         self.assertFalse(form.is_valid())
         self.assertTrue(form.is_bound)
