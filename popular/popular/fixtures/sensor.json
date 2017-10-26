@@ -4,19 +4,19 @@
     "pk": 1,
     "fields": {
         "created_by": 2,
-        "name": "Random Sensor 4522",
-        "sku": "585-43299-921",
-        "serial_no": "U6093D84IB",
+        "name": "Random Sensor 2382",
+        "sku": "866-32862-848",
+        "serial_no": "487U8JWE27",
         "temp_units": 1,
         "pressure_units": 3,
         "alt_units": 5,
         "ws_units": 7,
-        "installed": "2017-10-25",
+        "installed": "2017-10-26",
         "climate": true,
         "camera": false,
-        "link": "/complex/sensor/1/",
-        "ulink": "/complex/sensor/update/1/",
-        "dlink": "/complex/sensor/delete/1/"
+        "link": "/complex/sensors/1/",
+        "ulink": "/complex/sensors/update/1/",
+        "dlink": "/complex/sensors/delete/1/"
     }
 },
 {
@@ -24,19 +24,19 @@
     "pk": 2,
     "fields": {
         "created_by": 2,
-        "name": "Random Sensor 1745",
-        "sku": "754-84258-699",
-        "serial_no": "EE867ND53H",
+        "name": "Random Sensor 1611",
+        "sku": "710-81185-582",
+        "serial_no": "9JIUO22P46",
         "temp_units": 1,
         "pressure_units": 3,
         "alt_units": 5,
         "ws_units": 7,
-        "installed": "2017-10-25",
+        "installed": "2017-10-26",
         "climate": true,
         "camera": false,
-        "link": "/complex/sensor/2/",
-        "ulink": "/complex/sensor/update/2/",
-        "dlink": "/complex/sensor/delete/2/"
+        "link": "/complex/sensors/2/",
+        "ulink": "/complex/sensors/update/2/",
+        "dlink": "/complex/sensors/delete/2/"
     }
 },
 {
@@ -44,19 +44,19 @@
     "pk": 3,
     "fields": {
         "created_by": 2,
-        "name": "Random Sensor 2666",
-        "sku": "389-86388-105",
-        "serial_no": "ID0PEPKW17",
+        "name": "Random Sensor 4723",
+        "sku": "818-54244-880",
+        "serial_no": "YG1248Y81R",
         "temp_units": 1,
         "pressure_units": 3,
         "alt_units": 5,
         "ws_units": 7,
-        "installed": "2017-10-25",
+        "installed": "2017-10-26",
         "climate": true,
         "camera": false,
-        "link": "/complex/sensor/3/",
-        "ulink": "/complex/sensor/update/3/",
-        "dlink": "/complex/sensor/delete/3/"
+        "link": "/complex/sensors/3/",
+        "ulink": "/complex/sensors/update/3/",
+        "dlink": "/complex/sensors/delete/3/"
     }
 },
 {
@@ -64,19 +64,19 @@
     "pk": 4,
     "fields": {
         "created_by": 2,
-        "name": "Random Sensor 1094",
-        "sku": "405-42573-166",
-        "serial_no": "6O12F3138I",
+        "name": "Random Sensor 4523",
+        "sku": "782-27662-343",
+        "serial_no": "I9L63B1848",
         "temp_units": 1,
         "pressure_units": 3,
         "alt_units": 5,
         "ws_units": 7,
-        "installed": "2017-10-25",
+        "installed": "2017-10-26",
         "climate": true,
         "camera": false,
-        "link": "/complex/sensor/4/",
-        "ulink": "/complex/sensor/update/4/",
-        "dlink": "/complex/sensor/delete/4/"
+        "link": "/complex/sensors/4/",
+        "ulink": "/complex/sensors/update/4/",
+        "dlink": "/complex/sensors/delete/4/"
     }
 },
 {
@@ -84,19 +84,19 @@
     "pk": 5,
     "fields": {
         "created_by": 2,
-        "name": "Random Sensor 3600",
-        "sku": "675-78635-977",
-        "serial_no": "AHC248ZVM5",
+        "name": "Random Sensor 1177",
+        "sku": "272-74547-526",
+        "serial_no": "L8BW8FIRHA",
         "temp_units": 1,
         "pressure_units": 3,
         "alt_units": 5,
         "ws_units": 7,
-        "installed": "2017-10-25",
+        "installed": "2017-10-26",
         "climate": true,
         "camera": false,
-        "link": "/complex/sensor/5/",
-        "ulink": "/complex/sensor/update/5/",
-        "dlink": "/complex/sensor/delete/5/"
+        "link": "/complex/sensors/5/",
+        "ulink": "/complex/sensors/update/5/",
+        "dlink": "/complex/sensors/delete/5/"
     }
 },
 {
@@ -104,19 +104,19 @@
     "pk": 6,
     "fields": {
         "created_by": 2,
-        "name": "Random Sensor 4816",
-        "sku": "558-58664-968",
-        "serial_no": "CVH4MS5GQ2",
+        "name": "Random Sensor 4135",
+        "sku": "245-98563-113",
+        "serial_no": "4GT6BYXM23",
         "temp_units": 1,
         "pressure_units": 3,
         "alt_units": 5,
         "ws_units": 7,
-        "installed": "2017-10-25",
+        "installed": "2017-10-26",
         "climate": true,
         "camera": false,
-        "link": "/complex/sensor/6/",
-        "ulink": "/complex/sensor/update/6/",
-        "dlink": "/complex/sensor/delete/6/"
+        "link": "/complex/sensors/6/",
+        "ulink": "/complex/sensors/update/6/",
+        "dlink": "/complex/sensors/delete/6/"
     }
 },
 {
@@ -124,19 +124,19 @@
     "pk": 7,
     "fields": {
         "created_by": 2,
-        "name": "Random Sensor 3396",
-        "sku": "498-22851-775",
-        "serial_no": "0328TAH5H3",
+        "name": "Random Sensor 4496",
+        "sku": "916-53730-712",
+        "serial_no": "25SV41OL95",
         "temp_units": 1,
         "pressure_units": 3,
         "alt_units": 5,
         "ws_units": 7,
-        "installed": "2017-10-25",
+        "installed": "2017-10-26",
         "climate": true,
         "camera": false,
-        "link": "/complex/sensor/7/",
-        "ulink": "/complex/sensor/update/7/",
-        "dlink": "/complex/sensor/delete/7/"
+        "link": "/complex/sensors/7/",
+        "ulink": "/complex/sensors/update/7/",
+        "dlink": "/complex/sensors/delete/7/"
     }
 },
 {
@@ -144,19 +144,19 @@
     "pk": 8,
     "fields": {
         "created_by": 2,
-        "name": "Random Sensor 1582",
-        "sku": "317-60937-524",
-        "serial_no": "DBP319164E",
+        "name": "Random Sensor 3905",
+        "sku": "642-14284-117",
+        "serial_no": "7JUP58ZE0X",
         "temp_units": 1,
         "pressure_units": 3,
         "alt_units": 5,
         "ws_units": 7,
-        "installed": "2017-10-25",
+        "installed": "2017-10-26",
         "climate": true,
         "camera": false,
-        "link": "/complex/sensor/8/",
-        "ulink": "/complex/sensor/update/8/",
-        "dlink": "/complex/sensor/delete/8/"
+        "link": "/complex/sensors/8/",
+        "ulink": "/complex/sensors/update/8/",
+        "dlink": "/complex/sensors/delete/8/"
     }
 },
 {
@@ -164,19 +164,19 @@
     "pk": 9,
     "fields": {
         "created_by": 2,
-        "name": "Random Sensor 4093",
-        "sku": "485-81336-840",
-        "serial_no": "XY6420XXPQ",
+        "name": "Random Sensor 1391",
+        "sku": "379-61411-364",
+        "serial_no": "Y2G41K779K",
         "temp_units": 1,
         "pressure_units": 3,
         "alt_units": 5,
         "ws_units": 7,
-        "installed": "2017-10-25",
+        "installed": "2017-10-26",
         "climate": true,
         "camera": false,
-        "link": "/complex/sensor/9/",
-        "ulink": "/complex/sensor/update/9/",
-        "dlink": "/complex/sensor/delete/9/"
+        "link": "/complex/sensors/9/",
+        "ulink": "/complex/sensors/update/9/",
+        "dlink": "/complex/sensors/delete/9/"
     }
 }
 ]
