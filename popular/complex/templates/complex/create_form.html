@@ -11,6 +11,8 @@
             {{ form.as_table }}
         </table>
         {% csrf_token %}
+        <button type="button" onclick="location.href={% url 'complex:home' %}">Cancel</button>
         <input type="submit" value="Create">
     </form>
 {% endblock %}
+

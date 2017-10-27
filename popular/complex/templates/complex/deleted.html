@@ -1,0 +1,9 @@
+{% extends "complex/base.html" %}
+
+{% block form %}
+    {% if pk %}
+        <p>Object {{ pk }} deleted successfully.</p>
+    {% else %}
+        <p>Object deleted successfully.</p>
+    {% endif %}
+{% endblock %}
