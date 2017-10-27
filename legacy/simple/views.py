@@ -128,7 +128,6 @@ def inventory_delete(request, pk):
                                   pk=pk,
                                   created_by=request.user)
     if request.method == 'POST':
-        form = InventoryForm(request.POST)
         form = InventoryForm(request.POST, instance=inventory)
         if form.is_valid():
             inventory.deleted = True

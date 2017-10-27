@@ -22,9 +22,6 @@
         <div id="inside">
             <header>Django: Complex App</header>
             {% block header %}{% endblock %}
-            <div>
-            {% block form %}{% endblock %}
-            </div>
             <nav id="menu">
                 <h4 style="text-align:center">Manage</h4>
                 <ul>
@@ -36,6 +33,11 @@
                     <li><a id="logout" href="/logout/">Logout User</a></li>
                 </ul>
             </nav>
+            <article id="form">
+            <div>
+                {% block form %}{% endblock %}
+            </div>
+            </article>
             <article id="table">
             <div>
                 {% block table %}{% endblock %}
