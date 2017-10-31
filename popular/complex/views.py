@@ -14,46 +14,93 @@ from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, DeleteView, DetailView
 from django.views.generic import ListView, TemplateView, UpdateView
 
-from complex.forms import EventForm, SensorForm
+from complex.forms import EventForm, SensorForm, SensorUpdateForm
 from complex.models import Event, Sensor 
 
 class EventCreateView(CreateView):
-    template_name = 'complex/create_form.html'
     form_class = EventForm
+    http_method_not_allowed = ['delete', 'patch', 'put']
+    success_url = None
+    template_name = 'complex/create_form.html'
+
+    def get_initial(self):
+        return {'created_by': self.request.user}
 
     def form_valid(self, form):
+        self.object = form.save()
+        self.success_url = reverse_lazy('complex:created',
+                                        kwargs={'pk': self.object.pk})
         return super(EventCreateView, self).form_valid(form)
 
 class EventDeleteView(DeleteView):
-    template_name = 'complex/delete_form.html'
     form_class = EventForm
-    lookup_field = 'pk'
+    http_method_not_allowed = ['delete', 'patch', 'put']
+    success_url = None
+    template_name = 'complex/confirm_delete.html'
 
-    def form_valid(self, form):
-        return super(EventDeleteView, self).form_valid(form)
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.success_url = reverse_lazy('complex:deleted',
+                                        kwargs={'pk': self.object.pk})
+        return super(EventDeleteView, self).delete(request, *args, **kwargs)
+
+    def get_object(self, queryset=None):
+        object = Event.objects.get(pk=self.kwargs['pk'],
+                                   created_by=self.request.user)
+        return object
+
+    def get_queryset(self):
+        return get_object_or_404(Event, 
+                                 created_by=self.request.user,
+                                 pk=self.kwargs['pk'])
     
 class EventDetailView(DetailView):
-    template_name = 'complex/event_detail.html'
+    context_object_name = 'event'
+    http_method_not_allowed = ['delete', 'patch', 'post', 'put']
     lookup_field = 'pk'
-    lookup_url_kwarg = None
+    model = Event
+    template_name = 'complex/event_detail.html'
 
     def get_absolute_url(self):
         return reverse_lazy('event-detail',
                             kwargs={'pk': self.pk})
 
 class EventListView(ListView):
+    allow_empty = True
+    context_object_name = 'object_list'
+    http_method_not_allowed = ['delete', 'patch', 'post', 'put']
     form = EventForm
-    template_name = 'complex/event_list.html'
+    paginate_by = 5
+    paginate_orphans = 0
+    paginator_class = Paginator
+    page_kwarg = 'page'
     queryset = Event.objects.all()
-    context_object_name = ''
+    template_name = 'complex/event_list.html'
 
 class EventUpdateView(UpdateView):
-    template_name = 'complex/update_form.html'
+    model = Event
     form_class = EventForm
-    lookup_field = 'pk'
+    http_method_not_allowed = ['delete', 'patch', 'put']
+    success_url = None
+    template_name = 'complex/update_form.html'
 
     def form_valid(self, form):
+        form.save()
+        self.success_url = reverse_lazy('complex:updated',
+                                        kwargs={'pk': self.object.pk})
         return super(EventUpdateView, self).form_valid(form)
+
+    def get_initial(self):
+        return {'sensor': self.object.sensor,
+                'timestamp': self.object.timestamp,
+                'location': self.object.location,
+                'status': self.object.status,
+                'camera': self.object.camera,
+                'avg_temp': self.object.avg_temp,
+                'avg_pressure': self.object.avg_pressure,
+                'pct_humidity': self.object.pct_humidity,
+                'altitude': self.object.altitude,
+                'windspeed': self.object.windspeed}
 
 class HomePageView(TemplateView):
     template_name = 'complex/index.html'
@@ -70,19 +117,19 @@ class SensorCreateView(CreateView):
     def form_valid(self, form):
         self.object = form.save()
         self.success_url = reverse_lazy('complex:created',
-                                        kwargs={'pk': self.object.id})
+                                        kwargs={'pk': self.object.pk})
         return super(SensorCreateView, self).form_valid(form)
 
 class SensorDeleteView(DeleteView):
     form_class = SensorForm
     http_method_not_allowed = ['delete', 'patch', 'put']
     success_url = None
-    template_name = 'complex/delete_form.html'
+    template_name = 'complex/confirm_delete.html'
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
         self.success_url = reverse_lazy('complex:deleted',
-                                        kwargs={'pk': self.object.id})
+                                        kwargs={'pk': self.object.pk})
         return super(SensorDeleteView, self).delete(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
@@ -101,11 +148,15 @@ class SensorDetailView(DetailView):
     model = Sensor
     template_name = 'complex/sensor_detail.html'
 
+    def get_absolute_url(self):
+        return reverse_lazy('sensor-detail',
+                            kwargs={'pk': self.pk})
+
 class SensorListView(ListView):
     allow_empty = True
     context_object_name = 'object_list'
+    form = SensorForm
     http_method_not_allowed = ['delete', 'patch', 'post', 'put']
-    model = Sensor
     paginate_by = 5
     paginate_orphans = 0
     paginator_class = Paginator
@@ -115,41 +166,23 @@ class SensorListView(ListView):
 
 class SensorUpdateView(UpdateView):
     model = Sensor
-    form_class = SensorForm
-    #http_method_not_allowed = ['delete', 'patch', 'put']
+    form_class = SensorUpdateForm
+    http_method_not_allowed = ['delete', 'patch', 'put']
     success_url = None
     template_name = 'complex/update_form.html'
 
-    def get_form(self):
-        print('kwargs: {}'.format(self.kwargs))
-        if 'data' in self.kwargs:
-            data = self.kwargs['data']
-            del data['serial_no']
-            self.kwargs.update({'instance': self.object,
-                                'data': data})
-        return super(SensorUpdateView, self).get_form()
-
     def form_valid(self, form):
+        form.save()
         self.success_url = reverse_lazy('complex:updated',
                                         kwargs={'pk': self.object.id})
         return super(SensorUpdateView, self).form_valid(form)
 
     def get_initial(self):
-        self.object = Sensor.objects.get(pk=self.kwargs.get('pk'))
         return {'created_by': self.request.user,
                 'name': self.object.name,
                 'sku': self.object.sku,
                 'serial_no': self.object.serial_no.upper(),
                 'camera': self.object.camera}
-
-    def get_object(self, queryset=None):
-        return Sensor.objects.get(pk=self.kwargs['pk'],
-                                  created_by=self.request.user)
-
-    #def get_queryset(self):
-    #    return get_object_or_404(Sensor, 
-    #                             created_by=self.request.user,
-    #                             pk=self.kwargs['pk'])
 
 class CreatedView(TemplateView):
     template_name = 'complex/created.html'

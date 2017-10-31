@@ -210,11 +210,7 @@ def inventory_update(request, pk):
     if request.method == 'POST':
         form = InventoryForm(request.POST, instance=inventory)
         if form.is_valid():
-            # update only works on sequences
-            inventories = Inventory.objects.filter(pk=pk,
-                                                   created_by=request.user,
-                                                   deleted=False)
-            inventories.update(**form.cleaned_data)
+            form.save()
             return HttpResponseRedirect(
                 reverse_lazy('simple:updated',
                              kwargs={'pk': pk}))
@@ -352,11 +348,7 @@ def store_update(request, pk):
     if request.method == 'POST':
         form = StoreForm(request.POST, instance=store)
         if form.is_valid():
-            # update only works on sequences
-            stores = Store.objects.filter(pk=pk,
-                                          created_by=request.user,
-                                          deleted=False)
-            stores.update(**form.cleaned_data)
+            form.save()
             return HttpResponseRedirect(
                 reverse_lazy('simple:updated',
                              kwargs={'pk': pk}))
@@ -516,34 +508,28 @@ def widget_update(request, pk):
     template = 'simple/update_form.html'
     context = _get_context()
     context['title'] = 'Update an Existing Widget'
+    widget = get_object_or_404(Widget,
+                               pk=pk,
+                               created_by=request.user,
+                               deleted=False)
     if request.method == 'POST':
         form = WidgetForm(request.POST)
         if form.is_valid():
-            try:
-                # update only works on sequences
-                widgets = Widget.objects.filter(pk=pk,
-                                                created_by=request.user,
-                                                deleted=False)
-                widgets.update(**form.cleaned_data)
-                return HttpResponseRedirect(
-                    reverse_lazy('simple:updated',
-                                 kwargs={'pk': pk}))
-            except Widget.DoesNotExist as e:
-                return HttpResponseRedirect(
-                    reverse_lazy('simple:non-existent',
-                                 kwargs={'pk': pk}))
-            except IntegrityError as e:
-                context['form'] = _duplicate_key(form)
-                return render(request, template, context)
+            print('WidgetForm cleaned_data: {}'.format(form.cleaned_data))
+            widget.name = form.cleaned_data['name']
+            widget.sku = form.cleaned_data['sku']
+            widget.cost = form.cleaned_data['cost']
+            widget.save()
+            return HttpResponseRedirect(
+                reverse_lazy('simple:updated',
+                             kwargs={'pk': pk}))
         else:
             context['form'] = form
             return render(request, template, context)
     else:
-        widget = Widget.objects.get(pk=pk,
-                                    created_by=request.user,
-                                    deleted=False)
         initial = {'created_by': request.user,
                    'name': widget.name,
+                   'sku': widget.sku,
                    'cost': widget.cost}
         context['form'] = WidgetForm(initial=initial)
         return render(request, template, context)

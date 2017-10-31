@@ -1,0 +1,45 @@
+{% extends "complex/base.html" %}
+{% load static %}
+
+{% block table %}
+    <h3>Active Events</h3>
+    {% if object_list %}
+        <table id="list">
+            <thead>
+                <tr>
+                    <th>Link</th>
+                    <th>Sensor: Name</th>
+                    <th>Sensor: SKU</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for event in object_list %}
+                <tr>
+                    <td><a href="{{ event.link }}">{{ event.link }}</a></td>
+                    <td>{{ event.sensor.name }}</td>
+                    <td>{{ event.sensor.sku }}</td>
+                    <td>{{ event.location }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>There are no active events.</p>
+    {% endif %}
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+{% endblock %}

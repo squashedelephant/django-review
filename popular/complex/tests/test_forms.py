@@ -7,7 +7,7 @@ from random import randint, random
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from complex.forms import EventForm, SensorForm
+from complex.forms import EventForm, SensorForm, SensorUpdateForm
 from complex.models import Event, Sensor
 from complex.tests.utils import get_alt_units, get_pressure_units
 from complex.tests.utils import get_random_name, get_random_sku, get_serial_no
@@ -272,3 +272,44 @@ class TestSensorForm(TestCase):
         self.assertEqual(1, len(form.errors['pressure_units']))
         self.assertEqual(u'This field is required.',
                          form.errors['pressure_units'][0])
+
+class TestSensorUpdateForm(TestCase):
+    fixtures = ['sensor', 'user']
+
+    def setUp(self):
+        self.user = User.objects.get(username='qa')
+        value = randint(1000, 5000)
+        self.data_invalid = {}
+        self.data_valid = {'name': get_random_name(),
+                           'sku': get_random_sku(),
+                           'serial_no': get_serial_no(),
+                           'temp_units': get_temp_units(),
+                           'pressure_units': get_pressure_units(),
+                           'alt_units': get_alt_units(),
+                           'ws_units': get_ws_units()}
+        self.data_long = self.data_valid.copy()
+        self.data_long.update({'name': 'Exceedingly Long {}'.format(value)})
+        self.data_empty = self.data_valid.copy()
+        self.data_empty.update({'name': None})
+        self.data_blank = self.data_valid.copy()
+        self.data_blank.update({'name': ''})
+
+    def tearDown(self):
+        self.data_valid = None
+        self.data_long = None
+        self.data_empty = None
+        self.data_blank = None
+
+    def test_01_name_valid(self):
+        form = SensorForm(data=self.data_valid)
+        soup = BeautifulSoup(str(form), 'html.parser')
+        for option in soup.find(attrs={'name': 'created_by'}).findAll('option'):
+            if option.text == self.user.username:
+                self.data_valid.update({'created_by': option['value']})
+        form = SensorForm(data=self.data_valid)
+        self.assertTrue(form.is_valid())
+        self.assertTrue(form.is_bound)
+        sensor = Sensor(**form.cleaned_data)
+        form = SensorUpdateForm(data=self.data_valid, instance=sensor)
+        self.assertEqual(self.data_valid['name'],
+                         form.data['name'])
