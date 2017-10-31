@@ -166,7 +166,7 @@ class TestEventForm(TestCase):
         form = EventForm(data=self.event_data)
         self.assertIn('location', str(form))
         flds_1 = '<EventForm bound=True, valid=False, fields=(sensor;timestamp;location;'
-        flds_2 = 'status;camera;avg_temp;avg_pressure;pct_humidity;altitude;windspeed;deleted)>'
+        flds_2 = 'status;camera;avg_temp;avg_pressure;pct_humidity;altitude;windspeed)>'
         self.assertEqual('{}{}'.format(flds_1, flds_2),
                          repr(form))
 
@@ -300,7 +300,7 @@ class TestSensorUpdateForm(TestCase):
         self.data_empty = None
         self.data_blank = None
 
-    def test_01_name_valid(self):
+    def test_01_serial_no_read_only(self):
         form = SensorForm(data=self.data_valid)
         soup = BeautifulSoup(str(form), 'html.parser')
         for option in soup.find(attrs={'name': 'created_by'}).findAll('option'):
@@ -311,5 +311,8 @@ class TestSensorUpdateForm(TestCase):
         self.assertTrue(form.is_bound)
         sensor = Sensor(**form.cleaned_data)
         form = SensorUpdateForm(data=self.data_valid, instance=sensor)
-        self.assertEqual(self.data_valid['name'],
-                         form.data['name'])
+        self.assertTrue(form.is_valid())
+        self.assertTrue(form.is_bound)
+        soup = BeautifulSoup(str(form), 'html.parser')
+        input = soup.find(attrs={'name': 'serial_no'})
+        self.assertTrue(input.has_attr('disabled'))

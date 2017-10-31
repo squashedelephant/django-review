@@ -131,11 +131,13 @@ class Event(models.Model):
         (LOW_POWER, 'Low Power')
     )
 
-    LENS = 200
-    GLARE = 201
-    MEMORY_FULL = 202
+    NA = 200
+    LENS = 201
+    GLARE = 202
+    MEMORY_FULL = 203
 
     CAMERA = (
+        (NA, 'N/A'),
         (LENS, 'Lens Obscured'),
         (GLARE, 'Contrast Too High'),
         (MEMORY_FULL, 'Memory Full')
@@ -147,8 +149,7 @@ class Event(models.Model):
     status = models.SmallIntegerField(choices=STATUS,
                                       default=ONLINE)
     camera = models.SmallIntegerField(choices=CAMERA,
-                                       null=True,
-                                       blank=True)
+                                      default=NA)
     avg_temp = models.DecimalField(max_digits=5,
                                    decimal_places=2,
                                    default=Decimal('0.00'))

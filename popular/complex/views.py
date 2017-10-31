@@ -17,6 +17,7 @@ from django.views.generic import ListView, TemplateView, UpdateView
 from complex.forms import EventForm, SensorForm, SensorUpdateForm
 from complex.models import Event, Sensor 
 
+
 class EventCreateView(CreateView):
     form_class = EventForm
     http_method_not_allowed = ['delete', 'patch', 'put']
@@ -24,7 +25,16 @@ class EventCreateView(CreateView):
     template_name = 'complex/create_form.html'
 
     def get_initial(self):
-        return {'created_by': self.request.user}
+        sensors = Sensor.objects.filter(created_by=self.request.user)     
+        return {'sensor': sensors,
+                'location': Event.LOCATIONS,
+                'status': Event.STATUS,
+                'camera': Event.CAMERA,
+                'avg_temp': 0.00,
+                'avg_pressure': 0.00,
+                'pct_humidity': 0,
+                'altitude': 0,
+                'windspeed': 0}
 
     def form_valid(self, form):
         self.object = form.save()
@@ -45,15 +55,9 @@ class EventDeleteView(DeleteView):
         return super(EventDeleteView, self).delete(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
-        object = Event.objects.get(pk=self.kwargs['pk'],
-                                   created_by=self.request.user)
+        object = Event.objects.get(pk=self.kwargs['pk'])
         return object
 
-    def get_queryset(self):
-        return get_object_or_404(Event, 
-                                 created_by=self.request.user,
-                                 pk=self.kwargs['pk'])
-    
 class EventDetailView(DetailView):
     context_object_name = 'event'
     http_method_not_allowed = ['delete', 'patch', 'post', 'put']
@@ -65,6 +69,13 @@ class EventDetailView(DetailView):
         return reverse_lazy('event-detail',
                             kwargs={'pk': self.pk})
 
+    def get_object(self, queryset=None):
+        event = Event.objects.get(pk=self.kwargs['pk'])
+        event.location = event.get_location_display()
+        event.status = event.get_status_display()
+        event.camera = event.get_camera_display()
+        return event
+
 class EventListView(ListView):
     allow_empty = True
     context_object_name = 'object_list'
@@ -74,8 +85,14 @@ class EventListView(ListView):
     paginate_orphans = 0
     paginator_class = Paginator
     page_kwarg = 'page'
-    queryset = Event.objects.all()
+    #queryset = Event.objects.all()
     template_name = 'complex/event_list.html'
+
+    def get_queryset(self):
+        queryset = Event.objects.all()
+        for event in queryset:
+            event.location = event.get_location_display()
+        return queryset
 
 class EventUpdateView(UpdateView):
     model = Event
@@ -137,11 +154,6 @@ class SensorDeleteView(DeleteView):
                                     created_by=self.request.user)
         return object
 
-    def get_queryset(self):
-        return get_object_or_404(Sensor, 
-                                 created_by=self.request.user,
-                                 pk=self.kwargs['pk'])
-
 class SensorDetailView(DetailView):
     context_object_name = 'sensor'
     http_method_not_allowed = ['delete', 'patch', 'post', 'put']
@@ -152,6 +164,15 @@ class SensorDetailView(DetailView):
         return reverse_lazy('sensor-detail',
                             kwargs={'pk': self.pk})
 
+    def get_object(self, queryset=None):
+        sensor = Sensor.objects.get(pk=self.kwargs['pk'],
+                                    created_by=self.request.user)
+        sensor.temp_units = sensor.get_temp_units_display()
+        sensor.pressure_units = sensor.get_pressure_units_display()
+        sensor.alt_units = sensor.get_alt_units_display()
+        sensor.ws_units = sensor.get_ws_units_display()
+        return sensor
+
 class SensorListView(ListView):
     allow_empty = True
     context_object_name = 'object_list'
@@ -161,8 +182,11 @@ class SensorListView(ListView):
     paginate_orphans = 0
     paginator_class = Paginator
     page_kwarg = 'page'
-    queryset = Sensor.objects.all()
     template_name = 'complex/sensor_list.html'
+
+    def get_queryset(self):
+        return get_list_or_404(Sensor, 
+                               created_by=self.request.user)
 
 class SensorUpdateView(UpdateView):
     model = Sensor
