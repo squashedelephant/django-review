@@ -49,6 +49,10 @@ footer {
     text-align: center;
 }
 
+form {
+    background-color: '#CCCCC';
+}
+
 header {
     padding: 1em;
     color: black;

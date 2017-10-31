@@ -88,7 +88,6 @@ def get_timestamp():
     return: datetime.datetime localized to tz
     """
     t = datetime.now()
-    #return t.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
     return datetime(t.year,
                     t.month,
                     t.day,

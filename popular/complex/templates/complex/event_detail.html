@@ -1,0 +1,38 @@
+{% extends "complex/base.html" %}
+
+{% block table %}
+    <table id="detail">
+        <tr>
+            <th>Sensor</th>
+            <th>Timestamp</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th>Camera Feature</th>
+            <th>Average Temperature</th>
+            <th>Average Pressure</th>
+            <th>Percentage Humidity</th>
+            <th>Altitude</th>
+            <th>Windspeed</th>
+        </tr>
+        <tr>
+            <td>{{ event.sensor }}</td>
+            <td>{{ event.timestamp }}</td>
+            <td>{{ event.location }}</td>
+            <td>{{ event.status }}</td>
+            <td>{{ event.camera }}</td>
+            <td>{{ event.avg_temp }}</td>
+            <td>{{ event.avg_pressure }}</td>
+            <td>{{ event.pct_humidity }}</td>
+            <td>{{ event.altitude }}</td>
+            <td>{{ event.windspeed }}</td>
+        </tr>
+    </table>
+    {% if event.sensor %}
+        <button type="button">
+            <a href="{{ event.ulink }}">Modify Event</a>
+        </button>
+        <button type="button">
+            <a href="{{ event.dlink }}">Delete Event</a>
+        </button>
+    {% endif %}
+{% endblock %}
