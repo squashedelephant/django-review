@@ -151,12 +151,13 @@ class TestSensorView(TestCase):
             self.assertEqual(expected[idx].sku, data[2].string)
             self.assertEqual(expected[idx].serial_no, data[3].string)
 
-    def ttest_03_list_next_page(self):
+    def test_03_list_next_page(self):
         page = 2
         (offset, limit) = self._convert_page(page)
         self._set_user(self.kwargs['qa'])
         self.assertTrue(self.user.is_authenticated())
         url = reverse('complex:sensor-list', kwargs={'page': page})
+        url = '/complex/sensors/?page=2'
         self.request = self.factory.get(path=url,
                                         content_type=self.format)
         self.request.user = self.user
@@ -169,6 +170,7 @@ class TestSensorView(TestCase):
         expected = Sensor.objects.filter(created_by=self.request.user)[offset:limit]
         self.assertEqual('Active Sensors', soup.find('h3').string)
         rows = soup.findAll('table')[0].findAll('tbody')[0].findAll('tr')
+        print(rows)
         self.assertEqual(len(expected), len(rows))
         for idx in range(len(rows)):
             data = rows[idx].findAll('td')

@@ -185,8 +185,26 @@ class SensorListView(ListView):
     template_name = 'complex/sensor_list.html'
 
     def get_queryset(self):
-        return get_list_or_404(Sensor, 
+        return get_list_or_404(Sensor,
                                created_by=self.request.user)
+        print('request attrs: {}'.format(self.request.GET))
+        qs = get_list_or_404(Sensor, 
+                             created_by=self.request.user)
+        page = self.get_paginate_by(self.request.GET.get('page'))
+        return self.paginate_queryset(qs, page)
+        #attrs: ['__class__', '__delattr__', '__dict__', '__doc__', '__format__',
+        #        '__getattribute__', '__hash__', '__init__', '__module__', '__new__',
+        #        '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__',
+        #        '__str__', '__subclasshook__', '__weakref__', '_allowed_methods',
+        #        'allow_empty', 'args', 'as_view', 'content_type', 'context_object_name',
+        #        'dispatch', 'form', 'get', 'get_allow_empty', 'get_context_data',
+        #        'get_context_object_name', 'get_ordering', 'get_paginate_by',
+        #        'get_paginate_orphans', 'get_paginator', 'get_queryset', 'get_template_names',
+        #        'head', 'http_method_names', 'http_method_not_allowed', 'kwargs', 'model',
+        #        'options', 'ordering', 'page_kwarg', 'paginate_by', 'paginate_orphans',
+        #        'paginate_queryset', 'paginator_class', 'queryset', 'render_to_response',
+        #        'request', 'response_class', 'template_engine', 'template_name',
+        #        'template_name_suffix']
 
 class SensorUpdateView(UpdateView):
     model = Sensor
